@@ -14,7 +14,7 @@ This chart deploys a single IBM Integration Bus integration node, containing a s
 To install the chart with the release name `rel1`:
 
 ```bash
-helm install --name rel1 ibm-integration-bus-exp --set license=accept
+helm install --name rel1 ibm-integration-bus-demo --set license=accept
 ```
 
 This command accepts the IBM Integration Bus license and deploys an IBM Integration Bus server on the Kubernetes cluster. The [configuration](#configuration) section lists the parameters that can be configured during installation.
@@ -32,7 +32,7 @@ helm delete rel1
 The command removes all the Kubernetes components associated with the chart.
 
 ## Configuration
-The following table lists the configurable parameters of the `ibm-integration-bus-exp` chart and their default values.
+The following table lists the configurable parameters of the `ibm-integration-bus-demo` chart and their default values.
 
 | Parameter                        | Description                                     | Default                                                    |
 | -------------------------------- | ----------------------------------------------- | ---------------------------------------------------------- |

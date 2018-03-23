@@ -47,13 +47,24 @@ IIB high availability is configured using the pod Readiness and Liveness probes 
 
 Test scenario involves blocking the port temporarily on one IIB pod instance and observing how kubernetes a) initially re-routes the incoming traffic and b) later restarts the pod.
 
-## Tests
+### Tests
 
-Block incoming port using IPtables:
+**Stop IIB node without killing pod**
 
-    kubectl exec <iib pod> -- /sbin/iptables -A INPUT -p tcp --destination-port 7800 -j DROP
+    kubectl exec <iib pod name> -ti -- /opt/ibm/iib-10.0.0.10/server/bin/mqsistop IIB_NODE
 
 
+<!-- Block incoming port using IPtables:
+
+    kubectl exec <iib pod> -- /sbin/iptables -A INPUT -p tcp --destination-port 7800 -j DROP -->
+
+Watch pod events
+
+    watch "kubectl describe pods ibm-integration-bus-prod-686b58999d-fvdjq | tail"
+
+Watch iib pods
+
+    watch kubectl get pods -o wide -l app=ibm-integration-bus-prod
 ---
 
 ## Links

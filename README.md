@@ -32,14 +32,25 @@ The test scenario involves high volume injections of REST GET queries to the ser
 	curl -s 192.168.24.33:32420/icpIIBtest?[1-1000000] > /dev/null
     ... repeat for parallel TCP sessions
 
+or better using the stress load script (which runs 100 parallel TCP connections)
+    
+    ./iib_stress_test.py
+
 
 Monitor pods load in ICP
 	
 	watch -n 1 kubectl top pod -l app=ibm-integration-bus-prod -n default
 
-Monitor message stats in iib
 
-TODO
+Monitor message stats in iib instances
+
+    kubectl port-forward <iib pod 1> 5000:4414
+    kubectl port-forward <iib pod 2> 5001:4414
+
+    and then from browser host:
+    ssh -L 5000:localhost:5000 -L 5001:localhost:5001 master
+    point browser to http://localhost:5000 and 5001
+
 
 ## 2. High availability
 

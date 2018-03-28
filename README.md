@@ -5,11 +5,10 @@ The following scenarios are covered:
 1. IIB autoscaling and load balancing
 2. IIB high-availablity
 3. MQ integration
+4. Custom catalog item
 
 ## TODO:
 
-- port forwards for separate iib instances
-- MQ
 - catalog item for demo chart
 
 
@@ -39,11 +38,9 @@ or better using the stress load script (which runs 100 parallel TCP connections)
     
     ./iib_stress_test.py
 
-
 Monitor pods load in ICP
 	
 	watch -n 1 kubectl top pod -l app=ibm-integration-bus-prod -n default
-
 
 Monitor message stats in iib instances
 
@@ -53,7 +50,6 @@ Monitor message stats in iib instances
     and then from browser host:
     ssh -L 5000:localhost:5000 -L 5001:localhost:5001 master
     point browser to http://localhost:5000 and 5001
-
 
 ## 2. High availability
 
@@ -67,7 +63,6 @@ Test scenario involves blocking the port temporarily on one IIB pod instance and
 
     kubectl exec <iib pod name> -ti -- /opt/ibm/iib-10.0.0.10/server/bin/mqsistop IIB_NODE
 
-
 <!-- Block incoming port using IPtables:
 
     kubectl exec <iib pod> -- /sbin/iptables -A INPUT -p tcp --destination-port 7800 -j DROP -->
@@ -79,6 +74,7 @@ Watch pod events
 Watch iib pods
 
     watch kubectl get pods -o wide -l app=ibm-integration-bus-prod
+
 ---
 
 ## Links

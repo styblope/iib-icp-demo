@@ -75,6 +75,39 @@ Watch iib pods
 
     watch kubectl get pods -o wide -l app=ibm-integration-bus-prod
 
+## 3. MQ Integration
+
+IIB production image doesn't have MQ libraries at the moment. So to demo MQ workflow within IIB container we used development image https://github.com/DAVEXACOM/IIB-MQ.git and connect it to MSB pipeline. In order to deploy another MQ workflow replace/add .bar file to the project.
+
+**Dockerfile modification**
+In order to minimize build time move line
+	
+	COPY *.bar  /etc/mqm/
+
+after following lines
+
+	# Expose default admin port and http port, plus MQ ports
+	EXPOSE 4414 7800 7883 1414 9443
+
+	
+**Disable MQ security**
+You may need to disable MQ authentication in MQ container. 
+
+Connect to mq container
+	
+	kubectl exec -it mq-ibm-mq-0&nbsp; /bin/bash
+
+Start runmqc
+	
+	runmqc
+	
+Disable authentication
+
+	alter qmgr chlauth(disabled)
+	dis qmgr all
+	alter qmgr connauth(' ‘)
+	refresh security
+
 ---
 
 ## Links
@@ -83,5 +116,9 @@ https://github.com/ot4i/iib-helm
 
 IIB docker repo:
 https://github.com/ot4i/iib-docker
+
+Setting up the MSB pipeline:
+https://www.ibm.com/support/knowledgecenter/en/SS5PWC/pipeline.html
+
 
 https://developer.ibm.com/integration/blog/2017/09/18/lightweight-integration-useful-links/

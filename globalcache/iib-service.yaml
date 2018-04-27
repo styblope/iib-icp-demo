@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: iib-globalcache
+  name: iib-globalcache
+spec:
+  clusterIP: None # Headless service for StatefulSet
+  ports:
+  - name: globalcache0
+    port: 2800
+  - name: globalcache1
+    port: 2801
+  - name: globalcache2
+    port: 2802
+  - name: globalcache3
+    port: 2803
+  selector:
+    app: iib-globalcache
+
+# ---
+
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   labels:
+#     app: iib-demo
+#   name: iib-demo
+# spec:
+#   ports:
+#   - name: webui
+#     nodePort: 30395
+#     port: 4414
+#     protocol: TCP
+#     targetPort: 4414
+#   - name: serverlistener
+#     nodePort: 32420
+#     port: 7800
+#     protocol: TCP
+#     targetPort: 7800
+#   - name: nodelistener
+#     nodePort: 32530
+#     port: 7080
+#     protocol: TCP
+#     targetPort: 7080
+#   selector:
+#     app: iib-demo
+#   type: NodePort

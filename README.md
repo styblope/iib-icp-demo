@@ -20,8 +20,8 @@ Scalable IIB deployment is configured with cluster-wide NFS persistent volume (`
 
 The test scenario involves high volume injections of REST GET queries to the service until automatic instance scale-up gets triggered.
 
-![](images/IIB-single.svg)
-![](images/IIB.svg)
+![](IIB-single.svg)
+![](media/IIB.svg)
 
 ### Tests
 

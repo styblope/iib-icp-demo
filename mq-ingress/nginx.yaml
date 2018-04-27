@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: iib-nginx-config
+data:
+  default.conf: |
+    stream {
+      log_format log_stream [$time_local] $protocol $status $bytes_sent $bytes_received $session_time;
+
+      access_log off;
+      error_log  /var/log/nginx/error.log;
+
+      server {
+
+        listen                  1414;
+        listen                  [::]:1414;
+        proxy_timeout           600s;
+
+        set $iib_service gateway.watsonplatform.net;
+        proxy_pass https://$iib_service;
+      }
+    }
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: iib-nginx
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: iib-nginx
+    spec:
+      containers:
+      - image: nginx:latest
+        imagePullPolicy: IfNotPresent
+        name: iib-nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: iib-nginx-config
+          mountPath: /etc/nginx/conf.d
+      # Load the configuration files for nginx
+      volumes:
+        - name: iib-nginx-config
+          configMap:
+            name: iib-nginx-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iib-ingress
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app: iib-ingress

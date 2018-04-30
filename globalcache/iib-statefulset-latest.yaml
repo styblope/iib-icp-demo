@@ -1,18 +1,21 @@
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: StatefulSet
 metadata:
+  creationTimestamp: null
   labels:
     app: iib-globalcache
   name: iib-globalcache
 spec:
+  podManagementPolicy: OrderedReady
+  replicas: 2
+  revisionHistoryLimit: 10
   selector:
     matchLabels:
-      app: iib-globalcache # has to match .spec.template.metadata.labels
+      app: iib-globalcache
   serviceName: iib-globalcache
-  replicas: 2
-
   template:
     metadata:
+      creationTimestamp: null
       labels:
         app: iib-globalcache
       name: iib-globalcache
@@ -26,22 +29,35 @@ spec:
         - name: SERVERNAME
           value: IIB_SERVER
         - name: CACHE_POLICY
-          # value: default
-          value: "/tmp/globalcache-policy/policy_two_brokers_ha.xml"
+          value: /tmp/globalcache-policy/policy_two_brokers_ha.xml
         - name: CACHE_PORT_RANGE
-          value: "2800-2819"
+          value: 2800-2819
         image: mycluster.icp:8500/default/iibv10image:globalcache
         imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 4414
+            scheme: HTTP
+          initialDelaySeconds: 240
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
         name: iib-globalcache
         ports:
         - containerPort: 2800
           name: globalcache0
+          protocol: TCP
         - containerPort: 2801
           name: globalcache1
+          protocol: TCP
         - containerPort: 2802
           name: globalcache2
+          protocol: TCP
         - containerPort: 2803
-          name: globalcache3      
+          name: globalcache3
+          protocol: TCP
         - containerPort: 7800
           name: serverlistener
           protocol: TCP
@@ -51,35 +67,6 @@ spec:
         - containerPort: 4414
           name: webui
           protocol: TCP
-        # readinessProbe:
-        #   failureThreshold: 3
-        #   httpGet:
-        #     path: /
-        #     port: 4414
-        #     scheme: HTTP
-        #   initialDelaySeconds: 15
-        #   periodSeconds: 10
-        #   successThreshold: 1
-        #   timeoutSeconds: 1
-
-# suppress readiness probe temporarily
-        # readinessProbe:
-        #   failureThreshold: 3
-        #   tcpSocket:
-        #     port: 7800
-        #   initialDelaySeconds: 15
-        #   periodSeconds: 10
-        #   successThreshold: 1
-        #   timeoutSeconds: 1
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 4414
-            scheme: HTTP
-          initialDelaySeconds: 240
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 1
         resources:
           limits:
             cpu: "2"
@@ -94,10 +81,22 @@ spec:
           name: bars
         - mountPath: /tmp/globalcache-policy
           name: globalcache-policy
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
       volumes:
-      - name: globalcache-policy
-        configMap:
+      - configMap:
+          defaultMode: 420
           name: iib-globalcache-policy
+        name: globalcache-policy
       - name: bars
         persistentVolumeClaim:
           claimName: iib-pvc
+  updateStrategy:
+    rollingUpdate:
+      partition: 0
+    type: RollingUpdate
+status:
+  replicas: 0

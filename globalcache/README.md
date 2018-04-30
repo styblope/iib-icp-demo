@@ -46,23 +46,16 @@ Sample policy files are located here:
 
 Customize `policy_two_brokers_ha.xml` by changing FQDN names (`hostname -f`) of the nodes and port ranges.
 
-Create configmap with policy XML file
+Create configmap with sample 2 brokers policy XML file
 
-    kubectl create configmap iib-globalcache-policy --from-file=policy_two_brokers_ha.xml
+    kubectl create configmap iib-globalcache-policy --from-file=globalcache_policy.xml=policy_two_brokers_ha.xml
 
+Modify the policy file so that it uses 3 brokers and splits the cache continers evenly among all three nodes while using the first 2 nodes as catalog servers. Scale up the iib statefulset to 3 replicas.
 
-TODO:
+     kubectl create configmap iib-globalcache-policy --from-file=globalcache_policy.xml=policy_three_brokers_ha.xml
 
-- cache ports - range, single port?
-- persistent volume for cache? Is there need for persisten data (if we use HA mode)?
-- verify cache function
+     kubectl scale statefulset iib-globalcache --replicas=3
 
-## Verify cache
+## Verify cache placement
 
     kubectl exec -ti iib-globalcache-0 -- bash -c "mqsicacheadmin IIB_NODE -c showPlacement"
-
-## Combine cache nodes and normal (stateless) nodes into k8s loadbalancing service
-
-TODO:
-
-- common service (ingress) for statefull and stateless

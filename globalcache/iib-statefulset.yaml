@@ -27,7 +27,7 @@ spec:
           value: IIB_SERVER
         - name: CACHE_POLICY
           # value: default
-          value: "/tmp/globalcache-policy/policy_two_brokers_ha.xml"
+          value: "/tmp/globalcache-policy/globalcache_policy.xml"
         - name: CACHE_PORT_RANGE
           value: "2800-2819"
         image: mycluster.icp:8500/default/iibv10image:globalcache
@@ -51,26 +51,25 @@ spec:
         - containerPort: 4414
           name: webui
           protocol: TCP
-        # readinessProbe:
-        #   failureThreshold: 3
-        #   httpGet:
-        #     path: /
-        #     port: 4414
-        #     scheme: HTTP
-        #   initialDelaySeconds: 15
-        #   periodSeconds: 10
-        #   successThreshold: 1
-        #   timeoutSeconds: 1
+#         readinessProbe:
+#           failureThreshold: 3
+#           httpGet:
+#             path: /
+#             port: 4414
+#             scheme: HTTP
+#           initialDelaySeconds: 15
+#           periodSeconds: 10
+#           successThreshold: 1
+#           timeoutSeconds: 1
 
-# suppress readiness probe temporarily
-        # readinessProbe:
-        #   failureThreshold: 3
-        #   tcpSocket:
-        #     port: 7800
-        #   initialDelaySeconds: 15
-        #   periodSeconds: 10
-        #   successThreshold: 1
-        #   timeoutSeconds: 1
+#         readinessProbe:
+#           failureThreshold: 3
+#           tcpSocket:
+#             port: 7800
+#           initialDelaySeconds: 15
+#           periodSeconds: 10
+#           successThreshold: 1
+#           timeoutSeconds: 1
         livenessProbe:
           httpGet:
             path: /

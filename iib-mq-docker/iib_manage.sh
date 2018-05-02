@@ -8,7 +8,7 @@
 
 set -e
 
-NODE_NAME=${NODE_NAME-IIBV10010}
+NODE_NAME=${NODE_NAME-IIBV10NODE}
 EXEC_NAME=${IIBSERVERNAME-IS1}
 export JDBC_SERVICE=BROKER
 export HOST_NAME=IIBDOCKER
@@ -147,7 +147,12 @@ start()
   	# mqsideploy $NODE_NAME -e $EXEC_NAME -a /etc/mqm/ICPDeploy.bar -m
 	# change to deploy all bar files
   	for BAR_FILE in $(ls -v /etc/mqm/*.bar); do
-	   echo "About to deploying bar file $BAR_FILE"
+	   echo "About to deploying bar file $BAR_FILE from /etc/mqm"
+	   mqsideploy ${NODE_NAME} -e ${EXEC_NAME} -a ${BAR_FILE}
+        done
+	# deploy bar files from mounted volume /tmp/BARs
+	for BAR_FILE in $(ls -v /tmp/BARs/*.bar); do
+	   echo "About to deploying bar file $BAR_FILE from /tmp/BARs"
 	   mqsideploy ${NODE_NAME} -e ${EXEC_NAME} -a ${BAR_FILE}
         done
   	

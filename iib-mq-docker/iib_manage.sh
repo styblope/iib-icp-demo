@@ -104,7 +104,6 @@ start()
   
   
 
-
 	if [ ${NODE_EXISTS} -ne 0 ]; then
     echo "----------------------------------------"
     echo "Node $NODE_NAME does not exist..."
@@ -120,41 +119,40 @@ start()
 	echo "Starting syslog"
   sudo /usr/sbin/rsyslogd
   	
-  	echo "Configuring db access"
-  	mqsisetdbparms $NODE_NAME -n BROKER -u sa -p passw0rd
+	echo "Configuring db access"
+	mqsisetdbparms $NODE_NAME -n BROKER -u sa -p passw0rd
   	
-	echo "Starting node $NODE_NAME"
-  	
-  	mqsistart $NODE_NAME
+	echo "Starting node $NODE_NAME" 	
+  mqsistart $NODE_NAME
 	echo "----------------------------------------"
 
+
+	echo "Starting Switch Server"	
+	SWITCH_EXISTS=`iibswitch create switch -c /home/iibuser/switch.json | grep "already" | wc -l`
 	
-  	
-  	echo "Starting Switch Server"
-  	
-  	SWITCH_EXISTS=`iibswitch create switch -c /home/iibuser/switch.json | grep "already" | wc -l`
-  	
-  	if [ ${SWITCH_EXISTS} -eq 0 ] ; then
-  		echo "S starting Switch"
-  		iibswitch start switch -c /home/iibuser/switch.json
-  		
-  	fi
-  	mqsichangeproperties $NODE_NAME -e $EXEC_NAME -o ComIbmIIBSwitchManager -n agentXConfigFile -p /home/iibuser/agentx.json
-  	
-  	mqsistop $NODE_NAME
-  	mqsistart $NODE_NAME
-  	
-  	# mqsideploy $NODE_NAME -e $EXEC_NAME -a /etc/mqm/ICPDeploy.bar -m
+	if [ ${SWITCH_EXISTS} -eq 0 ] ; then
+		echo "S starting Switch"
+		iibswitch start switch -c /home/iibuser/switch.json
+		
+	fi
+	mqsichangeproperties $NODE_NAME -e $EXEC_NAME -o ComIbmIIBSwitchManager -n agentXConfigFile -p /home/iibuser/agentx.json
+	
+	mqsistop $NODE_NAME
+	mqsistart $NODE_NAME
+	
+	# mqsideploy $NODE_NAME -e $EXEC_NAME -a /etc/mqm/ICPDeploy.bar -m
 	# change to deploy all bar files
-  	for BAR_FILE in $(ls -v /etc/mqm/*.bar); do
-	   echo "About to deploying bar file $BAR_FILE from /etc/mqm"
-	   mqsideploy ${NODE_NAME} -e ${EXEC_NAME} -a ${BAR_FILE}
-        done
-	# deploy bar files from mounted volume /tmp/BARs
-	for BAR_FILE in $(ls -v /tmp/BARs/*.bar); do
-	   echo "About to deploying bar file $BAR_FILE from /tmp/BARs"
-	   mqsideploy ${NODE_NAME} -e ${EXEC_NAME} -a ${BAR_FILE}
-        done
+	for BAR_FILE in $(ls -v /etc/mqm/*.bar); do
+    echo "About to deploying bar file $BAR_FILE from /etc/mqm"
+    mqsideploy ${NODE_NAME} -e ${EXEC_NAME} -a ${BAR_FILE}
+  done
+  # deploy bar files from mounted volume /tmp/BARs
+  if [ -d "$DIRECTORY" ]; then
+    for BAR_FILE in $(ls -v /tmp/BARs/*.bar); do
+	  echo "About to deploying bar file $BAR_FILE from /tmp/BARs"
+	  mqsideploy ${NODE_NAME} -e ${EXEC_NAME} -a ${BAR_FILE}
+    done
+  fi
   	
 }
 
@@ -178,6 +176,7 @@ monitor()
 		sleep 1
 	done
 }
+
 mq-license-check.sh
 parameterCheck
 config

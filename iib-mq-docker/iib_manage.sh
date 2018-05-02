@@ -147,7 +147,7 @@ start()
     mqsideploy ${NODE_NAME} -e ${EXEC_NAME} -a ${BAR_FILE}
   done
   # deploy bar files from mounted volume /tmp/BARs
-  if [ -d "$DIRECTORY" ]; then
+  if [ -d "/tmp/BARs" ]; then
     for BAR_FILE in $(ls -v /tmp/BARs/*.bar); do
 	  echo "About to deploying bar file $BAR_FILE from /tmp/BARs"
 	  mqsideploy ${NODE_NAME} -e ${EXEC_NAME} -a ${BAR_FILE}

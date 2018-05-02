@@ -9,7 +9,9 @@
 set -e
 
 NODE_NAME=${NODE_NAME-IIBV10NODE}
-EXEC_NAME=${IIBSERVERNAME-IS1}
+SERVER_NAME=${SERVER_NAME-IS1}
+CACHE_POLICY=${CACHE_POLICY-disabled} # `disabled`, `default`, `none` or fully qualified XML policy filename
+CACHE_PORT_RANGE=${CACHE_PORT_RANGE-"2800-2819"}
 export JDBC_SERVICE=BROKER
 export HOST_NAME=IIBDOCKER
 
@@ -109,23 +111,41 @@ start()
     echo "Node $NODE_NAME does not exist..."
     echo "Creating node $NODE_NAME"
 		mqsicreatebroker $NODE_NAME
-		mqsistart $NODE_NAME
-		mqsicreateexecutiongroup $NODE_NAME -e $EXEC_NAME
-		mqsistop $NODE_NAME
-		
     echo "----------------------------------------"
-	fi
-	echo "----------------------------------------"
-	echo "Starting syslog"
-  sudo /usr/sbin/rsyslogd
-  	
-	echo "Configuring db access"
-	mqsisetdbparms $NODE_NAME -n BROKER -u sa -p passw0rd
-  	
-	echo "Starting node $NODE_NAME" 	
-  mqsistart $NODE_NAME
-	echo "----------------------------------------"
-
+    echo "Starting node $NODE_NAME"
+		mqsistart $NODE_NAME
+    echo "----------------------------------------"
+    echo "Setting cachemanager parameters:"
+    echo "  - listenerHost: $(hostname -f)"
+    mqsichangeproperties $NODE_NAME -b cachemanager -o CacheManager -n listenerHost -v $(hostname -f)
+    echo "----------------------------------------" 
+    echo "Stopping node before changing cache policy"
+    mqsistop $NODE_NAME
+    echo "----------------------------------------"
+    echo "Changing cache policy to: $CACHE_POLICY"
+    mqsichangebroker $NODE_NAME -b $CACHE_POLICY -r $CACHE_PORT_RANGE
+    echo "----------------------------------------"
+    echo "Starting syslog"
+    sudo /usr/sbin/rsyslogd
+    echo "----------------------------------------"
+    echo "Configuring db access"
+    mqsisetdbparms $NODE_NAME -n BROKER -u sa -p passw0rd
+    echo "----------------------------------------"
+    echo "Starting node $NODE_NAME"
+    mqsistart $NODE_NAME
+    echo "----------------------------------------"
+    mqsicreateexecutiongroup $NODE_NAME -e $SERVER_NAME
+	else
+  	echo "----------------------------------------"
+  	echo "Starting syslog"
+    sudo /usr/sbin/rsyslogd
+    echo "----------------------------------------"
+  	echo "Configuring db access"
+  	mqsisetdbparms $NODE_NAME -n BROKER -u sa -p passw0rd
+  	echo "Starting node $NODE_NAME" 	
+    mqsistart $NODE_NAME
+  	echo "----------------------------------------"
+  fi
 
 	echo "Starting Switch Server"	
 	SWITCH_EXISTS=`iibswitch create switch -c /home/iibuser/switch.json | grep "already" | wc -l`
@@ -135,22 +155,21 @@ start()
 		iibswitch start switch -c /home/iibuser/switch.json
 		
 	fi
-	mqsichangeproperties $NODE_NAME -e $EXEC_NAME -o ComIbmIIBSwitchManager -n agentXConfigFile -p /home/iibuser/agentx.json
-	
+	mqsichangeproperties $NODE_NAME -e $SERVER_NAME -o ComIbmIIBSwitchManager -n agentXConfigFile -p /home/iibuser/agentx.json	
 	mqsistop $NODE_NAME
 	mqsistart $NODE_NAME
 	
-	# mqsideploy $NODE_NAME -e $EXEC_NAME -a /etc/mqm/ICPDeploy.bar -m
+	# mqsideploy $NODE_NAME -e $SERVER_NAME -a /etc/mqm/ICPDeploy.bar -m
 	# change to deploy all bar files
 	for BAR_FILE in $(ls -v /etc/mqm/*.bar); do
-    echo "About to deploying bar file $BAR_FILE from /etc/mqm"
-    mqsideploy ${NODE_NAME} -e ${EXEC_NAME} -a ${BAR_FILE}
+    echo "Deploy bar file $BAR_FILE from /etc/mqm"
+    mqsideploy ${NODE_NAME} -e ${SERVER_NAME} -a ${BAR_FILE}
   done
   # deploy bar files from mounted volume /tmp/BARs
   if [ -d "/tmp/BARs" ]; then
     for BAR_FILE in $(ls -v /tmp/BARs/*.bar); do
-	  echo "About to deploying bar file $BAR_FILE from /tmp/BARs"
-	  mqsideploy ${NODE_NAME} -e ${EXEC_NAME} -a ${BAR_FILE}
+	  echo "Deploying bar file $BAR_FILE from /tmp/BARs"
+	  mqsideploy ${NODE_NAME} -e ${SERVER_NAME} -a ${BAR_FILE}
     done
   fi
   	

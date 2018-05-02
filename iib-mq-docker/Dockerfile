@@ -7,9 +7,8 @@
 
 FROM ubuntu:14.04
 
-MAINTAINER Sam Rogers srogers@uk.ibm.com
 
-#begin here
+LABEL maintainers="Timur Markunin timur.markunin1@ibm.com, Petr Styblo petr.styblo@cz.ibm.com"
 
 # Install packages
 RUN export DEBIAN_FRONTEND=noninteractive \

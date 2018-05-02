@@ -59,30 +59,31 @@ You can also enable the embedded eXtreme Scale global cache feature by specifyin
 
 You can optionally specify `CACHE_PORT_RANGE` to define the range of ports that the cache manager can use. Set this parameter to `generate` (default) or to a specific range of ports. If you specify a range of ports, the value of this parameter must be in the format `xxxx-yyyy`, and the range must contain at least 20 ports
 
-### Running administration commands
+### Configure k8s multi-integration node cache topology
 
-You can run any of the Integration Bus
- commands using one of two methods:
+**Cache policy file**
 
-##### Directly in the container
+> To share data across integration nodes, or enhance the availability of the cache, you must create a policy file. The policy file is an XML file that the cache manager uses to connect the caches of multiple integration nodes. Set the cache policy to the fully qualified name of the policy file.
 
-Attach a bash session to your container and execute your commands as you would normally:
+Sample policy files are located here:
 
-~~~
-docker exec -it <container name> /bin/bash
-~~~
+    cd /opt/ibm/iib-10.0.0.10/server/sample/globalcache
 
-At this point you will be in a shell inside the container and can source `mqsiprofile` and run your commands.
+Customize `policy_two_brokers_ha.xml` by changing FQDN names (`hostname -f`) of the nodes and port ranges.
 
-##### Using Docker exec
+In k8s, create a configmap with sample 2 brokers policy XML file
 
-Use Docker exec to run a non-interactive Bash session that runs any of the Integration Bus commands.  For example:
+    kubectl create configmap iib-globalcache-policy --from-file=globalcache_policy.xml=policy_two_brokers_ha.xml
 
-~~~
-docker exec <container name> /bin/bash -c mqsilist
-~~~
+You may modify the policy file so that it uses 3 brokers and splits the cache continers evenly among all three nodes while using the first 2 nodes as catalog servers. Scale up the iib statefulset to 3 replicas.
 
-### Accessing logs
+     kubectl create configmap iib-globalcache-policy --from-file=globalcache_policy.xml=policy_three_brokers_ha.xml
+
+Verify cache placement
+
+    kubectl exec -ti iib-globalcache-0 -- bash -c "mqsicacheadmin IIB_NODE -c showPlacement"
+
+## Accessing logs
 
 This image also configures syslog, so when you run a container, your node will be outputting messages to /var/log/syslog inside the container.  You can access this by attaching a bash session as described above or by using docker exec.  For example:
 

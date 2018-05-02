@@ -23,17 +23,6 @@ Verify that cache is running
     source ./mqsiprofile
     ./mqsireportproperties MYNODE -b cachemanager -o CacheManager -r 2800-2819
 
-## Push container to local registry
-
-    docker push mycluster.icp:8500/default/iibv10image:globalcache
-
-## Deploy iib replicas in k8s as StatefulSet
-
-    kubects apply -f iib-service.yaml
-    kubectl apply -f iib-statefulset.yaml
-
-We'll use 2 replicas with embedded global cache on each node, running in HA mode.
-
 ## Configure multi-integration node cache topology
 
 **Cache policy file**
@@ -46,15 +35,9 @@ Sample policy files are located here:
 
 Customize `policy_two_brokers_ha.xml` by changing FQDN names (`hostname -f`) of the nodes and port ranges.
 
-Create configmap with sample 2 brokers policy XML file
+In k8s, you may create a configmap with sample 2 brokers policy XML file like this:
 
     kubectl create configmap iib-globalcache-policy --from-file=globalcache_policy.xml=policy_two_brokers_ha.xml
-
-Modify the policy file so that it uses 3 brokers and splits the cache continers evenly among all three nodes while using the first 2 nodes as catalog servers. Scale up the iib statefulset to 3 replicas.
-
-     kubectl create configmap iib-globalcache-policy --from-file=globalcache_policy.xml=policy_three_brokers_ha.xml
-
-     kubectl scale statefulset iib-globalcache --replicas=3
 
 ## Verify cache placement
 

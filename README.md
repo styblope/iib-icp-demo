@@ -58,9 +58,13 @@ or better using the stress load script (which runs 100 parallel TCP connections)
     
     ./iib_stress_test.py
 
-Monitor pods load in ICP
+Monitor pod CPU load
 	
-	watch -n 1 kubectl top pod -l app=iib -n default
+	watch -n 1 "kubectl top pod -l app=iib"
+
+Watch pods
+
+    watch -n 1 "kubectl get pods -o wide -l app=iib"
 
 Monitor message stats in iib instances
 
@@ -95,19 +99,15 @@ The test case involves blocking the port temporarily on one IIB pod instance and
 
 Stop IIB node without killing pod
 
-    kubectl exec <iib pod name> -ti -- /opt/ibm/iib-10.0.0.10/server/bin/mqsistop IIB_NODE
+    kubectl exec <iib pod name> -ti -- bash -c "mqsistop IIB_NODE"
 
-<!-- Block incoming port using IPtables:
+Watch pod probe events
 
-    kubectl exec <iib pod> -- /sbin/iptables -A INPUT -p tcp --destination-port 7800 -j DROP -->
+    watch "kubectl describe pods <iib pod name> | tail"
 
-Watch pod events
+Watch pods
 
-    watch "kubectl describe pods iib-686b58999d-fvdjq | tail"
-
-Watch iib pods
-
-    watch kubectl get pods -o wide -l app=iib
+    watch "kubectl get pods -o wide -l app=iib"
 
 ## MQ Integration
 

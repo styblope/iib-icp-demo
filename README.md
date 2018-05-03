@@ -3,17 +3,20 @@ IIB on IBM Cloud Private Demo
 
 The following scenarios are covered:
 
-1. IIB auto-scaling and load balancing (stateless case)
-2. IIB high-availability (readiness/liveness probes)
-3. MQ integration
-4. IIB Global Cache
-5. Custom catalog item (HELM chart)
-6. Automated deployment of IIB flows (BAR files) across the cluster
-7. IIB version rolling update (using k8s rolling update features)
-8. Centralized IIB logging (show centralized IIB logs in Kiabana)
-9. (?) IIB Monitoring
-10. (?) A/B testing, canaries, network policies
-11. (?) ISTIO - pod-to-pod TLS
+1. IIB scaling using UCD
+2. IIB auto-scaling and load balancing (stateless case)
+3. IIB high-availability (readiness/liveness probes)
+4. MQ integration, TLS
+5. IIB Global Cache
+6. Custom catalog item (HELM chart)
+7. Automated deployment of IIB flows (BAR files) across the cluster
+8. IIB version rolling update (using k8s rolling update features)
+9. Centralized IIB logging (show centralized IIB logs in Kiabana)
+10. (?) IIB Monitoring
+11. (?) Blue/Green deployments, traffic routing, network policies
+12. (?) ISTIO - pod-to-pod TLS
+
+## IIB scaling using UCD
 
 ## Autoscaling with load balancer
 
@@ -155,7 +158,7 @@ Show IIB embedded global cache feature on IBM Cloud Private container orchestrat
 **Tasks**
 
 - Prepare custom IIB image with settings to enable the embedded global cache
-- Use scaled IIB *statefulset* with caching enabled
+- Use scaled IIB *statefulset* with enabled caching
 - Use cache policy XML file to define the cache catalog nodes and cache container nodes
 - Show cache placement and test function using a custom application (BAR) 
 

@@ -154,9 +154,34 @@ Show IIB embedded global cache feature on IBM Cloud Private container orchestrat
 
 **Tasks**
 
-- Prepare custom IIB image with enabled embedded global cache
-- Setup IIB *statefulset* with global chache catalog 
-- with cache policy file 
+- Prepare custom IIB image with settings to enable the embedded global cache
+- Use scaled IIB *statefulset* with caching enabled
+- Use cache policy XML file to define the cache catalog nodes and cache container nodes
+- Show cache placement and test function using a custom application (BAR) 
+
+**Implementation:**
+
+Configure multi-integration node cache topology
+
+> To share data across integration nodes, or enhance the availability of the cache, you must create a policy file. The policy file is an XML file that the cache manager uses to connect the caches of multiple integration nodes. Set the cache policy to the fully qualified name of the policy file.
+
+Sample policy files are located here:
+
+    cd /opt/ibm/iib-10.0.0.11/server/sample/globalcache
+
+Customize `policy_two_brokers_ha.xml` by changing FQDN names (`hostname -f`) of the nodes and port ranges.
+
+In k8s, you may create a configmap with e.g. sample 2 brokers policy XML file like this (see more details in the docker image README):
+
+    kubectl create configmap iib-globalcache-policy --from-file=globalcache_policy.xml=policy_two_brokers_ha.xml
+
+Show cache manager properties
+    
+    kubectl exec -ti iib-0 -- bash -c "mqsireportproperties IIB_NODE -b cachemanager -o CacheManager -r"  
+
+Verify cache placement
+
+    kubectl exec -ti iib-0 -- bash -c "mqsicacheadmin IIB_NODE -c showPlacement"
 
 ## Custom catalog item (HELM chart)
 

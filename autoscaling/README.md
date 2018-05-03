@@ -1,22 +1,10 @@
 # IIB on IBM Cloud Private Demo
 
-The following scenarios are covered:
-
-1. IIB autoscaling and load balancing
-2. IIB high-availablity
-3. MQ integration
-4. Custom catalog item
-
-## TODO:
-
-- catalog item for demo chart
-
-
 ## 1. Autoscaling with load balancer
 
 Scalable IIB deployment is configured with cluster-wide NFS persistent volume (`/export/BARs`) which holds BARs files. Autoscaling is set based on CPU threshold (20%). Initial deployment starts one IIB instance and scales to two instances on high load. 
 
-     kubectl autoscale deployment --max=2 --min=1 --cpu-percent=20 ibm-integration-bus-demo
+     kubectl autoscale deployment --max=2 --min=1 --cpu-percent=20 iib
 
 The test scenario involves high volume injections of REST GET queries to the service until automatic instance scale-up gets triggered.
 
@@ -40,7 +28,7 @@ or better using the stress load script (which runs 100 parallel TCP connections)
 
 Monitor pods load in ICP
 	
-	watch -n 1 kubectl top pod -l app=ibm-integration-bus-prod -n default
+	watch -n 1 kubectl top pod -l app=iib -n default
 
 Monitor message stats in iib instances
 
@@ -69,11 +57,11 @@ Test scenario involves blocking the port temporarily on one IIB pod instance and
 
 Watch pod events
 
-    watch "kubectl describe pods ibm-integration-bus-prod-686b58999d-fvdjq | tail"
+    watch "kubectl describe pods iib-6bbd4bd795-5gkd6 | tail"
 
 Watch iib pods
 
-    watch kubectl get pods -o wide -l app=ibm-integration-bus-prod
+    watch kubectl get pods -o wide -l app=iib
 
 ---
 

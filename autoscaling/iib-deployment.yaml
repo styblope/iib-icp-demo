@@ -1,25 +1,14 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  annotations:
-    deployment.kubernetes.io/revision: "1"
-  creationTimestamp: 2018-03-21T09:45:31Z
-  generation: 36
   labels:
-    app: ibm-integration-bus-prod
-    chart: ibm-integration-bus-prod-exp-1.0.0
-    heritage: Tiller
-    release: ibm-integration-bus-prod-exp
-  name: ibm-integration-bus-prod
-  namespace: default
-  resourceVersion: "4525737"
-  selfLink: /apis/extensions/v1beta1/namespaces/default/deployments/ibm-integration-bus-prod
-  uid: 98a90f9c-2cec-11e8-ab4c-000c296ba764
+    app: iib
+  name: iib
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ibm-integration-bus-prod
+      app: iib
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -29,20 +18,24 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        app: ibm-integration-bus-prod
-      name: ibm-integration-bus-prod
+        app: iib
+      name: iib
     spec:
       containers:
       - env:
         - name: LICENSE
           value: accept
-        - name: NODENAME
+        - name: NODE_NAME
           value: IIB_NODE
-        - name: SERVERNAME
+        - name: SERVER_NAME
           value: IIB_SERVER
-        image: mycluster.icp:8500/default/iib-prod:10.0.0.10
+        - name: MQ_QMGR_NAME
+          value: MQ1
+        - name: CACHE_POLICY
+          value: disabled
+        image: mycluster.icp:8500/default/iib-mq:10.0.0.10
         imagePullPolicy: IfNotPresent
-        name: ibm-integration-bus-prod
+        name: iib
         ports:
         - containerPort: 7800
           name: serverlistener
@@ -94,23 +87,9 @@ spec:
           name: bars
       dnsPolicy: ClusterFirst
       restartPolicy: Always
-      schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
       volumes:
       - name: bars
         persistentVolumeClaim:
           claimName: iib-pvc
-status:
-  availableReplicas: 1
-  conditions:
-  - lastTransitionTime: 2018-03-21T09:45:32Z
-    lastUpdateTime: 2018-03-21T09:45:32Z
-    message: Deployment has minimum availability.
-    reason: MinimumReplicasAvailable
-    status: "True"
-    type: Available
-  observedGeneration: 36
-  readyReplicas: 1
-  replicas: 1
-  updatedReplicas: 1

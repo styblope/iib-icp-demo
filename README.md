@@ -38,7 +38,7 @@ Scalable IIB deployment is configured with cluster-wide NFS persistent volume (`
 
 Create auto-scaling policy:
 
-     kubectl autoscale deployment --max=2 --min=1 --cpu-percent=20 ibm-integration-bus-demo
+     kubectl autoscale deployment --max=2 --min=1 --cpu-percent=20 iib
 
 The test scenario involves high volume injections of REST GET queries to the service until automatic instance scale-up gets triggered.
 
@@ -60,7 +60,7 @@ or better using the stress load script (which runs 100 parallel TCP connections)
 
 Monitor pods load in ICP
 	
-	watch -n 1 kubectl top pod -l app=ibm-integration-bus-prod -n default
+	watch -n 1 kubectl top pod -l app=iib -n default
 
 Monitor message stats in iib instances
 
@@ -103,11 +103,11 @@ Stop IIB node without killing pod
 
 Watch pod events
 
-    watch "kubectl describe pods ibm-integration-bus-prod-686b58999d-fvdjq | tail"
+    watch "kubectl describe pods iib-686b58999d-fvdjq | tail"
 
 Watch iib pods
 
-    watch kubectl get pods -o wide -l app=ibm-integration-bus-prod
+    watch kubectl get pods -o wide -l app=iib
 
 ## MQ Integration
 

@@ -12,6 +12,10 @@ NODE_NAME=${NODE_NAME-IIBV10NODE}
 SERVER_NAME=${SERVER_NAME-IS1}
 CACHE_POLICY=${CACHE_POLICY-disabled} # `disabled`, `default`, `none` or fully qualified XML policy filename
 CACHE_PORT_RANGE=${CACHE_PORT_RANGE-"2800-2819"}
+# MQ_ENABLE_SWITCH_SERVER
+# MQ_DISABLE_WEB_CONSOLE
+# MQ_TLS_KEYSTORE
+# MQ_TLS_PASSPHRASE
 export JDBC_SERVICE=BROKER
 export HOST_NAME=IIBDOCKER
 
@@ -20,11 +24,11 @@ export HOST_NAME=IIBDOCKER
 
 stop()
 {
-	echo "----------------------------------------"
-	echo "Stopping node $NODE_NAME..."
-	mqsistop $NODE_NAME
-	echo "Stopping Queue Manager $MQ_QMGR_NAME..."
-	endmqm $MQ_QMGR_NAME
+  echo "----------------------------------------"
+  echo "Stopping node $NODE_NAME..."
+  mqsistop $NODE_NAME
+  echo "Stopping Queue Manager $MQ_QMGR_NAME..."
+  endmqm $MQ_QMGR_NAME
 }
 parameterCheck()
 {
@@ -42,7 +46,7 @@ parameterCheck()
 config()
 {
   # Populate and update the contents of /var/mqm - this is needed for
-	# bind-mounted volumes, and also to migrate data from previous versions of MQ
+  # bind-mounted volumes, and also to migrate data from previous versions of MQ
 
   setup-var-mqm.sh
 
@@ -97,23 +101,23 @@ state()
 
 start()
 {
-	su - iibuser
-	echo "----------------------------------------"
+  su - iibuser
+  echo "----------------------------------------"
   /opt/ibm/iib-10.0.0.10/iib version
-	echo "----------------------------------------"
+  echo "----------------------------------------"
 
   NODE_EXISTS=`mqsilist | grep $NODE_NAME > /dev/null ; echo $?`
   
   
 
-	if [ ${NODE_EXISTS} -ne 0 ]; then
+  if [ ${NODE_EXISTS} -ne 0 ]; then
     echo "----------------------------------------"
     echo "Node $NODE_NAME does not exist..."
     echo "Creating node $NODE_NAME"
-		mqsicreatebroker $NODE_NAME
+    mqsicreatebroker $NODE_NAME
     echo "----------------------------------------"
     echo "Starting node $NODE_NAME"
-		mqsistart $NODE_NAME
+    mqsistart $NODE_NAME
     echo "----------------------------------------"
     echo "Setting cachemanager parameters:"
     echo "  - listenerHost: $(hostname -f)"
@@ -135,49 +139,50 @@ start()
     mqsistart $NODE_NAME
     echo "----------------------------------------"
     mqsicreateexecutiongroup $NODE_NAME -e $SERVER_NAME
-	else
-  	echo "----------------------------------------"
-  	echo "Starting syslog"
+  else
+    echo "----------------------------------------"
+    echo "Starting syslog"
     sudo /usr/sbin/rsyslogd
     echo "----------------------------------------"
-  	echo "Configuring db access"
-  	mqsisetdbparms $NODE_NAME -n BROKER -u sa -p passw0rd
-  	echo "Starting node $NODE_NAME" 	
+    echo "Configuring db access"
+    mqsisetdbparms $NODE_NAME -n BROKER -u sa -p passw0rd
+    echo "Starting node $NODE_NAME"   
     mqsistart $NODE_NAME
-  	echo "----------------------------------------"
+    echo "----------------------------------------"
   fi
 
-	echo "Starting Switch Server"	
-	SWITCH_EXISTS=`iibswitch create switch -c /home/iibuser/switch.json | grep "already" | wc -l`
-	
-	if [ ${SWITCH_EXISTS} -eq 0 ] ; then
-		echo "S starting Switch"
-		iibswitch start switch -c /home/iibuser/switch.json
-		
-	fi
-	mqsichangeproperties $NODE_NAME -e $SERVER_NAME -o ComIbmIIBSwitchManager -n agentXConfigFile -p /home/iibuser/agentx.json	
-	mqsistop $NODE_NAME
-	mqsistart $NODE_NAME
-	
-	# mqsideploy $NODE_NAME -e $SERVER_NAME -a /etc/mqm/ICPDeploy.bar -m
-	# change to deploy all bar files
-	for BAR_FILE in $(ls -v /etc/mqm/*.bar); do
+  if [ "${MQ_ENABLE_SWITCH_SERVER+x}" ]; then
+    echo "----------------------------------------"
+    echo "Starting Switch Server"
+    echo "----------------------------------------"
+    SWITCH_EXISTS=`iibswitch create switch -c /home/iibuser/switch.json | grep "already" | wc -l`
+  
+    if [ ${SWITCH_EXISTS} -eq 0 ]; then
+    iibswitch start switch -c /home/iibuser/switch.json
+    fi
+    mqsichangeproperties $NODE_NAME -e $SERVER_NAME -o ComIbmIIBSwitchManager -n agentXConfigFile -p /home/iibuser/agentx.json  
+    mqsistop $NODE_NAME
+    mqsistart $NODE_NAME
+  fi
+  
+  # Deploy built-in bar files
+  for BAR_FILE in $(ls -v /etc/mqm/*.bar); do
     echo "Deploy bar file $BAR_FILE from /etc/mqm"
     mqsideploy ${NODE_NAME} -e ${SERVER_NAME} -a ${BAR_FILE}
   done
-  # deploy bar files from mounted volume /tmp/BARs
+  # Deploy bar files in mounted volume /tmp/BARs
   if [ -d "/tmp/BARs" ]; then
     for BAR_FILE in $(ls -v /tmp/BARs/*.bar); do
-	  echo "Deploying bar file $BAR_FILE from /tmp/BARs"
-	  mqsideploy ${NODE_NAME} -e ${SERVER_NAME} -a ${BAR_FILE}
+    echo "Deploying bar file $BAR_FILE from /tmp/BARs"
+    mqsideploy ${NODE_NAME} -e ${SERVER_NAME} -a ${BAR_FILE}
     done
   fi
-  	
+    
 }
 
 monitor()
 {
-	# Loop until "dspmq" says the queue manager is running
+  # Loop until "dspmq" says the queue manager is running
   until [ "`state`" == "RUNNING" ]; do
     sleep 1
   done
@@ -187,13 +192,13 @@ monitor()
   until [ "`state`" != "RUNNING" ]; do
     sleep 5
   done
-	echo "----------------------------------------"
-	echo "Running - stop container to exit"
-	# Loop forever by default - container must be stopped manually.
+  echo "----------------------------------------"
+  echo "Running - stop container to exit"
+  # Loop forever by default - container must be stopped manually.
   # Here is where you can add in conditions controlling when your container will exit - e.g. check for existence of specific processes stopping or errors being reported
-	while true; do
-		sleep 1
-	done
+  while true; do
+    sleep 1
+  done
 }
 
 mq-license-check.sh

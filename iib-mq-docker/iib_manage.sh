@@ -121,7 +121,9 @@ start()
     echo "----------------------------------------"
     echo "Setting cachemanager parameters:"
     echo "  - listenerHost: $(hostname -f)"
+    echo "  - MQTTServer: disabled"
     mqsichangeproperties $NODE_NAME -b cachemanager -o CacheManager -n listenerHost -v $(hostname -f)
+    mqsichangeproperties $NODE_NAME -b pubsub -o MQTTServer -n enabled -v false
     echo "----------------------------------------" 
     echo "Stopping node before changing cache policy"
     mqsistop $NODE_NAME

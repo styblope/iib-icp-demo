@@ -1,0 +1,3047 @@
+{
+    "name": "IIBHttpApp2",
+    "description": "",
+    "enforceCompleteSnapshots": false,
+    "propSheet": {"properties": []},
+    "templatePropSheet": {
+        "name": "template",
+        "properties": []
+    },
+    "components": [
+        {
+            "name": "Case.bar",
+            "description": "",
+            "created": 1524814548213,
+            "componentType": "STANDARD",
+            "ignoreQualifiers": 0,
+            "importAutomatically": false,
+            "useVfs": true,
+            "active": true,
+            "deleted": false,
+            "defaultVersionType": "FULL",
+            "cleanupDaysToKeep": 0,
+            "cleanupCountToKeep": 0,
+            "componentTemplate": {
+                "securityResourceId": "16320070-76e7-ae02-78eb-df313917a839",
+                "path": "componentTemplates\/16320070-771a-b631-30d3-5b95aa5fa665",
+                "name": "IIB flow",
+                "description": "",
+                "ignoreQualifiers": 0,
+                "componentType": "STANDARD",
+                "tags": [],
+                "active": true,
+                "envPropDefs": [],
+                "resPropDefs": [],
+                "propDefs": [],
+                "properties": [],
+                "processes": [
+                    {
+                        "name": "Copy bar to mounted folder",
+                        "description": "",
+                        "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                        "takesVersion": true,
+                        "inventoryActionType": "ADD",
+                        "status": "Active",
+                        "configActionType": "ADD",
+                        "active": true,
+                        "path": "componentTemplates\/16320070-771a-b631-30d3-5b95aa5fa665\/processes\/16320077-f3ca-6233-1a55-c11a8a4311bd",
+                        "deleted": false,
+                        "propDefs": [],
+                        "rootActivity": {
+                            "edges": [
+                                {
+                                    "to": "6f86c83490689774a3ba4812634a8e",
+                                    "from": "Copy bar to mounted folder",
+                                    "type": "SUCCESS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "Copy bar to mounted folder",
+                                    "from": "Download Artifacts",
+                                    "type": "SUCCESS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "Download Artifacts",
+                                    "from": "Delete Files and Directories",
+                                    "type": "SUCCESS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "Delete Files and Directories",
+                                    "type": "ALWAYS",
+                                    "value": ""
+                                }
+                            ],
+                            "offsets": [
+                                {
+                                    "name": "Download Artifacts",
+                                    "x": -75,
+                                    "y": 300,
+                                    "h": 70,
+                                    "w": 260
+                                },
+                                {
+                                    "name": "Delete Files and Directories",
+                                    "x": -100,
+                                    "y": 155,
+                                    "h": 70,
+                                    "w": 310
+                                },
+                                {
+                                    "name": "6f86c83490689774a3ba4812634a8e",
+                                    "x": -5,
+                                    "y": 590,
+                                    "h": 80,
+                                    "w": 120
+                                },
+                                {
+                                    "name": "Copy bar to mounted folder",
+                                    "x": -80,
+                                    "y": 445,
+                                    "h": 70,
+                                    "w": 270
+                                }
+                            ],
+                            "layoutMode": "auto",
+                            "type": "graph",
+                            "name": "3c279171-a8b0-4347-bbf3-e196ee80c2eb",
+                            "children": [
+                                {
+                                    "type": "finish",
+                                    "name": "6f86c83490689774a3ba4812634a8e",
+                                    "children": []
+                                },
+                                {
+                                    "allowFailure": false,
+                                    "useImpersonation": false,
+                                    "showHidden": false,
+                                    "impersonationUseSudo": false,
+                                    "pluginVersion": 62,
+                                    "commandName": "Delete Files and Directories",
+                                    "pluginName": "File Utils",
+                                    "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                    "properties": {
+                                        "baseDir": ".",
+                                        "includes": "**\/*",
+                                        "excludes": "",
+                                        "followSymlinks": "false",
+                                        "caseSensitive": "true"
+                                    },
+                                    "cachedAuthTokenRestriction": {
+                                        "name": "System Default",
+                                        "description": "Used by default for any plugin steps without a specified token restriction",
+                                        "restrictions": [{
+                                            "verb": "ALL",
+                                            "url": "\/*"
+                                        }]
+                                    },
+                                    "type": "plugin",
+                                    "name": "Delete Files and Directories",
+                                    "children": []
+                                },
+                                {
+                                    "allowFailure": false,
+                                    "useImpersonation": false,
+                                    "showHidden": false,
+                                    "impersonationUseSudo": false,
+                                    "pluginVersion": 29,
+                                    "commandName": "Download Artifacts",
+                                    "pluginName": "IBM UrbanCode Deploy Versioned File Storage",
+                                    "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                    "properties": {
+                                        "directoryOffset": ".",
+                                        "artifactSetBaseDir": "",
+                                        "fileIncludePatterns": "**\/*",
+                                        "fileExcludePatterns": "",
+                                        "syncMode": "true",
+                                        "fullVerification": "true",
+                                        "setFileExecuteBits": "false",
+                                        "verifyFileIntegrity": "false",
+                                        "versionId": "${p:version.id}",
+                                        "serverUrl": "${p:server.url}",
+                                        "compId": "${p:component.id}",
+                                        "resId": "${p:resource.id}",
+                                        "charset": "",
+                                        "label": ""
+                                    },
+                                    "cachedAuthTokenRestriction": {
+                                        "name": "System Default",
+                                        "description": "Used by default for any plugin steps without a specified token restriction",
+                                        "restrictions": [{
+                                            "verb": "ALL",
+                                            "url": "\/*"
+                                        }]
+                                    },
+                                    "type": "plugin",
+                                    "name": "Download Artifacts",
+                                    "children": []
+                                },
+                                {
+                                    "allowFailure": false,
+                                    "useImpersonation": false,
+                                    "showHidden": false,
+                                    "impersonationUseSudo": false,
+                                    "pluginVersion": 9,
+                                    "commandName": "Shell",
+                                    "pluginName": "Shell",
+                                    "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                    "properties": {
+                                        "directoryOffset": ".",
+                                        "shellInterpreter": "",
+                                        "scriptBody": "sshpass -p ${p:environment\/pwd} scp .\/*.bar user@mycluster.icp:\/export\/BARs",
+                                        "runAsDaemon": "false",
+                                        "outputFile": ""
+                                    },
+                                    "cachedAuthTokenRestriction": {
+                                        "name": "System Default",
+                                        "description": "Used by default for any plugin steps without a specified token restriction",
+                                        "restrictions": [{
+                                            "verb": "ALL",
+                                            "url": "\/*"
+                                        }]
+                                    },
+                                    "type": "plugin",
+                                    "name": "Copy bar to mounted folder",
+                                    "children": []
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "Deploy BAR",
+                        "description": "",
+                        "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                        "takesVersion": true,
+                        "inventoryActionType": "ADD",
+                        "status": "Active",
+                        "configActionType": "ADD",
+                        "active": true,
+                        "path": "componentTemplates\/16320070-771a-b631-30d3-5b95aa5fa665\/processes\/163215c4-c3c9-03b2-80f4-155d53b91eae",
+                        "deleted": false,
+                        "propDefs": [],
+                        "rootActivity": {
+                            "edges": [
+                                {
+                                    "to": "Download Artifacts",
+                                    "from": "Delete Files and Directories",
+                                    "type": "SUCCESS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "Copy bar to mounted folder",
+                                    "from": "Replace old bar from mounted folder",
+                                    "type": "ALWAYS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "Replace old bar from mounted folder",
+                                    "from": "Download Artifacts",
+                                    "type": "SUCCESS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "Delete Files and Directories",
+                                    "type": "ALWAYS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "2dcc6723c0469cf6d06cb1898e9bee",
+                                    "from": "Deploy BAR",
+                                    "type": "SUCCESS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "Deploy BAR",
+                                    "from": "Copy bar to mounted folder",
+                                    "type": "SUCCESS",
+                                    "value": ""
+                                }
+                            ],
+                            "offsets": [
+                                {
+                                    "name": "Delete Files and Directories",
+                                    "x": -155,
+                                    "y": 140,
+                                    "h": 90,
+                                    "w": 440
+                                },
+                                {
+                                    "name": "Deploy BAR",
+                                    "x": -35,
+                                    "y": 700,
+                                    "h": 90,
+                                    "w": 200
+                                },
+                                {
+                                    "name": "Replace old bar from mounted folder",
+                                    "x": -165,
+                                    "y": 420,
+                                    "h": 90,
+                                    "w": 460
+                                },
+                                {
+                                    "name": "Copy bar to mounted folder",
+                                    "x": -120,
+                                    "y": 560,
+                                    "h": 90,
+                                    "w": 370
+                                },
+                                {
+                                    "name": "2dcc6723c0469cf6d06cb1898e9bee",
+                                    "x": -5,
+                                    "y": 840,
+                                    "h": 90,
+                                    "w": 140
+                                },
+                                {
+                                    "name": "Download Artifacts",
+                                    "x": -110,
+                                    "y": 280,
+                                    "h": 90,
+                                    "w": 350
+                                }
+                            ],
+                            "layoutMode": "auto",
+                            "type": "graph",
+                            "name": "7dfb4410-e9f9-4bcc-a7fb-702b4589658d",
+                            "children": [
+                                {
+                                    "type": "finish",
+                                    "name": "2dcc6723c0469cf6d06cb1898e9bee",
+                                    "children": []
+                                },
+                                {
+                                    "allowFailure": false,
+                                    "useImpersonation": false,
+                                    "showHidden": false,
+                                    "impersonationUseSudo": false,
+                                    "pluginVersion": 9,
+                                    "commandName": "Shell",
+                                    "pluginName": "Shell",
+                                    "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                    "properties": {
+                                        "directoryOffset": ".",
+                                        "shellInterpreter": "",
+                                        "scriptBody": "sshpass -p ${p:environment\/pwd} ssh user@mycluster.icp 'rm \/export\/BARs\/*.bar'",
+                                        "runAsDaemon": "false",
+                                        "outputFile": ""
+                                    },
+                                    "cachedAuthTokenRestriction": {
+                                        "name": "System Default",
+                                        "description": "Used by default for any plugin steps without a specified token restriction",
+                                        "restrictions": [{
+                                            "verb": "ALL",
+                                            "url": "\/*"
+                                        }]
+                                    },
+                                    "type": "plugin",
+                                    "name": "Replace old bar from mounted folder",
+                                    "children": []
+                                },
+                                {
+                                    "allowFailure": false,
+                                    "useImpersonation": false,
+                                    "showHidden": false,
+                                    "impersonationUseSudo": false,
+                                    "pluginVersion": 9,
+                                    "commandName": "Shell",
+                                    "pluginName": "Shell",
+                                    "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                    "properties": {
+                                        "directoryOffset": ".",
+                                        "shellInterpreter": "",
+                                        "scriptBody": "sshpass -p ${p:environment\/pwd} scp .\/*.bar user@mycluster.icp:\/export\/BARs",
+                                        "runAsDaemon": "false",
+                                        "outputFile": ""
+                                    },
+                                    "cachedAuthTokenRestriction": {
+                                        "name": "System Default",
+                                        "description": "Used by default for any plugin steps without a specified token restriction",
+                                        "restrictions": [{
+                                            "verb": "ALL",
+                                            "url": "\/*"
+                                        }]
+                                    },
+                                    "type": "plugin",
+                                    "name": "Copy bar to mounted folder",
+                                    "children": []
+                                },
+                                {
+                                    "allowFailure": false,
+                                    "useImpersonation": false,
+                                    "showHidden": false,
+                                    "impersonationUseSudo": false,
+                                    "pluginVersion": 62,
+                                    "commandName": "Delete Files and Directories",
+                                    "pluginName": "File Utils",
+                                    "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                    "properties": {
+                                        "baseDir": ".",
+                                        "includes": "**\/*",
+                                        "excludes": "",
+                                        "followSymlinks": "false",
+                                        "caseSensitive": "true"
+                                    },
+                                    "cachedAuthTokenRestriction": {
+                                        "name": "System Default",
+                                        "description": "Used by default for any plugin steps without a specified token restriction",
+                                        "restrictions": [{
+                                            "verb": "ALL",
+                                            "url": "\/*"
+                                        }]
+                                    },
+                                    "type": "plugin",
+                                    "name": "Delete Files and Directories",
+                                    "children": []
+                                },
+                                {
+                                    "allowFailure": false,
+                                    "useImpersonation": false,
+                                    "showHidden": false,
+                                    "impersonationUseSudo": false,
+                                    "pluginVersion": 29,
+                                    "commandName": "Download Artifacts",
+                                    "pluginName": "IBM UrbanCode Deploy Versioned File Storage",
+                                    "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                    "properties": {
+                                        "directoryOffset": ".",
+                                        "artifactSetBaseDir": "",
+                                        "fileIncludePatterns": "**\/*",
+                                        "fileExcludePatterns": "",
+                                        "syncMode": "true",
+                                        "fullVerification": "true",
+                                        "setFileExecuteBits": "false",
+                                        "verifyFileIntegrity": "false",
+                                        "versionId": "${p:version.id}",
+                                        "serverUrl": "${p:server.url}",
+                                        "compId": "${p:component.id}",
+                                        "resId": "${p:resource.id}",
+                                        "charset": "",
+                                        "label": ""
+                                    },
+                                    "cachedAuthTokenRestriction": {
+                                        "name": "System Default",
+                                        "description": "Used by default for any plugin steps without a specified token restriction",
+                                        "restrictions": [{
+                                            "verb": "ALL",
+                                            "url": "\/*"
+                                        }]
+                                    },
+                                    "type": "plugin",
+                                    "name": "Download Artifacts",
+                                    "children": []
+                                },
+                                {
+                                    "allowFailure": false,
+                                    "useImpersonation": false,
+                                    "showHidden": false,
+                                    "impersonationUseSudo": false,
+                                    "pluginVersion": 9,
+                                    "commandName": "Shell",
+                                    "pluginName": "Shell",
+                                    "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                    "properties": {
+                                        "directoryOffset": ".",
+                                        "shellInterpreter": "",
+                                        "scriptBody": "kubectl get pods | grep 'iib'| awk '{print $1}' | xargs -I {:}  kubectl exec  {:} -- bash -c \"mqsideploy ${p:environment\/node.name} -e ${p:environment\/server.name} -a ${p:environment\/shared.folder}\/${p:component.name}\"\n",
+                                        "runAsDaemon": "false",
+                                        "outputFile": ""
+                                    },
+                                    "cachedAuthTokenRestriction": {
+                                        "name": "System Default",
+                                        "description": "Used by default for any plugin steps without a specified token restriction",
+                                        "restrictions": [{
+                                            "verb": "ALL",
+                                            "url": "\/*"
+                                        }]
+                                    },
+                                    "type": "plugin",
+                                    "name": "Deploy BAR",
+                                    "children": []
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "genericProcesses": [],
+                "teamMappings": []
+            },
+            "sourceConfigPluginName": "File System (Versioned)",
+            "envPropDefs": [],
+            "resPropDefs": [],
+            "versionPropDefs": [],
+            "propSheetGroup": {"propSheets": [
+                {
+                    "name": "template",
+                    "properties": []
+                },
+                {
+                    "name": "custom",
+                    "properties": []
+                },
+                {
+                    "name": "FileSystemVersionedComponentProperties",
+                    "properties": [
+                        {
+                            "name": "basePath",
+                            "value": "\/Users\/timurmarkunin\/Desktop\/iibDocker\/http\/",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "excludes",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "extensions",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "includes",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "saveFileExecuteBits",
+                            "value": "false",
+                            "description": "",
+                            "secure": false
+                        }
+                    ]
+                }
+            ]},
+            "processes": [
+                {
+                    "name": "Deploy BAR old",
+                    "description": "",
+                    "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                    "takesVersion": true,
+                    "inventoryActionType": "ADD",
+                    "status": "Active",
+                    "configActionType": "ADD",
+                    "active": true,
+                    "path": "components\/16306078-d0ac-b1fd-a4d5-fed17ed0de4e\/processes\/163064a7-5590-a552-cffb-0ea644d2f8fa",
+                    "deleted": false,
+                    "propDefs": [],
+                    "rootActivity": {
+                        "edges": [
+                            {
+                                "to": "mqsiprofile",
+                                "from": "Copy bar to mounted folder",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "Copy bar to mounted folder",
+                                "from": "Replace old bar from mounted folder",
+                                "type": "ALWAYS",
+                                "value": ""
+                            },
+                            {
+                                "to": "Deploy BAR",
+                                "from": "mqsiprofile",
+                                "type": "ALWAYS",
+                                "value": ""
+                            },
+                            {
+                                "to": "Delete Files and Directories",
+                                "type": "ALWAYS",
+                                "value": ""
+                            },
+                            {
+                                "to": "2dcc6723c0469cf6d06cb1898e9bee",
+                                "from": "Deploy BAR",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "Replace old bar from mounted folder",
+                                "from": "Download Artifacts",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "Download Artifacts",
+                                "from": "Delete Files and Directories",
+                                "type": "SUCCESS",
+                                "value": ""
+                            }
+                        ],
+                        "offsets": [
+                            {
+                                "name": "Replace old bar from mounted folder",
+                                "x": -220,
+                                "y": 470,
+                                "h": 110,
+                                "w": 590
+                            },
+                            {
+                                "name": "Download Artifacts",
+                                "x": -145,
+                                "y": 310,
+                                "h": 110,
+                                "w": 440
+                            },
+                            {
+                                "name": "Deploy BAR",
+                                "x": -45,
+                                "y": 950,
+                                "h": 110,
+                                "w": 240
+                            },
+                            {
+                                "name": "mqsiprofile",
+                                "x": -45,
+                                "y": 790,
+                                "h": 110,
+                                "w": 240
+                            },
+                            {
+                                "name": "2dcc6723c0469cf6d06cb1898e9bee",
+                                "x": -5,
+                                "y": 1110,
+                                "h": 100,
+                                "w": 160
+                            },
+                            {
+                                "name": "Copy bar to mounted folder",
+                                "x": -155,
+                                "y": 630,
+                                "h": 110,
+                                "w": 460
+                            },
+                            {
+                                "name": "Delete Files and Directories",
+                                "x": -205,
+                                "y": 150,
+                                "h": 110,
+                                "w": 560
+                            }
+                        ],
+                        "layoutMode": "auto",
+                        "type": "graph",
+                        "name": "4612d7fb-9f23-491d-8571-e7d4fe359f66",
+                        "children": [
+                            {
+                                "type": "finish",
+                                "name": "2dcc6723c0469cf6d06cb1898e9bee",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "pluginVersion": 9,
+                                "commandName": "Shell",
+                                "pluginName": "Shell",
+                                "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                "properties": {
+                                    "directoryOffset": ".",
+                                    "shellInterpreter": "",
+                                    "scriptBody": "pod=$(kubectl get pods | grep 'ibm-integration-bus-prod'| awk '{print $1}')\nkubectl exec $pod -- bash -c \"source ${p:environment\/profile.path}mqsiprofile\"",
+                                    "runAsDaemon": "false",
+                                    "outputFile": ""
+                                },
+                                "cachedAuthTokenRestriction": {
+                                    "name": "System Default",
+                                    "description": "Used by default for any plugin steps without a specified token restriction",
+                                    "restrictions": [{
+                                        "verb": "ALL",
+                                        "url": "\/*"
+                                    }]
+                                },
+                                "type": "plugin",
+                                "name": "mqsiprofile",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "pluginVersion": 9,
+                                "commandName": "Shell",
+                                "pluginName": "Shell",
+                                "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                "properties": {
+                                    "directoryOffset": ".",
+                                    "shellInterpreter": "",
+                                    "scriptBody": "sshpass -p ${p:environment\/pwd} ssh user@mycluster.icp 'rm \/export\/BARs\/*.bar'",
+                                    "runAsDaemon": "false",
+                                    "outputFile": ""
+                                },
+                                "cachedAuthTokenRestriction": {
+                                    "name": "System Default",
+                                    "description": "Used by default for any plugin steps without a specified token restriction",
+                                    "restrictions": [{
+                                        "verb": "ALL",
+                                        "url": "\/*"
+                                    }]
+                                },
+                                "type": "plugin",
+                                "name": "Replace old bar from mounted folder",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "pluginVersion": 9,
+                                "commandName": "Shell",
+                                "pluginName": "Shell",
+                                "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                "properties": {
+                                    "directoryOffset": ".",
+                                    "shellInterpreter": "",
+                                    "scriptBody": "sshpass -p ${p:environment\/pwd} scp .\/*.bar user@mycluster.icp:\/export\/BARs",
+                                    "runAsDaemon": "false",
+                                    "outputFile": ""
+                                },
+                                "cachedAuthTokenRestriction": {
+                                    "name": "System Default",
+                                    "description": "Used by default for any plugin steps without a specified token restriction",
+                                    "restrictions": [{
+                                        "verb": "ALL",
+                                        "url": "\/*"
+                                    }]
+                                },
+                                "type": "plugin",
+                                "name": "Copy bar to mounted folder",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "pluginVersion": 62,
+                                "commandName": "Delete Files and Directories",
+                                "pluginName": "File Utils",
+                                "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                "properties": {
+                                    "baseDir": ".",
+                                    "includes": "**\/*",
+                                    "excludes": "",
+                                    "followSymlinks": "false",
+                                    "caseSensitive": "true"
+                                },
+                                "cachedAuthTokenRestriction": {
+                                    "name": "System Default",
+                                    "description": "Used by default for any plugin steps without a specified token restriction",
+                                    "restrictions": [{
+                                        "verb": "ALL",
+                                        "url": "\/*"
+                                    }]
+                                },
+                                "type": "plugin",
+                                "name": "Delete Files and Directories",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "pluginVersion": 29,
+                                "commandName": "Download Artifacts",
+                                "pluginName": "IBM UrbanCode Deploy Versioned File Storage",
+                                "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                "properties": {
+                                    "directoryOffset": ".",
+                                    "artifactSetBaseDir": "",
+                                    "fileIncludePatterns": "**\/*",
+                                    "fileExcludePatterns": "",
+                                    "syncMode": "true",
+                                    "fullVerification": "true",
+                                    "setFileExecuteBits": "false",
+                                    "verifyFileIntegrity": "false",
+                                    "versionId": "${p:version.id}",
+                                    "serverUrl": "${p:server.url}",
+                                    "compId": "${p:component.id}",
+                                    "resId": "${p:resource.id}",
+                                    "charset": "",
+                                    "label": ""
+                                },
+                                "cachedAuthTokenRestriction": {
+                                    "name": "System Default",
+                                    "description": "Used by default for any plugin steps without a specified token restriction",
+                                    "restrictions": [{
+                                        "verb": "ALL",
+                                        "url": "\/*"
+                                    }]
+                                },
+                                "type": "plugin",
+                                "name": "Download Artifacts",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "pluginVersion": 9,
+                                "commandName": "Shell",
+                                "pluginName": "Shell",
+                                "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                "properties": {
+                                    "directoryOffset": ".",
+                                    "shellInterpreter": "",
+                                    "scriptBody": "kubectl get pods | grep 'iib'| awk '{print $1}' | xargs -I {:}  kubectl exec  {:} -- bash -c \"mqsideploy ${p:environment\/node.name} -e ${p:environment\/server.name} -a ${p:environment\/shared.folder}\/${p:component.name}\"\n",
+                                    "runAsDaemon": "false",
+                                    "outputFile": ""
+                                },
+                                "cachedAuthTokenRestriction": {
+                                    "name": "System Default",
+                                    "description": "Used by default for any plugin steps without a specified token restriction",
+                                    "restrictions": [{
+                                        "verb": "ALL",
+                                        "url": "\/*"
+                                    }]
+                                },
+                                "type": "plugin",
+                                "name": "Deploy BAR",
+                                "children": []
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "Remove old bars",
+                    "description": "",
+                    "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                    "takesVersion": false,
+                    "status": "",
+                    "active": true,
+                    "path": "components\/16306078-d0ac-b1fd-a4d5-fed17ed0de4e\/processes\/1632053c-8208-3e68-c015-0d7d20600c15",
+                    "deleted": false,
+                    "propDefs": [],
+                    "rootActivity": {
+                        "edges": [
+                            {
+                                "to": "3ab0b2cf897c753252e2fac993425f",
+                                "from": "Remove old bars",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "Remove old bars",
+                                "type": "ALWAYS",
+                                "value": ""
+                            }
+                        ],
+                        "offsets": [
+                            {
+                                "name": "3ab0b2cf897c753252e2fac993425f",
+                                "x": -5,
+                                "y": 450,
+                                "h": 80,
+                                "w": 120
+                            },
+                            {
+                                "name": "Remove old bars",
+                                "x": -25,
+                                "y": 230,
+                                "h": 70,
+                                "w": 200
+                            }
+                        ],
+                        "layoutMode": "auto",
+                        "type": "graph",
+                        "name": "c1374250-0d84-4fe2-843e-f0f653de6e1c",
+                        "children": [
+                            {
+                                "type": "finish",
+                                "name": "3ab0b2cf897c753252e2fac993425f",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "pluginVersion": 9,
+                                "commandName": "Shell",
+                                "pluginName": "Shell",
+                                "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                "properties": {
+                                    "directoryOffset": ".",
+                                    "shellInterpreter": "",
+                                    "scriptBody": "sshpass -p ${p:environment\/pwd} ssh user@mycluster.icp 'rm \/export\/BARs\/*.bar'",
+                                    "runAsDaemon": "false",
+                                    "outputFile": ""
+                                },
+                                "cachedAuthTokenRestriction": {
+                                    "name": "System Default",
+                                    "description": "Used by default for any plugin steps without a specified token restriction",
+                                    "restrictions": [{
+                                        "verb": "ALL",
+                                        "url": "\/*"
+                                    }]
+                                },
+                                "type": "plugin",
+                                "name": "Remove old bars",
+                                "children": []
+                            }
+                        ]
+                    }
+                }
+            ],
+            "configTemplates": [],
+            "genericProcesses": [],
+            "teamMappings": [],
+            "tags": []
+        },
+        {
+            "name": "ICPDeploy.bar",
+            "description": "",
+            "created": 1521729638058,
+            "componentType": "STANDARD",
+            "ignoreQualifiers": 0,
+            "importAutomatically": false,
+            "useVfs": true,
+            "active": true,
+            "deleted": false,
+            "defaultVersionType": "FULL",
+            "cleanupDaysToKeep": 0,
+            "cleanupCountToKeep": 0,
+            "componentTemplate": {
+                "securityResourceId": "16320070-76e7-ae02-78eb-df313917a839",
+                "path": "componentTemplates\/16320070-771a-b631-30d3-5b95aa5fa665",
+                "name": "IIB flow",
+                "description": "",
+                "ignoreQualifiers": 0,
+                "componentType": "STANDARD",
+                "tags": [],
+                "active": true,
+                "envPropDefs": [],
+                "resPropDefs": [],
+                "propDefs": [],
+                "properties": [],
+                "processes": [
+                    {
+                        "name": "Copy bar to mounted folder",
+                        "description": "",
+                        "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                        "takesVersion": true,
+                        "inventoryActionType": "ADD",
+                        "status": "Active",
+                        "configActionType": "ADD",
+                        "active": true,
+                        "path": "componentTemplates\/16320070-771a-b631-30d3-5b95aa5fa665\/processes\/16320077-f3ca-6233-1a55-c11a8a4311bd",
+                        "deleted": false,
+                        "propDefs": [],
+                        "rootActivity": {
+                            "edges": [
+                                {
+                                    "to": "6f86c83490689774a3ba4812634a8e",
+                                    "from": "Copy bar to mounted folder",
+                                    "type": "SUCCESS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "Copy bar to mounted folder",
+                                    "from": "Download Artifacts",
+                                    "type": "SUCCESS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "Download Artifacts",
+                                    "from": "Delete Files and Directories",
+                                    "type": "SUCCESS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "Delete Files and Directories",
+                                    "type": "ALWAYS",
+                                    "value": ""
+                                }
+                            ],
+                            "offsets": [
+                                {
+                                    "name": "Download Artifacts",
+                                    "x": -75,
+                                    "y": 300,
+                                    "h": 70,
+                                    "w": 260
+                                },
+                                {
+                                    "name": "Delete Files and Directories",
+                                    "x": -100,
+                                    "y": 155,
+                                    "h": 70,
+                                    "w": 310
+                                },
+                                {
+                                    "name": "6f86c83490689774a3ba4812634a8e",
+                                    "x": -5,
+                                    "y": 590,
+                                    "h": 80,
+                                    "w": 120
+                                },
+                                {
+                                    "name": "Copy bar to mounted folder",
+                                    "x": -80,
+                                    "y": 445,
+                                    "h": 70,
+                                    "w": 270
+                                }
+                            ],
+                            "layoutMode": "auto",
+                            "type": "graph",
+                            "name": "3c279171-a8b0-4347-bbf3-e196ee80c2eb",
+                            "children": [
+                                {
+                                    "type": "finish",
+                                    "name": "6f86c83490689774a3ba4812634a8e",
+                                    "children": []
+                                },
+                                {
+                                    "allowFailure": false,
+                                    "useImpersonation": false,
+                                    "showHidden": false,
+                                    "impersonationUseSudo": false,
+                                    "pluginVersion": 62,
+                                    "commandName": "Delete Files and Directories",
+                                    "pluginName": "File Utils",
+                                    "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                    "properties": {
+                                        "baseDir": ".",
+                                        "includes": "**\/*",
+                                        "excludes": "",
+                                        "followSymlinks": "false",
+                                        "caseSensitive": "true"
+                                    },
+                                    "cachedAuthTokenRestriction": {
+                                        "name": "System Default",
+                                        "description": "Used by default for any plugin steps without a specified token restriction",
+                                        "restrictions": [{
+                                            "verb": "ALL",
+                                            "url": "\/*"
+                                        }]
+                                    },
+                                    "type": "plugin",
+                                    "name": "Delete Files and Directories",
+                                    "children": []
+                                },
+                                {
+                                    "allowFailure": false,
+                                    "useImpersonation": false,
+                                    "showHidden": false,
+                                    "impersonationUseSudo": false,
+                                    "pluginVersion": 29,
+                                    "commandName": "Download Artifacts",
+                                    "pluginName": "IBM UrbanCode Deploy Versioned File Storage",
+                                    "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                    "properties": {
+                                        "directoryOffset": ".",
+                                        "artifactSetBaseDir": "",
+                                        "fileIncludePatterns": "**\/*",
+                                        "fileExcludePatterns": "",
+                                        "syncMode": "true",
+                                        "fullVerification": "true",
+                                        "setFileExecuteBits": "false",
+                                        "verifyFileIntegrity": "false",
+                                        "versionId": "${p:version.id}",
+                                        "serverUrl": "${p:server.url}",
+                                        "compId": "${p:component.id}",
+                                        "resId": "${p:resource.id}",
+                                        "charset": "",
+                                        "label": ""
+                                    },
+                                    "cachedAuthTokenRestriction": {
+                                        "name": "System Default",
+                                        "description": "Used by default for any plugin steps without a specified token restriction",
+                                        "restrictions": [{
+                                            "verb": "ALL",
+                                            "url": "\/*"
+                                        }]
+                                    },
+                                    "type": "plugin",
+                                    "name": "Download Artifacts",
+                                    "children": []
+                                },
+                                {
+                                    "allowFailure": false,
+                                    "useImpersonation": false,
+                                    "showHidden": false,
+                                    "impersonationUseSudo": false,
+                                    "pluginVersion": 9,
+                                    "commandName": "Shell",
+                                    "pluginName": "Shell",
+                                    "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                    "properties": {
+                                        "directoryOffset": ".",
+                                        "shellInterpreter": "",
+                                        "scriptBody": "sshpass -p ${p:environment\/pwd} scp .\/*.bar user@mycluster.icp:\/export\/BARs",
+                                        "runAsDaemon": "false",
+                                        "outputFile": ""
+                                    },
+                                    "cachedAuthTokenRestriction": {
+                                        "name": "System Default",
+                                        "description": "Used by default for any plugin steps without a specified token restriction",
+                                        "restrictions": [{
+                                            "verb": "ALL",
+                                            "url": "\/*"
+                                        }]
+                                    },
+                                    "type": "plugin",
+                                    "name": "Copy bar to mounted folder",
+                                    "children": []
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "Deploy BAR",
+                        "description": "",
+                        "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                        "takesVersion": true,
+                        "inventoryActionType": "ADD",
+                        "status": "Active",
+                        "configActionType": "ADD",
+                        "active": true,
+                        "path": "componentTemplates\/16320070-771a-b631-30d3-5b95aa5fa665\/processes\/163215c4-c3c9-03b2-80f4-155d53b91eae",
+                        "deleted": false,
+                        "propDefs": [],
+                        "rootActivity": {
+                            "edges": [
+                                {
+                                    "to": "Download Artifacts",
+                                    "from": "Delete Files and Directories",
+                                    "type": "SUCCESS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "Copy bar to mounted folder",
+                                    "from": "Replace old bar from mounted folder",
+                                    "type": "ALWAYS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "Replace old bar from mounted folder",
+                                    "from": "Download Artifacts",
+                                    "type": "SUCCESS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "Delete Files and Directories",
+                                    "type": "ALWAYS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "2dcc6723c0469cf6d06cb1898e9bee",
+                                    "from": "Deploy BAR",
+                                    "type": "SUCCESS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "Deploy BAR",
+                                    "from": "Copy bar to mounted folder",
+                                    "type": "SUCCESS",
+                                    "value": ""
+                                }
+                            ],
+                            "offsets": [
+                                {
+                                    "name": "Delete Files and Directories",
+                                    "x": -155,
+                                    "y": 140,
+                                    "h": 90,
+                                    "w": 440
+                                },
+                                {
+                                    "name": "Deploy BAR",
+                                    "x": -35,
+                                    "y": 700,
+                                    "h": 90,
+                                    "w": 200
+                                },
+                                {
+                                    "name": "Replace old bar from mounted folder",
+                                    "x": -165,
+                                    "y": 420,
+                                    "h": 90,
+                                    "w": 460
+                                },
+                                {
+                                    "name": "Copy bar to mounted folder",
+                                    "x": -120,
+                                    "y": 560,
+                                    "h": 90,
+                                    "w": 370
+                                },
+                                {
+                                    "name": "2dcc6723c0469cf6d06cb1898e9bee",
+                                    "x": -5,
+                                    "y": 840,
+                                    "h": 90,
+                                    "w": 140
+                                },
+                                {
+                                    "name": "Download Artifacts",
+                                    "x": -110,
+                                    "y": 280,
+                                    "h": 90,
+                                    "w": 350
+                                }
+                            ],
+                            "layoutMode": "auto",
+                            "type": "graph",
+                            "name": "7dfb4410-e9f9-4bcc-a7fb-702b4589658d",
+                            "children": [
+                                {
+                                    "type": "finish",
+                                    "name": "2dcc6723c0469cf6d06cb1898e9bee",
+                                    "children": []
+                                },
+                                {
+                                    "allowFailure": false,
+                                    "useImpersonation": false,
+                                    "showHidden": false,
+                                    "impersonationUseSudo": false,
+                                    "pluginVersion": 9,
+                                    "commandName": "Shell",
+                                    "pluginName": "Shell",
+                                    "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                    "properties": {
+                                        "directoryOffset": ".",
+                                        "shellInterpreter": "",
+                                        "scriptBody": "sshpass -p ${p:environment\/pwd} ssh user@mycluster.icp 'rm \/export\/BARs\/*.bar'",
+                                        "runAsDaemon": "false",
+                                        "outputFile": ""
+                                    },
+                                    "cachedAuthTokenRestriction": {
+                                        "name": "System Default",
+                                        "description": "Used by default for any plugin steps without a specified token restriction",
+                                        "restrictions": [{
+                                            "verb": "ALL",
+                                            "url": "\/*"
+                                        }]
+                                    },
+                                    "type": "plugin",
+                                    "name": "Replace old bar from mounted folder",
+                                    "children": []
+                                },
+                                {
+                                    "allowFailure": false,
+                                    "useImpersonation": false,
+                                    "showHidden": false,
+                                    "impersonationUseSudo": false,
+                                    "pluginVersion": 9,
+                                    "commandName": "Shell",
+                                    "pluginName": "Shell",
+                                    "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                    "properties": {
+                                        "directoryOffset": ".",
+                                        "shellInterpreter": "",
+                                        "scriptBody": "sshpass -p ${p:environment\/pwd} scp .\/*.bar user@mycluster.icp:\/export\/BARs",
+                                        "runAsDaemon": "false",
+                                        "outputFile": ""
+                                    },
+                                    "cachedAuthTokenRestriction": {
+                                        "name": "System Default",
+                                        "description": "Used by default for any plugin steps without a specified token restriction",
+                                        "restrictions": [{
+                                            "verb": "ALL",
+                                            "url": "\/*"
+                                        }]
+                                    },
+                                    "type": "plugin",
+                                    "name": "Copy bar to mounted folder",
+                                    "children": []
+                                },
+                                {
+                                    "allowFailure": false,
+                                    "useImpersonation": false,
+                                    "showHidden": false,
+                                    "impersonationUseSudo": false,
+                                    "pluginVersion": 62,
+                                    "commandName": "Delete Files and Directories",
+                                    "pluginName": "File Utils",
+                                    "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                    "properties": {
+                                        "baseDir": ".",
+                                        "includes": "**\/*",
+                                        "excludes": "",
+                                        "followSymlinks": "false",
+                                        "caseSensitive": "true"
+                                    },
+                                    "cachedAuthTokenRestriction": {
+                                        "name": "System Default",
+                                        "description": "Used by default for any plugin steps without a specified token restriction",
+                                        "restrictions": [{
+                                            "verb": "ALL",
+                                            "url": "\/*"
+                                        }]
+                                    },
+                                    "type": "plugin",
+                                    "name": "Delete Files and Directories",
+                                    "children": []
+                                },
+                                {
+                                    "allowFailure": false,
+                                    "useImpersonation": false,
+                                    "showHidden": false,
+                                    "impersonationUseSudo": false,
+                                    "pluginVersion": 29,
+                                    "commandName": "Download Artifacts",
+                                    "pluginName": "IBM UrbanCode Deploy Versioned File Storage",
+                                    "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                    "properties": {
+                                        "directoryOffset": ".",
+                                        "artifactSetBaseDir": "",
+                                        "fileIncludePatterns": "**\/*",
+                                        "fileExcludePatterns": "",
+                                        "syncMode": "true",
+                                        "fullVerification": "true",
+                                        "setFileExecuteBits": "false",
+                                        "verifyFileIntegrity": "false",
+                                        "versionId": "${p:version.id}",
+                                        "serverUrl": "${p:server.url}",
+                                        "compId": "${p:component.id}",
+                                        "resId": "${p:resource.id}",
+                                        "charset": "",
+                                        "label": ""
+                                    },
+                                    "cachedAuthTokenRestriction": {
+                                        "name": "System Default",
+                                        "description": "Used by default for any plugin steps without a specified token restriction",
+                                        "restrictions": [{
+                                            "verb": "ALL",
+                                            "url": "\/*"
+                                        }]
+                                    },
+                                    "type": "plugin",
+                                    "name": "Download Artifacts",
+                                    "children": []
+                                },
+                                {
+                                    "allowFailure": false,
+                                    "useImpersonation": false,
+                                    "showHidden": false,
+                                    "impersonationUseSudo": false,
+                                    "pluginVersion": 9,
+                                    "commandName": "Shell",
+                                    "pluginName": "Shell",
+                                    "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                    "properties": {
+                                        "directoryOffset": ".",
+                                        "shellInterpreter": "",
+                                        "scriptBody": "kubectl get pods | grep 'iib'| awk '{print $1}' | xargs -I {:}  kubectl exec  {:} -- bash -c \"mqsideploy ${p:environment\/node.name} -e ${p:environment\/server.name} -a ${p:environment\/shared.folder}\/${p:component.name}\"\n",
+                                        "runAsDaemon": "false",
+                                        "outputFile": ""
+                                    },
+                                    "cachedAuthTokenRestriction": {
+                                        "name": "System Default",
+                                        "description": "Used by default for any plugin steps without a specified token restriction",
+                                        "restrictions": [{
+                                            "verb": "ALL",
+                                            "url": "\/*"
+                                        }]
+                                    },
+                                    "type": "plugin",
+                                    "name": "Deploy BAR",
+                                    "children": []
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "genericProcesses": [],
+                "teamMappings": []
+            },
+            "sourceConfigPluginName": "File System",
+            "envPropDefs": [],
+            "resPropDefs": [],
+            "versionPropDefs": [],
+            "propSheetGroup": {"propSheets": [
+                {
+                    "name": "custom",
+                    "properties": []
+                },
+                {
+                    "name": "template",
+                    "properties": []
+                },
+                {
+                    "name": "FileSystemComponentProperties",
+                    "properties": [
+                        {
+                            "name": "basePath",
+                            "value": "\/Users\/timurmarkunin\/Desktop\/iibDocker",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "extensions",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "namePattern",
+                            "value": "${version}",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "nextNumber",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "saveFileExecuteBits",
+                            "value": "false",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "useNamePattern",
+                            "value": "false",
+                            "description": "",
+                            "secure": false
+                        }
+                    ]
+                }
+            ]},
+            "processes": [{
+                "name": "Deploy BAR to ICP",
+                "description": "",
+                "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                "takesVersion": true,
+                "inventoryActionType": "ADD",
+                "status": "Active",
+                "configActionType": "ADD",
+                "active": true,
+                "path": "components\/1624e278-ec41-15fd-34bd-9b6837074c37\/processes\/1624e280-be5d-5eb0-c9b7-fa87e9db9236",
+                "deleted": false,
+                "propDefs": [],
+                "rootActivity": {
+                    "edges": [
+                        {
+                            "to": "Restart deployment",
+                            "from": "Copy BAR to ICP",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Delete Files and Directories",
+                            "type": "ALWAYS",
+                            "value": ""
+                        },
+                        {
+                            "to": "b2d01648ecedc5622622f4407dbaae",
+                            "from": "Restart deployment",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Delete old BAR from ICP",
+                            "from": "Download Artifacts",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Copy BAR to ICP",
+                            "from": "Delete old BAR from ICP",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Download Artifacts",
+                            "from": "Delete Files and Directories",
+                            "type": "SUCCESS",
+                            "value": ""
+                        }
+                    ],
+                    "offsets": [
+                        {
+                            "name": "b2d01648ecedc5622622f4407dbaae",
+                            "x": -5,
+                            "y": 890,
+                            "h": 90,
+                            "w": 150
+                        },
+                        {
+                            "name": "Restart deployment",
+                            "x": -90,
+                            "y": 740,
+                            "h": 100,
+                            "w": 320
+                        },
+                        {
+                            "name": "Delete old BAR from ICP",
+                            "x": -125,
+                            "y": 440,
+                            "h": 100,
+                            "w": 390
+                        },
+                        {
+                            "name": "Delete Files and Directories",
+                            "x": -180,
+                            "y": 140,
+                            "h": 100,
+                            "w": 500
+                        },
+                        {
+                            "name": "Download Artifacts",
+                            "x": -125,
+                            "y": 290,
+                            "h": 100,
+                            "w": 390
+                        },
+                        {
+                            "name": "Copy BAR to ICP",
+                            "x": -80,
+                            "y": 590,
+                            "h": 100,
+                            "w": 300
+                        }
+                    ],
+                    "layoutMode": "auto",
+                    "type": "graph",
+                    "name": "4fa50638-6ad1-4f53-b781-653b0e489313",
+                    "children": [
+                        {
+                            "type": "finish",
+                            "name": "b2d01648ecedc5622622f4407dbaae",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "pluginVersion": 9,
+                            "commandName": "Shell",
+                            "pluginName": "Shell",
+                            "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                            "properties": {
+                                "directoryOffset": ".",
+                                "shellInterpreter": "",
+                                "scriptBody": "sshpass -p ${p:environment\/pwd} scp .\/*.bar user@mycluster.icp:\/export\/BARs\n",
+                                "runAsDaemon": "false",
+                                "outputFile": ""
+                            },
+                            "cachedAuthTokenRestriction": {
+                                "name": "System Default",
+                                "description": "Used by default for any plugin steps without a specified token restriction",
+                                "restrictions": [{
+                                    "verb": "ALL",
+                                    "url": "\/*"
+                                }]
+                            },
+                            "type": "plugin",
+                            "name": "Copy BAR to ICP",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "pluginVersion": 62,
+                            "commandName": "Delete Files and Directories",
+                            "pluginName": "File Utils",
+                            "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                            "properties": {
+                                "baseDir": ".",
+                                "includes": "**\/*",
+                                "excludes": "",
+                                "followSymlinks": "false",
+                                "caseSensitive": "true"
+                            },
+                            "cachedAuthTokenRestriction": {
+                                "name": "System Default",
+                                "description": "Used by default for any plugin steps without a specified token restriction",
+                                "restrictions": [{
+                                    "verb": "ALL",
+                                    "url": "\/*"
+                                }]
+                            },
+                            "type": "plugin",
+                            "name": "Delete Files and Directories",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "pluginVersion": 29,
+                            "commandName": "Download Artifacts",
+                            "pluginName": "IBM UrbanCode Deploy Versioned File Storage",
+                            "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                            "properties": {
+                                "directoryOffset": ".",
+                                "artifactSetBaseDir": "",
+                                "fileIncludePatterns": "**\/*",
+                                "fileExcludePatterns": "",
+                                "syncMode": "true",
+                                "fullVerification": "true",
+                                "setFileExecuteBits": "false",
+                                "verifyFileIntegrity": "false",
+                                "versionId": "${p:version.id}",
+                                "serverUrl": "${p:server.url}",
+                                "compId": "${p:component.id}",
+                                "resId": "${p:resource.id}",
+                                "charset": "",
+                                "label": ""
+                            },
+                            "cachedAuthTokenRestriction": {
+                                "name": "System Default",
+                                "description": "Used by default for any plugin steps without a specified token restriction",
+                                "restrictions": [{
+                                    "verb": "ALL",
+                                    "url": "\/*"
+                                }]
+                            },
+                            "type": "plugin",
+                            "name": "Download Artifacts",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "pluginVersion": 9,
+                            "commandName": "Shell",
+                            "pluginName": "Shell",
+                            "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                            "properties": {
+                                "directoryOffset": ".",
+                                "shellInterpreter": "",
+                                "scriptBody": "kubectl scale --replicas=0 deployment\/ibm-integration-bus-prod\nkubectl scale --replicas=1 deployment\/ibm-integration-bus-prod",
+                                "runAsDaemon": "false",
+                                "outputFile": ""
+                            },
+                            "cachedAuthTokenRestriction": {
+                                "name": "System Default",
+                                "description": "Used by default for any plugin steps without a specified token restriction",
+                                "restrictions": [{
+                                    "verb": "ALL",
+                                    "url": "\/*"
+                                }]
+                            },
+                            "type": "plugin",
+                            "name": "Restart deployment",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "pluginVersion": 9,
+                            "commandName": "Shell",
+                            "pluginName": "Shell",
+                            "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                            "properties": {
+                                "directoryOffset": ".",
+                                "shellInterpreter": "",
+                                "scriptBody": "sshpass -p ${p:environment\/pwd} ssh user@mycluster.icp 'rm \/export\/BARs\/*.bar'",
+                                "runAsDaemon": "false",
+                                "outputFile": ""
+                            },
+                            "cachedAuthTokenRestriction": {
+                                "name": "System Default",
+                                "description": "Used by default for any plugin steps without a specified token restriction",
+                                "restrictions": [{
+                                    "verb": "ALL",
+                                    "url": "\/*"
+                                }]
+                            },
+                            "type": "plugin",
+                            "name": "Delete old BAR from ICP",
+                            "children": []
+                        }
+                    ]
+                }
+            }],
+            "configTemplates": [],
+            "genericProcesses": [],
+            "teamMappings": [],
+            "tags": []
+        },
+        {
+            "name": "iib-mq",
+            "description": "",
+            "created": 1525249883907,
+            "componentType": "STANDARD",
+            "ignoreQualifiers": 0,
+            "importAutomatically": false,
+            "useVfs": true,
+            "active": true,
+            "deleted": false,
+            "defaultVersionType": "FULL",
+            "cleanupDaysToKeep": 0,
+            "cleanupCountToKeep": 0,
+            "componentTemplate": {
+                "securityResourceId": "160737ca-e067-e9be-a431-aa145503ed4b",
+                "path": "componentTemplates\/160737ca-e095-ab27-077d-fa6d5a5ab2b4",
+                "name": "Docker Template",
+                "description": "",
+                "ignoreQualifiers": 0,
+                "componentType": "STANDARD",
+                "tags": [],
+                "active": true,
+                "envPropDefs": [],
+                "resPropDefs": [],
+                "propDefs": [
+                    {
+                        "name": "docker.image.name",
+                        "label": "Docker Image Name",
+                        "pattern": "",
+                        "type": "TEXT",
+                        "required": false,
+                        "description": "Name of the Docker image to use with this component. i.e. tomcat, nginx, ubuntu",
+                        "placeholder": ""
+                    },
+                    {
+                        "name": "docker.qualified.image",
+                        "label": "Fully Qualified Docker Image",
+                        "pattern": "",
+                        "type": "TEXT",
+                        "value": "${p?:docker.registry}${p:docker.image.name}:${p:version\/dockerImageTag}",
+                        "required": true,
+                        "description": "Name to pass into pull command, in the form, [REGISTRY_HOST[:REGISTRY_PORT]\/]NAME[:TAG]",
+                        "placeholder": ""
+                    },
+                    {
+                        "name": "docker.registry",
+                        "label": "Docker Registry",
+                        "pattern": "",
+                        "type": "TEXT",
+                        "required": false,
+                        "description": "Location of the docker registry used in pull commands",
+                        "placeholder": ""
+                    },
+                    {
+                        "name": "docker.container.name",
+                        "label": "Container Name",
+                        "pattern": "",
+                        "type": "TEXT",
+                        "value": "${p:docker.image.name}-${p:environment.name}",
+                        "required": true,
+                        "description": "Name to assign to the running docker container",
+                        "placeholder": ""
+                    }
+                ],
+                "properties": [],
+                "processes": [
+                    {
+                        "name": "Deploy",
+                        "description": "",
+                        "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                        "takesVersion": true,
+                        "inventoryActionType": "ADD",
+                        "status": "Active",
+                        "configActionType": "ADD",
+                        "active": true,
+                        "path": "componentTemplates\/160737ca-e095-ab27-077d-fa6d5a5ab2b4\/processes\/160737ca-e5f8-1622-33f5-5031656dabb0",
+                        "deleted": false,
+                        "propDefs": [],
+                        "rootActivity": {
+                            "edges": [
+                                {
+                                    "to": "Run Docker Container",
+                                    "from": "3415bda2aafa244d16083d9f925b31",
+                                    "type": "SUCCESS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "3415bda2aafa244d16083d9f925b31",
+                                    "from": "Pull Docker Image",
+                                    "type": "SUCCESS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "Remove Docker Container",
+                                    "from": "Stop Docker Container",
+                                    "type": "ALWAYS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "efb4d1efddce74b0d171a47f62095d",
+                                    "from": "Run Docker Container",
+                                    "type": "SUCCESS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "Stop Docker Container",
+                                    "type": "ALWAYS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "Pull Docker Image",
+                                    "type": "ALWAYS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "3415bda2aafa244d16083d9f925b31",
+                                    "from": "Remove Docker Container",
+                                    "type": "ALWAYS",
+                                    "value": ""
+                                }
+                            ],
+                            "offsets": [
+                                {
+                                    "name": "Pull Docker Image",
+                                    "x": -215,
+                                    "y": 90,
+                                    "h": 60,
+                                    "w": 210
+                                },
+                                {
+                                    "name": "Run Docker Container",
+                                    "x": -75,
+                                    "y": 400,
+                                    "h": 60,
+                                    "w": 230
+                                },
+                                {
+                                    "name": "Stop Docker Container",
+                                    "x": 88.5,
+                                    "y": 90,
+                                    "h": 60,
+                                    "w": 230
+                                },
+                                {
+                                    "name": "Remove Docker Container",
+                                    "x": 78.5,
+                                    "y": 180,
+                                    "h": 60,
+                                    "w": 250
+                                },
+                                {
+                                    "name": "efb4d1efddce74b0d171a47f62095d",
+                                    "x": -5,
+                                    "y": 510,
+                                    "h": 50,
+                                    "w": 90
+                                },
+                                {
+                                    "name": "3415bda2aafa244d16083d9f925b31",
+                                    "x": -10,
+                                    "y": 300,
+                                    "h": 50,
+                                    "w": 100
+                                }
+                            ],
+                            "layoutMode": "unknown",
+                            "type": "graph",
+                            "name": "917fa620-e1e4-4844-912b-a6ff331cb557",
+                            "children": [
+                                {
+                                    "type": "finish",
+                                    "name": "efb4d1efddce74b0d171a47f62095d",
+                                    "children": []
+                                },
+                                {
+                                    "allowFailure": false,
+                                    "useImpersonation": false,
+                                    "showHidden": false,
+                                    "impersonationUseSudo": false,
+                                    "pluginVersion": 10,
+                                    "commandName": "Pull Docker Image",
+                                    "pluginName": "Docker",
+                                    "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                    "properties": {
+                                        "image": "${p:docker.qualified.image}",
+                                        "commandOptions": "",
+                                        "globalOptions": "${p?:resource\/docker.opts}",
+                                        "envVars": ""
+                                    },
+                                    "cachedAuthTokenRestriction": {
+                                        "name": "System Default",
+                                        "description": "Used by default for any plugin steps without a specified token restriction",
+                                        "restrictions": [{
+                                            "verb": "ALL",
+                                            "url": "\/*"
+                                        }]
+                                    },
+                                    "type": "plugin",
+                                    "name": "Pull Docker Image",
+                                    "children": []
+                                },
+                                {
+                                    "allowFailure": false,
+                                    "useImpersonation": false,
+                                    "showHidden": false,
+                                    "impersonationUseSudo": false,
+                                    "pluginVersion": 10,
+                                    "commandName": "Run Docker Container",
+                                    "pluginName": "Docker",
+                                    "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                    "properties": {
+                                        "image": "${p:docker.qualified.image}",
+                                        "containerCommand": "",
+                                        "container": "${p:docker.container.name}",
+                                        "commandOptions": "-d\n",
+                                        "globalOptions": "${p?:resource\/docker.opts}",
+                                        "envVars": ""
+                                    },
+                                    "cachedAuthTokenRestriction": {
+                                        "name": "System Default",
+                                        "description": "Used by default for any plugin steps without a specified token restriction",
+                                        "restrictions": [{
+                                            "verb": "ALL",
+                                            "url": "\/*"
+                                        }]
+                                    },
+                                    "type": "plugin",
+                                    "name": "Run Docker Container",
+                                    "children": []
+                                },
+                                {
+                                    "allowFailure": false,
+                                    "useImpersonation": false,
+                                    "showHidden": false,
+                                    "impersonationUseSudo": false,
+                                    "pluginVersion": 10,
+                                    "commandName": "Stop Docker Container",
+                                    "pluginName": "Docker",
+                                    "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                    "properties": {
+                                        "container": "${p:docker.container.name}",
+                                        "commandOptions": "",
+                                        "globalOptions": "${p?:resource\/docker.opts}",
+                                        "envVars": ""
+                                    },
+                                    "cachedAuthTokenRestriction": {
+                                        "name": "System Default",
+                                        "description": "Used by default for any plugin steps without a specified token restriction",
+                                        "restrictions": [{
+                                            "verb": "ALL",
+                                            "url": "\/*"
+                                        }]
+                                    },
+                                    "type": "plugin",
+                                    "name": "Stop Docker Container",
+                                    "children": []
+                                },
+                                {
+                                    "allowFailure": false,
+                                    "useImpersonation": false,
+                                    "showHidden": false,
+                                    "impersonationUseSudo": false,
+                                    "pluginVersion": 10,
+                                    "commandName": "Remove Docker Container",
+                                    "pluginName": "Docker",
+                                    "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                    "properties": {
+                                        "container": "${p:docker.container.name}",
+                                        "commandOptions": "",
+                                        "globalOptions": "${p?:resource\/docker.opts}",
+                                        "envVars": ""
+                                    },
+                                    "cachedAuthTokenRestriction": {
+                                        "name": "System Default",
+                                        "description": "Used by default for any plugin steps without a specified token restriction",
+                                        "restrictions": [{
+                                            "verb": "ALL",
+                                            "url": "\/*"
+                                        }]
+                                    },
+                                    "type": "plugin",
+                                    "name": "Remove Docker Container",
+                                    "children": []
+                                },
+                                {
+                                    "type": "join",
+                                    "name": "3415bda2aafa244d16083d9f925b31",
+                                    "children": []
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "Update Inventory",
+                        "description": "Empty process to help acquire component versions during a docker-compose up deployment.",
+                        "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                        "takesVersion": true,
+                        "inventoryActionType": "ADD",
+                        "status": "Active",
+                        "configActionType": "ADD",
+                        "active": true,
+                        "path": "componentTemplates\/160737ca-e095-ab27-077d-fa6d5a5ab2b4\/processes\/160737ca-e701-e28f-daba-edb1a556c980",
+                        "deleted": false,
+                        "propDefs": [],
+                        "rootActivity": {
+                            "edges": [{
+                                "to": "52ab313f7bd1d841136630fa150808",
+                                "type": "ALWAYS",
+                                "value": ""
+                            }],
+                            "offsets": [{
+                                "name": "52ab313f7bd1d841136630fa150808",
+                                "x": -5,
+                                "y": 420,
+                                "h": 80,
+                                "w": 120
+                            }],
+                            "layoutMode": "unknown",
+                            "type": "graph",
+                            "name": "fa1dd342-76b3-4314-8345-0f98e5dd084f",
+                            "children": [{
+                                "type": "finish",
+                                "name": "52ab313f7bd1d841136630fa150808",
+                                "children": []
+                            }]
+                        }
+                    }
+                ],
+                "genericProcesses": [],
+                "teamMappings": []
+            },
+            "sourceConfigPluginName": "Docker",
+            "envPropDefs": [],
+            "resPropDefs": [],
+            "versionPropDefs": [
+                {
+                    "name": "dockerImageTag",
+                    "label": "dockerImageTag",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "",
+                    "placeholder": ""
+                },
+                {
+                    "name": "dockerImageId",
+                    "label": "dockerImageId",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "",
+                    "placeholder": ""
+                },
+                {
+                    "name": "org.label-schema.schema-version",
+                    "label": "org.label-schema.schema-version",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "",
+                    "placeholder": ""
+                },
+                {
+                    "name": "org.label-schema.build-date",
+                    "label": "org.label-schema.build-date",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "",
+                    "placeholder": ""
+                },
+                {
+                    "name": "org.label-schema.name",
+                    "label": "org.label-schema.name",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "",
+                    "placeholder": ""
+                },
+                {
+                    "name": "org.label-schema.vcs-ref",
+                    "label": "org.label-schema.vcs-ref",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "",
+                    "placeholder": ""
+                },
+                {
+                    "name": "ProductName",
+                    "label": "ProductName",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "",
+                    "placeholder": ""
+                },
+                {
+                    "name": "ProductID",
+                    "label": "ProductID",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "",
+                    "placeholder": ""
+                },
+                {
+                    "name": "ProductVersion",
+                    "label": "ProductVersion",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "",
+                    "placeholder": ""
+                },
+                {
+                    "name": "maintainer",
+                    "label": "maintainer",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "",
+                    "placeholder": ""
+                },
+                {
+                    "name": "org.label-schema.vcs-url",
+                    "label": "org.label-schema.vcs-url",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "",
+                    "placeholder": ""
+                },
+                {
+                    "name": "maintainers",
+                    "label": "maintainers",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "",
+                    "placeholder": ""
+                }
+            ],
+            "propSheetGroup": {"propSheets": [
+                {
+                    "name": "DockerTagImport",
+                    "properties": [
+                        {
+                            "name": "allowInsecure",
+                            "value": "true",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "api",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "awsCli",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "dockerHome",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "dockerImageName",
+                            "value": "default\/iib-mq",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "dockerRegistryAPIKey",
+                            "value": "",
+                            "description": "",
+                            "secure": true
+                        },
+                        {
+                            "name": "dockerRegistryName",
+                            "value": "mycluster.icp:8500",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "dockerRegistryPassword",
+                            "value": "",
+                            "description": "",
+                            "secure": true
+                        },
+                        {
+                            "name": "dockerRegistryUsername",
+                            "value": "admin",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "namingConvention",
+                            "value": "tag_only",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "org",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "regexForTag",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "region",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "registryType",
+                            "value": "false",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "space",
+                            "description": "",
+                            "secure": false
+                        }
+                    ]
+                },
+                {
+                    "name": "custom",
+                    "properties": []
+                },
+                {
+                    "name": "template",
+                    "properties": [
+                        {
+                            "name": "docker.container.name",
+                            "value": "${p:docker.image.name}-${p:environment.name}",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "docker.image.name",
+                            "value": "default\/iibv10image",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "docker.qualified.image",
+                            "value": "${p?:docker.registry}${p:docker.image.name}:${p:version\/dockerImageTag}",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "docker.registry",
+                            "value": "mycluster.icp:8500",
+                            "description": "",
+                            "secure": false
+                        }
+                    ]
+                }
+            ]},
+            "processes": [
+                {
+                    "name": "Rolling update",
+                    "description": "",
+                    "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                    "takesVersion": true,
+                    "inventoryActionType": "ADD",
+                    "status": "Active",
+                    "configActionType": "ADD",
+                    "active": true,
+                    "path": "components\/1631ffa3-f2aa-fa63-8ac6-ad7b3b71a7d0\/processes\/1631ffbf-a95d-fd45-7311-2c822f5f4aaa",
+                    "deleted": false,
+                    "propDefs": [],
+                    "rootActivity": {
+                        "edges": [
+                            {
+                                "to": "49e29d18d90cd7eb0b2b9714396f34",
+                                "from": "Rolling update",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "Rolling update",
+                                "type": "ALWAYS",
+                                "value": ""
+                            }
+                        ],
+                        "offsets": [
+                            {
+                                "name": "49e29d18d90cd7eb0b2b9714396f34",
+                                "x": -5,
+                                "y": 450,
+                                "h": 80,
+                                "w": 120
+                            },
+                            {
+                                "name": "Rolling update",
+                                "x": -40,
+                                "y": 230,
+                                "h": 70,
+                                "w": 190
+                            }
+                        ],
+                        "layoutMode": "auto",
+                        "type": "graph",
+                        "name": "2c9b3152-0bb4-457f-869e-ea26aa79b41c",
+                        "children": [
+                            {
+                                "type": "finish",
+                                "name": "49e29d18d90cd7eb0b2b9714396f34",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "pluginVersion": 9,
+                                "commandName": "Shell",
+                                "pluginName": "Shell",
+                                "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                "properties": {
+                                    "directoryOffset": ".",
+                                    "shellInterpreter": "",
+                                    "scriptBody": "sfset=$(kubectl get statefulsets | grep 'iib'| awk '{print $1}')\n# kubectl patch statefulset $sfset -p '{\"spec\":{\"updateStrategy\":{\"type\":\"RollingUpdate\"}}}'\nkubectl patch statefulset $sfset --type='json' -p='[{\"op\": \"replace\", \"path\": \"\/spec\/template\/spec\/containers\/0\/image\", \"value\":\"mycluster.icp:8500\/default\/${component.name}:${p:version.name}\"}]'",
+                                    "runAsDaemon": "false",
+                                    "outputFile": ""
+                                },
+                                "cachedAuthTokenRestriction": {
+                                    "name": "System Default",
+                                    "description": "Used by default for any plugin steps without a specified token restriction",
+                                    "restrictions": [{
+                                        "verb": "ALL",
+                                        "url": "\/*"
+                                    }]
+                                },
+                                "type": "plugin",
+                                "name": "Rolling update",
+                                "children": []
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "Scale statefulset",
+                    "description": "",
+                    "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                    "takesVersion": false,
+                    "status": "",
+                    "active": true,
+                    "path": "components\/1631ffa3-f2aa-fa63-8ac6-ad7b3b71a7d0\/processes\/16325cef-951d-9a6a-abd3-e0ec5ee359b8",
+                    "deleted": false,
+                    "propDefs": [{
+                        "name": "number",
+                        "label": "number",
+                        "pattern": "",
+                        "type": "TEXT",
+                        "value": "3",
+                        "required": true,
+                        "description": "",
+                        "placeholder": ""
+                    }],
+                    "rootActivity": {
+                        "edges": [
+                            {
+                                "to": "Run Generic: \"Scale IIB\"",
+                                "type": "ALWAYS",
+                                "value": ""
+                            },
+                            {
+                                "to": "5d09bbe73f5b6c3f7afd326cdfb3cf",
+                                "from": "Run Generic: \"Scale IIB\"",
+                                "type": "SUCCESS",
+                                "value": ""
+                            }
+                        ],
+                        "offsets": [
+                            {
+                                "name": "Run Generic: \"Scale IIB\"",
+                                "x": -60,
+                                "y": 230,
+                                "h": 50,
+                                "w": 250
+                            },
+                            {
+                                "name": "5d09bbe73f5b6c3f7afd326cdfb3cf",
+                                "x": -5,
+                                "y": 430,
+                                "h": 80,
+                                "w": 120
+                            }
+                        ],
+                        "layoutMode": "auto",
+                        "type": "graph",
+                        "name": "5f3f6589-6a71-4cfe-8834-c9e47318046a",
+                        "children": [
+                            {
+                                "type": "finish",
+                                "name": "5d09bbe73f5b6c3f7afd326cdfb3cf",
+                                "children": []
+                            },
+                            {
+                                "processName": "Scale IIB out",
+                                "resourcePath": "${p:resource.path}",
+                                "properties": {
+                                    "processId": "16325c7b-6bff-cf43-af73-bb2bccda7527",
+                                    "replicas": "${p:number}",
+                                    "resourcePath": "${p:resource.path}"
+                                },
+                                "type": "runProcess",
+                                "name": "Run Generic: \"Scale IIB\"",
+                                "children": []
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "Set environment properties",
+                    "description": "",
+                    "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                    "takesVersion": true,
+                    "inventoryActionType": "ADD",
+                    "status": "Active",
+                    "configActionType": "ADD",
+                    "active": true,
+                    "path": "components\/1631ffa3-f2aa-fa63-8ac6-ad7b3b71a7d0\/processes\/1631ffa3-f661-eaad-6eae-d129c54880f8",
+                    "deleted": false,
+                    "propDefs": [],
+                    "rootActivity": {
+                        "edges": [
+                            {
+                                "to": "c35e9769cab43e81a33c241679a855",
+                                "from": "Create Tag Environment Property",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "Create Tag Environment Property",
+                                "type": "ALWAYS",
+                                "value": ""
+                            }
+                        ],
+                        "offsets": [
+                            {
+                                "name": "c35e9769cab43e81a33c241679a855",
+                                "x": -5,
+                                "y": 450,
+                                "h": 80,
+                                "w": 120
+                            },
+                            {
+                                "name": "Create Tag Environment Property",
+                                "x": -105,
+                                "y": 230,
+                                "h": 70,
+                                "w": 320
+                            }
+                        ],
+                        "layoutMode": "auto",
+                        "type": "graph",
+                        "name": "74c4a300-72de-4fb2-8927-1fdf5c5367bc",
+                        "children": [
+                            {
+                                "type": "finish",
+                                "name": "c35e9769cab43e81a33c241679a855",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "pluginVersion": 76,
+                                "commandName": "Create Environment Property",
+                                "pluginName": "IBM UrbanCode Deploy Environments",
+                                "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                "properties": {
+                                    "application": "",
+                                    "environment": "${p:environment.id}",
+                                    "name": "${p:component.name}.tag",
+                                    "value": "'${p:version.name}'",
+                                    "isSecure": "false"
+                                },
+                                "cachedAuthTokenRestriction": {
+                                    "name": "System Default",
+                                    "description": "Used by default for any plugin steps without a specified token restriction",
+                                    "restrictions": [{
+                                        "verb": "ALL",
+                                        "url": "\/*"
+                                    }]
+                                },
+                                "type": "plugin",
+                                "name": "Create Tag Environment Property",
+                                "children": []
+                            }
+                        ]
+                    }
+                }
+            ],
+            "configTemplates": [],
+            "genericProcesses": [{
+                "name": "Scale IIB out",
+                "description": "",
+                "rootActivity": {
+                    "edges": [
+                        {
+                            "to": "Scale iib statefulset",
+                            "type": "ALWAYS",
+                            "value": ""
+                        },
+                        {
+                            "to": "54574da4571ebc772c53877cf6899c",
+                            "from": "Scale iib statefulset",
+                            "type": "SUCCESS",
+                            "value": ""
+                        }
+                    ],
+                    "offsets": [
+                        {
+                            "name": "54574da4571ebc772c53877cf6899c",
+                            "x": -5,
+                            "y": 450,
+                            "h": 80,
+                            "w": 120
+                        },
+                        {
+                            "name": "Scale iib statefulset",
+                            "x": -55,
+                            "y": 230,
+                            "h": 70,
+                            "w": 220
+                        }
+                    ],
+                    "layoutMode": "auto",
+                    "type": "graph",
+                    "name": "e31336e8-e69b-4be8-bd49-4c4f1f778a71",
+                    "children": [
+                        {
+                            "type": "finish",
+                            "name": "54574da4571ebc772c53877cf6899c",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "pluginVersion": 9,
+                            "commandName": "Shell",
+                            "pluginName": "Shell",
+                            "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                            "properties": {
+                                "directoryOffset": ".",
+                                "shellInterpreter": "",
+                                "scriptBody": "ss=$(kubectl get statefulset | grep 'iib'| awk '{print $1}')\nnumber=$(kubectl get statefulset | grep 'iib'| awk '{print $3}')\nnumber=$((number+1))\nkubectl scale statefulset $ss --replicas=$number",
+                                "runAsDaemon": "false",
+                                "outputFile": ""
+                            },
+                            "cachedAuthTokenRestriction": {
+                                "name": "System Default",
+                                "description": "Used by default for any plugin steps without a specified token restriction",
+                                "restrictions": [{
+                                    "verb": "ALL",
+                                    "url": "\/*"
+                                }]
+                            },
+                            "type": "plugin",
+                            "name": "Scale iib statefulset",
+                            "children": []
+                        }
+                    ]
+                },
+                "properties": [
+                    {
+                        "name": "contextType",
+                        "value": "Resource",
+                        "description": "",
+                        "secure": false
+                    },
+                    {
+                        "name": "defaultResourceId",
+                        "value": "1624e2a3-ace1-bf64-5611-61b743107329",
+                        "description": "",
+                        "secure": false
+                    },
+                    {
+                        "name": "workingDir",
+                        "value": "${p:resource\/work.dir}\/${p:process.name}",
+                        "description": "",
+                        "secure": false
+                    }
+                ],
+                "propDefs": [],
+                "teamMappings": []
+            }],
+            "teamMappings": [],
+            "tags": [{
+                "id": "1607387c-4d9c-f341-a79b-220da59b5fdf",
+                "name": "kubernetes.image",
+                "color": "#FFFFFF",
+                "description": "",
+                "objectType": "Component"
+            }]
+        }
+    ],
+    "environments": [{
+        "name": "ICP",
+        "description": "",
+        "color": "#17AF4B",
+        "requireApprovals": false,
+        "noSelfApprovals": false,
+        "exemptProcesses": [],
+        "lockSnapshots": false,
+        "requireSnapshots": false,
+        "cleanupDaysToKeep": 0,
+        "cleanupCountToKeep": 0,
+        "enableProcessHistoryCleanup": true,
+        "useSystemDefaultDays": true,
+        "historyCleanupDaysToKeep": 365,
+        "order": 0,
+        "active": true,
+        "propSheet": {"properties": [
+            {
+                "name": "node.name",
+                "value": "IIB_NODE",
+                "description": "",
+                "secure": false
+            },
+            {
+                "name": "pwd",
+                "value": "",
+                "description": "",
+                "secure": true
+            },
+            {
+                "name": "server.name",
+                "value": "IIB_SERVER",
+                "description": "",
+                "secure": false
+            },
+            {
+                "name": "shared.folder",
+                "value": "\/tmp\/BARs",
+                "description": "",
+                "secure": false
+            }
+        ]},
+        "templatePropSheet": {
+            "name": "template",
+            "properties": []
+        },
+        "baseResources": [{
+            "path": "\/IIB ICP",
+            "id": "1624e2a1-d3f2-ccf5-36fa-595ad33d3972"
+        }],
+        "componentPropSheets": [
+            {
+                "properties": [],
+                "componentName": "Case.bar"
+            },
+            {
+                "properties": [],
+                "componentName": "ICPDeploy.bar"
+            },
+            {
+                "properties": [],
+                "componentName": "iib-mq"
+            }
+        ],
+        "versionConditions": [],
+        "teamMappings": []
+    }],
+    "statuses": [],
+    "processes": [
+        {
+            "name": "Upgrade BAR",
+            "description": "",
+            "inventoryManagementType": "AUTOMATIC",
+            "offlineAgentHandling": "PRE_EXECUTION_CHECK",
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "95fa586482ebf2427f07e99d36b857",
+                        "type": "ALWAYS",
+                        "value": ""
+                    },
+                    {
+                        "to": "4a5c1ea703097d0e59457a3e325adb",
+                        "from": "95fa586482ebf2427f07e99d36b857",
+                        "type": "SUCCESS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "4a5c1ea703097d0e59457a3e325adb",
+                        "x": -5,
+                        "y": 430,
+                        "h": 80,
+                        "w": 120
+                    },
+                    {
+                        "name": "95fa586482ebf2427f07e99d36b857",
+                        "x": -80,
+                        "y": 230,
+                        "h": 80,
+                        "w": 230
+                    }
+                ],
+                "layoutMode": "auto",
+                "type": "graph",
+                "name": "da364dcf-925c-494e-a0cb-f13e17d282fa",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "4a5c1ea703097d0e59457a3e325adb",
+                        "children": []
+                    },
+                    {
+                        "name": "95fa586482ebf2427f07e99d36b857",
+                        "properties": [
+                            {
+                                "name": "activity.componentProcess.name",
+                                "value": "Deploy BAR"
+                            },
+                            {
+                                "name": "maxCompIteration",
+                                "value": "100"
+                            },
+                            {
+                                "name": "maxIteration",
+                                "value": "-1"
+                            },
+                            {
+                                "name": "failFast",
+                                "value": "false"
+                            }
+                        ],
+                        "type": "multiComponentEnvironmentIterator",
+                        "children": [{
+                            "properties": [],
+                            "type": "componentEnvironmentIterator",
+                            "name": "9580368ade5e1bc20cd81a7eb9ca1c",
+                            "children": [{
+                                "status": "Active",
+                                "type": "inventoryVersionDiff",
+                                "name": "cb2b04ef-a565-4895-ac04-7df5bc930968",
+                                "children": [{
+                                    "componentProcessName": "Deploy BAR",
+                                    "allowFailure": false,
+                                    "properties": {"activity.componentProcess.name": "Deploy BAR"},
+                                    "type": "componentProcess",
+                                    "name": "Deploy BAR",
+                                    "children": []
+                                }]
+                            }]
+                        }]
+                    }
+                ]
+            },
+            "propDefs": [],
+            "versionPresets": []
+        },
+        {
+            "name": "Rolling update",
+            "description": "",
+            "inventoryManagementType": "AUTOMATIC",
+            "offlineAgentHandling": "PRE_EXECUTION_CHECK",
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "1aa84e4d8a224befdd66fcedd6292b",
+                        "type": "ALWAYS",
+                        "value": ""
+                    },
+                    {
+                        "to": "6140fb6072740d61e20e51b40c6151",
+                        "from": "1a77e748c508799c08bf3f7cb5daea",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "1a77e748c508799c08bf3f7cb5daea",
+                        "from": "1aa84e4d8a224befdd66fcedd6292b",
+                        "type": "ALWAYS",
+                        "value": ""
+                    },
+                    {
+                        "to": "58ee65c23f82cdc3081fcac5a0d011",
+                        "from": "6140fb6072740d61e20e51b40c6151",
+                        "type": "SUCCESS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "58ee65c23f82cdc3081fcac5a0d011",
+                        "x": -5,
+                        "y": 690,
+                        "h": 90,
+                        "w": 130
+                    },
+                    {
+                        "name": "1a77e748c508799c08bf3f7cb5daea",
+                        "x": -135,
+                        "y": 340,
+                        "h": 100,
+                        "w": 390
+                    },
+                    {
+                        "name": "6140fb6072740d61e20e51b40c6151",
+                        "x": -85,
+                        "y": 515,
+                        "h": 100,
+                        "w": 290
+                    },
+                    {
+                        "name": "1aa84e4d8a224befdd66fcedd6292b",
+                        "x": -190,
+                        "y": 165,
+                        "h": 100,
+                        "w": 500
+                    }
+                ],
+                "layoutMode": "auto",
+                "type": "graph",
+                "name": "4f3c6786-d2ae-4986-9f93-af76b425c649",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "58ee65c23f82cdc3081fcac5a0d011",
+                        "children": []
+                    },
+                    {
+                        "name": "1a77e748c508799c08bf3f7cb5daea",
+                        "properties": [
+                            {
+                                "name": "activity.componentProcess.name",
+                                "value": "Copy bar to mounted folder"
+                            },
+                            {
+                                "name": "maxCompIteration",
+                                "value": "100"
+                            },
+                            {
+                                "name": "maxIteration",
+                                "value": "-1"
+                            },
+                            {
+                                "name": "runOnlyOnFirst",
+                                "value": "false"
+                            },
+                            {
+                                "name": "failFast",
+                                "value": "false"
+                            }
+                        ],
+                        "type": "multiComponentEnvironmentIterator",
+                        "children": [{
+                            "properties": [
+                                {
+                                    "name": "runOnlyOnFirst",
+                                    "value": "false"
+                                },
+                                {
+                                    "name": "failFast",
+                                    "value": "false"
+                                }
+                            ],
+                            "type": "componentEnvironmentIterator",
+                            "name": "4be316f25cc8cf315a1096377ca87c",
+                            "children": [{
+                                "status": "Active",
+                                "type": "inventoryVersionDiff",
+                                "name": "2d47c02d-a0bd-4964-adf8-70cb8e94e199",
+                                "children": [{
+                                    "componentProcessName": "Copy bar to mounted folder",
+                                    "allowFailure": false,
+                                    "properties": {"activity.componentProcess.name": "Copy bar to mounted folder"},
+                                    "type": "componentProcess",
+                                    "name": "Copy bar to mounted folder",
+                                    "children": []
+                                }]
+                            }]
+                        }]
+                    },
+                    {
+                        "name": "1aa84e4d8a224befdd66fcedd6292b",
+                        "properties": [
+                            {
+                                "name": "activity.componentProcess.name",
+                                "value": "Remove old bars"
+                            },
+                            {
+                                "name": "maxCompIteration",
+                                "value": "100"
+                            },
+                            {
+                                "name": "maxIteration",
+                                "value": "-1"
+                            },
+                            {
+                                "name": "runOnlyOnFirst",
+                                "value": "false"
+                            },
+                            {
+                                "name": "failFast",
+                                "value": "false"
+                            }
+                        ],
+                        "type": "multiComponentEnvironmentIterator",
+                        "children": [{
+                            "properties": [
+                                {
+                                    "name": "runOnlyOnFirst",
+                                    "value": "false"
+                                },
+                                {
+                                    "name": "failFast",
+                                    "value": "false"
+                                }
+                            ],
+                            "type": "componentEnvironmentIterator",
+                            "name": "dee90db52dc333c6c58e8215be5f19",
+                            "children": [{
+                                "type": "operationalProcessFilter",
+                                "name": "d89fbaef-e70c-4672-a49d-ca760d4b0210",
+                                "children": [{
+                                    "componentProcessName": "Remove old bars",
+                                    "allowFailure": false,
+                                    "properties": {"activity.componentProcess.name": "Remove old bars"},
+                                    "type": "componentProcess",
+                                    "name": "Remove old bars",
+                                    "children": []
+                                }]
+                            }]
+                        }]
+                    },
+                    {
+                        "componentName": "iib-mq",
+                        "properties": [
+                            {
+                                "name": "maxIteration",
+                                "value": "-1"
+                            },
+                            {
+                                "name": "runOnlyOnFirst",
+                                "value": "false"
+                            },
+                            {
+                                "name": "failFast",
+                                "value": "false"
+                            }
+                        ],
+                        "type": "componentEnvironmentIterator",
+                        "name": "6140fb6072740d61e20e51b40c6151",
+                        "children": [{
+                            "componentName": "iib-mq",
+                            "status": "Active",
+                            "type": "inventoryVersionDiff",
+                            "name": "e8319639-2b44-4007-aec8-d607dcc76d07",
+                            "children": [{
+                                "componentProcessName": "Rolling update",
+                                "componentName": "iib-mq",
+                                "allowFailure": false,
+                                "properties": {},
+                                "type": "componentProcess",
+                                "name": "Update statefulset",
+                                "children": []
+                            }]
+                        }]
+                    }
+                ]
+            },
+            "propDefs": [],
+            "versionPresets": []
+        },
+        {
+            "name": "Scale statefulset",
+            "description": "",
+            "inventoryManagementType": "AUTOMATIC",
+            "offlineAgentHandling": "PRE_EXECUTION_CHECK",
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "2d14dd9e2c58b5f9a877e911e93778",
+                        "from": "fe61d71e6400292c074a9ea5458acd",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "fe61d71e6400292c074a9ea5458acd",
+                        "type": "ALWAYS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "fe61d71e6400292c074a9ea5458acd",
+                        "x": -50,
+                        "y": 230,
+                        "h": 80,
+                        "w": 260
+                    },
+                    {
+                        "name": "2d14dd9e2c58b5f9a877e911e93778",
+                        "x": -5,
+                        "y": 430,
+                        "h": 80,
+                        "w": 120
+                    }
+                ],
+                "layoutMode": "auto",
+                "type": "graph",
+                "name": "185fbf7e-7f05-4784-b76e-1742193a8db4",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "2d14dd9e2c58b5f9a877e911e93778",
+                        "children": []
+                    },
+                    {
+                        "componentName": "iib-mq",
+                        "properties": [
+                            {
+                                "name": "maxIteration",
+                                "value": "-1"
+                            },
+                            {
+                                "name": "failFast",
+                                "value": "false"
+                            }
+                        ],
+                        "type": "componentEnvironmentIterator",
+                        "name": "fe61d71e6400292c074a9ea5458acd",
+                        "children": [{
+                            "componentName": "iib-mq",
+                            "status": "Active",
+                            "type": "inventoryVersionDiff",
+                            "name": "2b64ddaf-b5b4-47b2-8936-e2ea7f91cca5",
+                            "children": [{
+                                "componentProcessName": "Scale statefulset",
+                                "componentName": "iib-mq",
+                                "allowFailure": false,
+                                "properties": {},
+                                "type": "componentProcess",
+                                "name": "Scale",
+                                "children": []
+                            }]
+                        }]
+                    }
+                ]
+            },
+            "propDefs": [{
+                "name": "number",
+                "label": "number",
+                "pattern": "",
+                "type": "TEXT",
+                "value": "3",
+                "required": true,
+                "description": "",
+                "placeholder": ""
+            }],
+            "versionPresets": []
+        }
+    ],
+    "genericProcesses": [],
+    "teamMappings": [],
+    "tags": []
+}

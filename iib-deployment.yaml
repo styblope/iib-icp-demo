@@ -29,8 +29,6 @@ spec:
           value: IIB_NODE
         - name: SERVER_NAME
           value: IIB_SERVER
-        - name: MQ_QMGR_NAME
-          value: MQ1
         - name: CACHE_POLICY
           value: disabled
         image: mycluster.icp:8500/default/iib-mq:10.0.0.11
@@ -69,7 +67,7 @@ spec:
             path: /
             port: 4414
             scheme: HTTP
-          initialDelaySeconds: 20
+          initialDelaySeconds: 120
           periodSeconds: 10
           successThreshold: 1
           timeoutSeconds: 1

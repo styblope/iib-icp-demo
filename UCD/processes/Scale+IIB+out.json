@@ -1,0 +1,95 @@
+{
+    "name": "Scale IIB out",
+    "description": "",
+    "rootActivity": {
+        "edges": [
+            {
+                "to": "Scale iib statefulset",
+                "type": "ALWAYS",
+                "value": ""
+            },
+            {
+                "to": "54574da4571ebc772c53877cf6899c",
+                "from": "Scale iib statefulset",
+                "type": "SUCCESS",
+                "value": ""
+            }
+        ],
+        "offsets": [
+            {
+                "name": "54574da4571ebc772c53877cf6899c",
+                "x": -5,
+                "y": 450,
+                "h": 80,
+                "w": 120
+            },
+            {
+                "name": "Scale iib statefulset",
+                "x": -55,
+                "y": 230,
+                "h": 70,
+                "w": 220
+            }
+        ],
+        "layoutMode": "auto",
+        "type": "graph",
+        "name": "e31336e8-e69b-4be8-bd49-4c4f1f778a71",
+        "children": [
+            {
+                "type": "finish",
+                "name": "54574da4571ebc772c53877cf6899c",
+                "children": []
+            },
+            {
+                "allowFailure": false,
+                "useImpersonation": false,
+                "showHidden": false,
+                "impersonationUseSudo": false,
+                "pluginVersion": 9,
+                "commandName": "Shell",
+                "pluginName": "Shell",
+                "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                "properties": {
+                    "directoryOffset": ".",
+                    "shellInterpreter": "",
+                    "scriptBody": "ss=$(kubectl get statefulset | grep 'iib'| awk '{print $1}')\nnumber=$(kubectl get statefulset | grep 'iib'| awk '{print $3}')\nnumber=$((number+1))\nkubectl scale statefulset $ss --replicas=$number",
+                    "runAsDaemon": "false",
+                    "outputFile": ""
+                },
+                "cachedAuthTokenRestriction": {
+                    "name": "System Default",
+                    "description": "Used by default for any plugin steps without a specified token restriction",
+                    "restrictions": [{
+                        "verb": "ALL",
+                        "url": "\/*"
+                    }]
+                },
+                "type": "plugin",
+                "name": "Scale iib statefulset",
+                "children": []
+            }
+        ]
+    },
+    "properties": [
+        {
+            "name": "contextType",
+            "value": "Resource",
+            "description": "",
+            "secure": false
+        },
+        {
+            "name": "defaultResourceId",
+            "value": "1624e2a3-ace1-bf64-5611-61b743107329",
+            "description": "",
+            "secure": false
+        },
+        {
+            "name": "workingDir",
+            "value": "${p:resource\/work.dir}\/${p:process.name}",
+            "description": "",
+            "secure": false
+        }
+    ],
+    "propDefs": [],
+    "teamMappings": []
+}

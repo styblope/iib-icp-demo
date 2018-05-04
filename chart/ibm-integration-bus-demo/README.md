@@ -38,7 +38,7 @@ The following table lists the configurable parameters of the `ibm-integration-bu
 | -------------------------------- | ----------------------------------------------- | ---------------------------------------------------------- |
 | `license`                        | Set this to accept the terms of the IBM license | `Not accepted`                                     |
 | `image.repository`               | Image full name including repository            | `mycluster.icp:8500/default/iib-prod`                       |
-| `image.tag`                      | Image tag                                       | `10.0.0.10`                                                        |
+| `image.tag`                      | Image tag                                       | `10.0.0.11`                                                        |
 | `image.pullPolicy`               | Image pull policy                               | `IfNotPresent`                                             |
 | `image.pullSecret`               | Image pull secret, if you are using a private Docker registry | `nil`                                        |
 | `service.type`                   | Kubernetes service type for exposing ports       | `NodePort`                                  |

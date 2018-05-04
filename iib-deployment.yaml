@@ -33,7 +33,7 @@ spec:
           value: MQ1
         - name: CACHE_POLICY
           value: disabled
-        image: mycluster.icp:8500/default/iib-mq:10.0.0.10
+        image: mycluster.icp:8500/default/iib-mq:10.0.0.11
         imagePullPolicy: IfNotPresent
         name: iib
         ports:

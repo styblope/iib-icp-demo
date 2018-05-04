@@ -31,7 +31,7 @@ spec:
           value: "2800-2819"
         - name: MQ_QMGR_NAME
           value: MQ1
-        image: mycluster.icp:8500/default/iib-mq:10.0.0.10
+        image: mycluster.icp:8500/default/iib-mq:10.0.0.11
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 2800

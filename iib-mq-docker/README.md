@@ -67,7 +67,7 @@ You can optionally specify `CACHE_PORT_RANGE` to define the range of ports that 
 
 Sample policy files are located here:
 
-    cd /opt/ibm/iib-10.0.0.10/server/sample/globalcache
+    cd /opt/ibm/iib-10.0.0.11/server/sample/globalcache
 
 Customize `policy_two_brokers_ha.xml` by changing FQDN names (`hostname -f`) of the nodes and port ranges.
 

@@ -76,9 +76,9 @@ RUN chmod +x /usr/local/bin/*.sh
 
 # Install IIB V10 Developer edition
 RUN mkdir /opt/ibm && \
-    curl http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integration/10.0.0.10-IIB-LINUX64-DEVELOPER.tar.gz \
-    | tar zx --exclude iib-10.0.0.10/tools --directory /opt/ibm && \
-    /opt/ibm/iib-10.0.0.10/iib make registry global accept license silently
+    curl http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integration/10.0.0.11-IIB-LINUX64-DEVELOPER.tar.gz \
+    | tar zx --exclude iib-10.0.0.11/tools --directory /opt/ibm && \
+    /opt/ibm/iib-10.0.0.11/iib make registry global accept license silently
 
 # Configure system
 COPY kernel_settings.sh /tmp/

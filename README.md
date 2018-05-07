@@ -6,13 +6,13 @@ The following scenarios are covered:
 1. IIB scaling using UCD
 2. IIB auto-scaling and load balancing (stateless case)
 3. IIB high-availability (readiness/liveness probes)
-4. MQ integration, TLS
+4. TODO: MQ integration, TLS
 5. IIB Global Cache
 6. Custom catalog item (HELM chart)
 7. Automated deployment of IIB flows (BAR files) across the cluster
 8. IIB version rolling update (using k8s rolling update features)
 9. Centralized IIB logging (show centralized IIB logs in Kiabana)
-10. (?) IIB Monitoring
+10. Kubernetes cluster and IIB Monitoring
 11. (?) Blue/Green deployments, traffic routing, network policies
 12. (?) ISTIO - pod-to-pod TLS
 
@@ -28,7 +28,7 @@ Illustrate how IIB nodes can be automatically scaled for increased performance a
 - Automated dynamic scaling of IIB based on load
 - IIB high-availability due to redundancy and auto-recovery
 
-**Tasks**
+**Demo tasks**
 
 - Prepare a sample IIB flow (*BAR file*) to respond to GET requests on a REST interface
 - Setup basic IIB stateless scalable *deployment* 
@@ -88,7 +88,7 @@ Constantly watch the IIB node instances and recover from from accidental crashes
 - Increased availability (lower downtime) due to automatic recovery and re-scheduling. Typically useful for low-level failures (HW, resources, network, etc.)
 - Visibility and monitoring
 
-**Tasks**
+**Demo tasks**
 
 - Setup Readiness probe
 - Setup Liveness probe
@@ -155,7 +155,7 @@ Show IIB embedded global cache feature on IBM Cloud Private container orchestrat
 
 - Use the embedded global cache IIB feature in the same way as on a traditional VM deployment
 
-**Tasks**
+**Demo tasks**
 
 - Prepare custom IIB image with settings to enable the embedded global cache
 - Use scaled IIB *statefulset* with enabled caching
@@ -195,7 +195,7 @@ Verify cache placement
 - Make available deployable applications in a GUI catalog
 - Options for CI/CD and other ICP tooling
 
-**Tasks**
+**Demo tasks**
 
 - Show catalog and helm chart creation
 - Show Urban Code Deploy integration to create custom Docker image and HELM chart
@@ -221,6 +221,59 @@ Verify cache placement
 - Backup old files to `BARs backup` directory.
 
 **Implementation:**
+
+## Centralized IIB logging
+
+**Scenario:** Out-of-box centralized logging of system and application (IIB) logs
+
+**Benefits:**
+
+- Application log history, search, audit, archive
+- Troubleshooting, correlation
+- auto-scaling - no manual setup
+- possible to integrate with 3rd party tools (e.g. analytics)
+
+**Demo tasks**
+
+- Kibana GUI showcase
+- Filter for IIB pod/container logs
+- Optional: show custom log collector (/var/log/syslog)
+
+**Implementation**
+
+The logging collection, aggregation and storage are out-of-box
+
+TODO: Optional custom log collector implementation using sidecar container
+
+## Kubernetes cluster and IIB Monitoring
+
+**Scenario:** Built-in metric monitoring of container platform as well as deployed containerized applications
+
+**Benefits:**
+
+- Application performance monitoring and visibility
+- Centralized performance metrics collection (Heapster, Prometheus)
+- Reporting (Grafana)
+- Alerting
+
+**Demo tasks**
+
+- Show Monitoring and Alerting features from GUI
+- Create and watch custom metrics using Prometheus expression browser
+- Simulate HDD full threshold situation and show alerts in Alertmanager and Slack 
+
+**Implementation**
+
+Launch Prometheus expression browser
+    
+    kubectl -n kube-system port-forward deployment/monitoring-prometheus 9090:9090
+    http://localhost:9090/graph
+
+Configure alerts and external service notifications in configmaps `alert_rules` and `monitoring-prometheus-alertmanager`
+
+Simulate disk full situation by allocating space in a big file
+
+    fallocate -l 30G big-file1.tmp
 
 ---
 

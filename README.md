@@ -226,6 +226,8 @@ Deploy custom Global Cache application (src-iib/docker-gc/docker_gc.bar) to test
 
 UCD copies selected version of component (BAR file) to the mounted volume and then deploys it to all iib pods 
 
+![](media/deployBAR.jpg)
+
     kubectl get pods | grep 'iib'| awk '{print $1}' | xargs -I {:}  kubectl exec  {:} -- bash -c "mqsideploy   	${p:environment/node.name} -e ${p:environment/server.name} -a ${p:environment/shared.folder}/${p:component.name}"
     
 You can verify that desired version of the flow was deployed (Case.bar) by calling

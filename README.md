@@ -186,6 +186,8 @@ Verify cache placement
 
     kubectl exec -ti iib-0 -- bash -c "mqsicacheadmin IIB_NODE -c showPlacement"
 
+Deploy custom Global Cache application (src-iib/docker-gc/docker_gc.bar) to test. Test by using HTTP POST with "Content-Type: text/plain" and some data to <load-balancer-ip>:<load-balancer-http-port>/gchello. Application increments a counter inside GlobalCache by data length.
+
 ## Custom catalog item (HELM chart)
 
 **Scenario**: Leverage IBM Cloud Private's application to catalog to allow users to pick and deploy packaged applications (releases) with convenience of a GUI and central role-based access (RBAC/LDAP).

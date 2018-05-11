@@ -228,6 +228,16 @@ UCD copies selected version of component (BAR file) to the mounted volume and th
 
     kubectl get pods | grep 'iib'| awk '{print $1}' | xargs -I {:}  kubectl exec  {:} -- bash -c "mqsideploy   	${p:environment/node.name} -e ${p:environment/server.name} -a ${p:environment/shared.folder}/${p:component.name}"
     
+You can verify that desired version of the flow was deployed (Case.bar) by calling
+
+	curl -X PUT -i 'http://192.168.24.33:31277/hello' --data jknjnjk
+	
+It should return version name in response:
+
+		Hello there!
+		You have called the flow "case1" with the following bytes:
+		6a6b6e6a6e6a6b
+    
     
 ## IIB version rolling update (using k8s rolling update features)
 

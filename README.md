@@ -220,9 +220,13 @@ Deploy custom Global Cache application (src-iib/docker-gc/docker_gc.bar) to test
 
 - Configure version control (git) to track IIB application file versions and deploy flows (BAR files) using UCD to the IIB cluster
 - UCD pulls new versions from a repo (development folder) and deploys them to the `/export/BARs` global directory
-- Backup old files to `BARs backup` directory.
+- Backup old files to `BARs backup` directory. - not needed (UCD stores and tracks all deployed versions)
 
 **Implementation:**
+
+UCD copies selected version of component (BAR file) to the mounted volume and then deploys it to all iib pods 
+
+    kubectl get pods | grep 'iib'| awk '{print $1}' | xargs -I {:}  kubectl exec  {:} -- bash -c "mqsideploy   	${p:environment/node.name} -e ${p:environment/server.name} -a ${p:environment/shared.folder}/${p:component.name}"
 
 ## Centralized IIB logging
 

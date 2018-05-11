@@ -227,6 +227,19 @@ Deploy custom Global Cache application (src-iib/docker-gc/docker_gc.bar) to test
 UCD copies selected version of component (BAR file) to the mounted volume and then deploys it to all iib pods 
 
     kubectl get pods | grep 'iib'| awk '{print $1}' | xargs -I {:}  kubectl exec  {:} -- bash -c "mqsideploy   	${p:environment/node.name} -e ${p:environment/server.name} -a ${p:environment/shared.folder}/${p:component.name}"
+    
+    
+## IIB version rolling update (using k8s rolling update features)
+
+**Implementation:**
+
+UCD application contains iib-mq image component which versions are imported from ICP image registry.
+Application has deployment process called 'Rolling update'. The process executes
+
+	sfset=$(kubectl get statefulsets | grep 'iib'| awk '{print $1}')
+	# kubectl patch statefulset $sfset -p '{"spec":{"updateStrategy":{"type":"RollingUpdate"}}}'
+	kubectl patch statefulset $sfset --type='json' -p='[{"op": "replace", "path": 	"/spec/template/spec/containers/0/image", "value":"mycluster.icp:8500/default/${component.name}:${p:version.name}"}]'
+
 
 ## Centralized IIB logging
 

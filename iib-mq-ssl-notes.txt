@@ -1,0 +1,43 @@
+##Two way SSL between IIB and MQ using client connection##
+
+#assuming queue manager QM1 on machine A with SVRCONN channel MY.SCC
+#and integration node NODE1 on machine B
+#and where CONNAUTH and CHLATUH is set so that IIB can connect to QM1 via MY.SCC
+#and where IIB engine is run by user "iibuser"
+
+#create key.kdb keystores for IIB and MQ
+
+#assuming a key.kdb exists (with an appropriate key.sth password stash) for MQ (in /var/mqm/qmgrs/QM1/ssl/) where 2 certificates exist
+#personal certificate with label "ibmwebspheremqqm1" ("ibmwebspheremq<queue manager name>" all lowercase)
+	#alternatively set the personal certificate label for QM by running
+	runmqsc QM1
+	alter qmgr cerlabl('<your personal certificate label>')
+	end
+#signer certificate extracted from IIB's personal certificate
+
+#also assuming a key.kdb exists (with an appropriate key.sth password stash) (in <iib-key-path>/key.kdb) for IIB where 2 certificates exist
+#personal certificate with label "ibmwebspheremqiibuser" ("ibmwebspheremq<user running iib>" all lowercase)
+#signer certificate extracted from MQ's personal certificate
+
+#machine A:
+runmqsc QM1
+alter channel(MY.SCC) chltype(SVRCONN) sslcauth(REQUIRED)
+alter channel(MY.SCC) chltype(SVRCONN) sslciph(TLS_RSA_WITH_AES_256_CBC_SHA256)
+refresh security type(SSL)
+end
+
+#if you wish to store the QM keystore other than the default location (/var/mqm/qmgrs/QM1/ssl/key -->> /var/mqm/qmgrs/QM1/ssl/key.kdb), set sslkeyr
+runmqsc QM1
+alter qmgr sslkeyr(/your/custom/path/key)
+refresh security type(SSL)
+end
+#please note that sslkeyr(/your/custom/path/key) will only pick up a key /your/custom/path/key.kdb
+
+#machine B:
+#run mqsiprofile
+mqsichangeproperties NODE1 -o BrokerRegistry -n mqKeyRepository -v <iib-key-path>/key
+#please note that <iib-key-path>/key will only pick up a key <iib-key-path>/key.kdb
+
+#MQ nodes in a message flow that use MY.SCC have to 
+#1 check Use SSL option and 
+#2 specify SSL cipher specification like it is on the channel (in this case "TLS_RSA_WITH_AES_256_CBC_SHA256")

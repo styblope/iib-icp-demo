@@ -146,6 +146,10 @@ Disable authentication
 	alter qmgr connauth(' ‘)
 	refresh security
 
+**Setting up SSL**
+
+If you wish to use two-way SSL between IIB and MQ using a client connection, consult the notes in iib-mq-ssl-notes.txt.
+
 ## IIB Global Cache
 
 **Scenario**  

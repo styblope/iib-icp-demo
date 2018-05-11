@@ -256,6 +256,14 @@ Application has deployment process called 'Rolling update'. The process executes
 	sfset=$(kubectl get statefulsets | grep 'iib'| awk '{print $1}')
 	# kubectl patch statefulset $sfset -p '{"spec":{"updateStrategy":{"type":"RollingUpdate"}}}'
 	kubectl patch statefulset $sfset --type='json' -p='[{"op": "replace", "path": 	"/spec/template/spec/containers/0/image", "value":"mycluster.icp:8500/default/${component.name}:${p:version.name}"}]'
+	
+You can verify image version:
+
+	kubectl describe pod iib-0
+
+Response should contain image version:
+
+	Image:          mycluster.icp:8500/default/iib-mq:10.0.0.10
 
 
 ## Centralized IIB logging

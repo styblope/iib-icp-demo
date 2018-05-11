@@ -231,6 +231,13 @@ UCD copies selected version of component (BAR file) to the mounted volume and th
     
 ## IIB version rolling update (using k8s rolling update features)
 
+**Scenario:**: Automatic and controlled update of underlying image for IIB deployments
+
+**Benefits:**
+
+- Version control and tracking - control image version and audit environment inventory
+- Approval flow - process governance
+
 **Implementation:**
 
 UCD application contains iib-mq image component which versions are imported from ICP image registry.

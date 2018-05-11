@@ -250,6 +250,8 @@ It should return version name in response:
 
 **Implementation:**
 
+![](media/rolling-update.jpg)
+
 UCD application contains iib-mq image component which versions are imported from ICP image registry.
 Application has deployment process called 'Rolling update'. The process executes
 

@@ -271,7 +271,7 @@ You can verify image version:
 
 Response should contain image version:
 
-	Image:          mycluster.icp:8500/default/iib-mq:10.0.0.10
+	Image:          mycluster.icp:8500/default/iib-mq:10.0.0.11
 
 
 ## Centralized IIB logging

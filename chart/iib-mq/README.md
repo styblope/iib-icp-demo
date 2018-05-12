@@ -51,7 +51,7 @@ The following table lists the configurable parameters of the `iib-mq` chart and 
 | -------------------------------- | ----------------------------------------------- | ---------------------------------------------------------- |
 | `license`                        | Set to `accept` to accept the terms of the IBM license  | `not accepted`                                     |
 | `image.repository`               | Image full name including repository            | `icpcluster.icp:8500/default/iib-mq`                       |
-| `image.tag`                      | Image tag                                       | `10.0.0.10`                                                |
+| `image.tag`                      | Image tag                                       | `10.0.0.11`                                                |
 | `image.pullPolicy`               | Image pull policy                               | `IfNotPresent`                                             |
 | `image.pullSecret`               | Image pull secret, if you are using a private Docker registry | `nil`                                        |
 | `persistence.enabled`            | Use persistent volumes for all defined volumes  | `true`                                                     |

@@ -146,6 +146,10 @@ Disable authentication
 	alter qmgr connauth(' ‘)
 	refresh security
 
+**Setting up SSL**
+
+If you wish to use two-way SSL between IIB and MQ using a client connection, consult the notes in iib-mq-ssl-notes.txt.
+
 ## IIB Global Cache
 
 **Scenario**  
@@ -186,6 +190,8 @@ Verify cache placement
 
     kubectl exec -ti iib-0 -- bash -c "mqsicacheadmin IIB_NODE -c showPlacement"
 
+Deploy custom Global Cache application (src-iib/docker-gc/docker_gc.bar) to test. Test by using HTTP POST with "Content-Type: text/plain" and some data to `<load-balancer-ip>:<load-balancer-http-port>/gchello`. Application increments a counter inside GlobalCache by data length.
+
 ## Custom catalog item (HELM chart)
 
 **Scenario**: Leverage IBM Cloud Private's application to catalog to allow users to pick and deploy packaged applications (releases) with convenience of a GUI and central role-based access (RBAC/LDAP).
@@ -218,9 +224,55 @@ Verify cache placement
 
 - Configure version control (git) to track IIB application file versions and deploy flows (BAR files) using UCD to the IIB cluster
 - UCD pulls new versions from a repo (development folder) and deploys them to the `/export/BARs` global directory
-- Backup old files to `BARs backup` directory.
+- Backup old files to `BARs backup` directory. - not needed (UCD stores and tracks all deployed versions)
 
 **Implementation:**
+
+UCD copies selected version of component (BAR file) to the mounted volume and then deploys it to all iib pods 
+
+![](media/deployBAR.jpg)
+
+    kubectl get pods | grep 'iib'| awk '{print $1}' | xargs -I {:}  kubectl exec  {:} -- bash -c "mqsideploy   	${p:environment/node.name} -e ${p:environment/server.name} -a ${p:environment/shared.folder}/${p:component.name}"
+    
+You can verify that desired version of the flow was deployed (Case.bar) by calling
+
+	curl -X PUT -i 'http://192.168.24.33:31277/hello' --data jknjnjk
+	
+It should return version name in response:
+
+		Hello there!
+		You have called the flow "case1" with the following bytes:
+		6a6b6e6a6e6a6b
+    
+    
+## IIB version rolling update (using k8s rolling update features)
+
+**Scenario:**: Automatic and controlled update of underlying image for IIB deployments
+
+**Benefits:**
+
+- Version control and tracking - control image version and audit environment inventory
+- Approval flow - process governance
+
+**Implementation:**
+
+![](media/rolling-update.jpg)
+
+UCD application contains iib-mq image component which versions are imported from ICP image registry.
+Application has deployment process called 'Rolling update'. The process executes
+
+	sfset=$(kubectl get statefulsets | grep 'iib'| awk '{print $1}')
+	# kubectl patch statefulset $sfset -p '{"spec":{"updateStrategy":{"type":"RollingUpdate"}}}'
+	kubectl patch statefulset $sfset --type='json' -p='[{"op": "replace", "path": 	"/spec/template/spec/containers/0/image", "value":"mycluster.icp:8500/default/${component.name}:${p:version.name}"}]'
+	
+You can verify image version:
+
+	kubectl describe pod iib-0
+
+Response should contain image version:
+
+	Image:          mycluster.icp:8500/default/iib-mq:10.0.0.10
+
 
 ## Centralized IIB logging
 

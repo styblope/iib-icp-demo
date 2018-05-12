@@ -13,14 +13,13 @@ SERVER_NAME=${SERVER_NAME-IS1}
 CACHE_POLICY=${CACHE_POLICY-disabled} # `disabled`, `default`, `none` or fully qualified XML policy filename
 CACHE_PORT_RANGE=${CACHE_PORT_RANGE-"2800-2819"}
 MQ_QMGR_NAME=${MQ_QMGR_NAME-MQ1}
-# MQ_ENABLE_SWITCH_SERVER
+# ENABLE_SWITCH_SERVER
+# MQ_QMGR_NAME
 # MQ_DISABLE_WEB_CONSOLE
 # MQ_TLS_KEYSTORE
 # MQ_TLS_PASSPHRASE
 export JDBC_SERVICE=BROKER
 export HOST_NAME=IIBDOCKER
-
-
 
 
 stop()
@@ -102,10 +101,10 @@ state()
 
 start()
 {
-  su - iibuser
-  echo "----------------------------------------"
+	su - iibuser
+	echo "----------------------------------------"
   /opt/ibm/iib-10.0.0.10/iib version
-  echo "----------------------------------------"
+	echo "----------------------------------------"
 
   NODE_EXISTS=`mqsilist | grep $NODE_NAME > /dev/null ; echo $?`
   
@@ -154,7 +153,8 @@ start()
     echo "----------------------------------------"
   fi
 
-  if [ "${MQ_ENABLE_SWITCH_SERVER+x}" ]; then
+  # Enable Switch Server
+  if [ "${ENABLE_SWITCH_SERVER+x}" ]; then
     echo "----------------------------------------"
     echo "Starting Switch Server"
     echo "----------------------------------------"
@@ -173,6 +173,7 @@ start()
     echo "Deploy bar file $BAR_FILE from /etc/mqm"
     mqsideploy ${NODE_NAME} -e ${SERVER_NAME} -a ${BAR_FILE}
   done
+
   # Deploy bar files in mounted volume /tmp/BARs
   if [ -d "/tmp/BARs" ]; then
     for BAR_FILE in $(ls -v /tmp/BARs/*.bar); do

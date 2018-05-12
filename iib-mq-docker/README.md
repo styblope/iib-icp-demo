@@ -111,6 +111,7 @@ At this point, your container is running and you can [deploy](http://www-01.ibm.
 * **SERVER_NAME** - Set this to the name you want your Integration Server to be created with.
 * **CACHE_POLICY** - Set this to configure the embedded global cache. The parameter specifies the policy to use for the cache manager. You can set this parameter to `default`, `disabled`, `none`, or the fully qualified name of an XML policy file. 
 * **CACHE_PORT_RANGE** - Specify the range of ports that the cache manager can use. Set this parameter to `generate` or to a specific range of ports. If you specify a range of ports, the value of this parameter must be in the format `xxxx-yyyy`, and the range must contain at least 20 ports
+* **MQ_QMGR_NAME** - MQ Queue Manager name. Default value is `MQ1`.
 
 # License
 

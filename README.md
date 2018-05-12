@@ -6,13 +6,13 @@ The following scenarios are covered:
 1. IIB scaling using UCD
 2. IIB auto-scaling and load balancing (stateless case)
 3. IIB high-availability (readiness/liveness probes)
-4. MQ integration, TLS
+4. TODO: MQ integration, TLS
 5. IIB Global Cache
 6. Custom catalog item (HELM chart)
 7. Automated deployment of IIB flows (BAR files) across the cluster
 8. IIB version rolling update (using k8s rolling update features)
 9. Centralized IIB logging (show centralized IIB logs in Kiabana)
-10. (?) IIB Monitoring
+10. Kubernetes cluster and IIB Monitoring
 11. (?) Blue/Green deployments, traffic routing, network policies
 12. (?) ISTIO - pod-to-pod TLS
 
@@ -28,7 +28,7 @@ Illustrate how IIB nodes can be automatically scaled for increased performance a
 - Automated dynamic scaling of IIB based on load
 - IIB high-availability due to redundancy and auto-recovery
 
-**Tasks**
+**Demo tasks**
 
 - Prepare a sample IIB flow (*BAR file*) to respond to GET requests on a REST interface
 - Setup basic IIB stateless scalable *deployment* 
@@ -88,7 +88,7 @@ Constantly watch the IIB node instances and recover from from accidental crashes
 - Increased availability (lower downtime) due to automatic recovery and re-scheduling. Typically useful for low-level failures (HW, resources, network, etc.)
 - Visibility and monitoring
 
-**Tasks**
+**Demo tasks**
 
 - Setup Readiness probe
 - Setup Liveness probe
@@ -146,6 +146,10 @@ Disable authentication
 	alter qmgr connauth(' ‘)
 	refresh security
 
+**Setting up SSL**
+
+If you wish to use two-way SSL between IIB and MQ using a client connection, consult the notes in iib-mq-ssl-notes.txt.
+
 ## IIB Global Cache
 
 **Scenario**  
@@ -155,7 +159,7 @@ Show IIB embedded global cache feature on IBM Cloud Private container orchestrat
 
 - Use the embedded global cache IIB feature in the same way as on a traditional VM deployment
 
-**Tasks**
+**Demo tasks**
 
 - Prepare custom IIB image with settings to enable the embedded global cache
 - Use scaled IIB *statefulset* with enabled caching
@@ -186,6 +190,8 @@ Verify cache placement
 
     kubectl exec -ti iib-0 -- bash -c "mqsicacheadmin IIB_NODE -c showPlacement"
 
+Deploy custom Global Cache application (src-iib/docker-gc/docker_gc.bar) to test. Test by using HTTP POST with "Content-Type: text/plain" and some data to `<load-balancer-ip>:<load-balancer-http-port>/gchello`. Application increments a counter inside GlobalCache by data length.
+
 ## Custom catalog item (HELM chart)
 
 **Scenario**: Leverage IBM Cloud Private's application to catalog to allow users to pick and deploy packaged applications (releases) with convenience of a GUI and central role-based access (RBAC/LDAP).
@@ -195,7 +201,7 @@ Verify cache placement
 - Make available deployable applications in a GUI catalog
 - Options for CI/CD and other ICP tooling
 
-**Tasks**
+**Demo tasks**
 
 - Show catalog and helm chart creation
 - Show Urban Code Deploy integration to create custom Docker image and HELM chart
@@ -218,9 +224,108 @@ Verify cache placement
 
 - Configure version control (git) to track IIB application file versions and deploy flows (BAR files) using UCD to the IIB cluster
 - UCD pulls new versions from a repo (development folder) and deploys them to the `/export/BARs` global directory
-- Backup old files to `BARs backup` directory.
+- Backup old files to `BARs backup` directory. - not needed (UCD stores and tracks all deployed versions)
 
 **Implementation:**
+
+UCD copies selected version of component (BAR file) to the mounted volume and then deploys it to all iib pods 
+
+![](media/deployBAR.jpg)
+
+    kubectl get pods | grep 'iib'| awk '{print $1}' | xargs -I {:}  kubectl exec  {:} -- bash -c "mqsideploy   	${p:environment/node.name} -e ${p:environment/server.name} -a ${p:environment/shared.folder}/${p:component.name}"
+    
+You can verify that desired version of the flow was deployed (Case.bar) by calling
+
+	curl -X PUT -i 'http://192.168.24.33:31277/hello' --data jknjnjk
+	
+It should return version name in response:
+
+		Hello there!
+		You have called the flow "case1" with the following bytes:
+		6a6b6e6a6e6a6b
+    
+    
+## IIB version rolling update (using k8s rolling update features)
+
+**Scenario:**: Automatic and controlled update of underlying image for IIB deployments
+
+**Benefits:**
+
+- Version control and tracking - control image version and audit environment inventory
+- Approval flow - process governance
+
+**Implementation:**
+
+![](media/rolling-update.jpg)
+
+UCD application contains iib-mq image component which versions are imported from ICP image registry.
+Application has deployment process called 'Rolling update'. The process executes
+
+	sfset=$(kubectl get statefulsets | grep 'iib'| awk '{print $1}')
+	# kubectl patch statefulset $sfset -p '{"spec":{"updateStrategy":{"type":"RollingUpdate"}}}'
+	kubectl patch statefulset $sfset --type='json' -p='[{"op": "replace", "path": 	"/spec/template/spec/containers/0/image", "value":"mycluster.icp:8500/default/${component.name}:${p:version.name}"}]'
+	
+You can verify image version:
+
+	kubectl describe pod iib-0
+
+Response should contain image version:
+
+	Image:          mycluster.icp:8500/default/iib-mq:10.0.0.10
+
+
+## Centralized IIB logging
+
+**Scenario:** Out-of-box centralized logging of system and application (IIB) logs
+
+**Benefits:**
+
+- Application log history, search, audit, archive
+- Troubleshooting, correlation
+- auto-scaling - no manual setup
+- possible to integrate with 3rd party tools (e.g. analytics)
+
+**Demo tasks**
+
+- Kibana GUI showcase
+- Filter for IIB pod/container logs
+- Optional: show custom log collector (/var/log/syslog)
+
+**Implementation**
+
+The logging collection, aggregation and storage are out-of-box
+
+TODO: Optional custom log collector implementation using sidecar container
+
+## Kubernetes cluster and IIB Monitoring
+
+**Scenario:** Built-in metric monitoring of container platform as well as deployed containerized applications
+
+**Benefits:**
+
+- Application performance monitoring and visibility
+- Centralized performance metrics collection (Heapster, Prometheus)
+- Reporting (Grafana)
+- Alerting
+
+**Demo tasks**
+
+- Show Monitoring and Alerting features from GUI
+- Create and watch custom metrics using Prometheus expression browser
+- Simulate HDD full threshold situation and show alerts in Alertmanager and Slack 
+
+**Implementation**
+
+Launch Prometheus expression browser
+    
+    kubectl -n kube-system port-forward deployment/monitoring-prometheus 9090:9090
+    http://localhost:9090/graph
+
+Configure alerts and external service notifications in configmaps `alert_rules` and `monitoring-prometheus-alertmanager`
+
+Simulate disk full situation by allocating space in a big file
+
+    fallocate -l 30G big-file1.tmp
 
 ---
 

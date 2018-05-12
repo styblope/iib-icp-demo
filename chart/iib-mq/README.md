@@ -2,13 +2,9 @@
 
 # IBM MQ
 
-![MQ Logo](https://developer.ibm.com/messaging/wp-content/uploads/sites/18/2017/07/IBM-MQ-Square-200.png)
-
 IBM® MQ is messaging middleware that simplifies and accelerates the integration of diverse applications and business data across multiple platforms. It uses message queues to facilitate the exchanges of information and offers a single messaging solution for cloud, mobile, Internet of Things (IoT) and on-premises environments.
 
 # IBM INTEGRATION BUS
-
-![IIB Logo](https://ot4i.github.com/iib-helm/ibm-integration-bus-dev/IBM_Integration_Bus_Icon.svg)
 
 IBM® Integration Bus is a market-leading lightweight enterprise integration engine that offers a fast, simple way for systems and applications to communicate with each other. As a result, it can help you achieve business value, reduce IT complexity and save money. IBM Integration Bus supports a range of integration choices, skills and interfaces to optimize the value of existing technology investments. 
 
@@ -54,33 +50,36 @@ The following table lists the configurable parameters of the `iib-mq` chart and 
 | Parameter                        | Description                                     | Default                                                    |
 | -------------------------------- | ----------------------------------------------- | ---------------------------------------------------------- |
 | `license`                        | Set to `accept` to accept the terms of the IBM license  | `not accepted`                                     |
-| `image.repository`               | Image full name including repository            | `ibmcom/mq`                                                |
-| `image.tag`                      | Image tag                                       | `9`                                                        |
+| `image.repository`               | Image full name including repository            | `icpcluster.icp:8500/default/iib-mq`                       |
+| `image.tag`                      | Image tag                                       | `10.0.0.10`                                                |
 | `image.pullPolicy`               | Image pull policy                               | `IfNotPresent`                                             |
 | `image.pullSecret`               | Image pull secret, if you are using a private Docker registry | `nil`                                        |
-| `persistence.enabled`           | Use persistent volumes for all defined volumes                  | `true`                                     |
-| `persistence.useDynamicProvisioning` | Use dynamic provisioning (storage classes) for all volumes | `true`                                     |
-| `dataPVC.name`                  | Suffix for the PVC name                                         | `"data"`                                   |
-| `dataPVC.storageClassName`      | Storage class of volume for main MQ data (under `/var/mqm`)     | `""`                                       |
-| `dataPVC.size`                  | Size of volume for main MQ data (under `/var/mqm`)              | `2Gi`                                      |
-| `service.name`                   | Name of the Kubernetes service to create        | `qmgr`                                                     |
+| `persistence.enabled`            | Use persistent volumes for all defined volumes  | `true`                                                     |
+| `persistence.useDynamicProvisioning` | Use dynamic provisioning (storage classes) for all volumes | `true`                                      |
+| `dataPVC.name`                   | Suffix for the PVC name                         | `"data"`                                                   |
+| `dataPVC.storageClassName`       | Storage class of volume for main MQ data (under `/var/mqm`)  | `""`                                          |
+| `dataPVC.size`                   | Size of volume for main MQ data (under `/var/mqm`)           | `2Gi`                                         |
+| `service.name`                   | Name of the Kubernetes service to create        | `iib`                                                      |
 | `service.type`                   | Kubernetes service type exposing ports, e.g. `NodePort`       | `ClusterIP`                                  |
-| `resources.limits.cpu`          | Kubernetes CPU limit for the Queue Manager container | `500m`                                                   |
-| `resources.limits.memory`       | Kubernetes memory limit for the Queue Manager container | `512Mi`                                              |
-| `resources.requests.cpu`        | Kubernetes CPU request for the Queue Manager container | `500m`                                                 |
-| `resources.requests.memory`     | Kubernetes memory request for the Queue Manager container | `512Mi`                                            |
-| `queueManager.name`              | MQ Queue Manager name                           | Helm release name                                          |
-| `queueManager.dev.adminPassword` | Developer defaults - administrator password     | Random generated string.  See the notes that appear when you install for how to retrieve this.                            |
-| `queueManager.dev.appPassword`   | Developer defaults - app password   | `nil` (no password required to connect an MQ client)                   |
+| `resources.limits.cpu`           | Kubernetes CPU limit for the container | `2`                                                |
+| `resources.limits.memory`        | Kubernetes memory limit for the container | `2Gi`                                            |
+| `resources.requests.cpu`         | Kubernetes CPU request for the container | `1`                                              |
+| `resources.requests.memory`      | Kubernetes memory request for the Queue Manager container | `512Mi`                                          |
+| `queueManager.name`              | MQ Queue Manager name                           | `MQ1`                                                      |
+| `queueManager.dev.adminPassword` | Developer defaults - administrator password     | `passw0rd`   |
+| `queueManager.dev.appPassword`   | Developer defaults - app password   | `nil`                   |
+| `queueManager.enableswitchserver` | Enable MQ Switch Server                         | `nil` |
 | `nameOverride`                   | Set to partially override the resource names used in this chart | `nil`                                      |
-|`nodename`              | IBM Integration Bus integration node name                           | `IIBV10010`                                        |
-| `servername`              | IBM Integration Bus integration server name                           | `IS1`                                        |
+| `iib.nodename`                   | IBM Integration Bus integration node name       | `IIB_NODE`                                                 |
+| `iib.servername`                 | IBM Integration Bus integration server name     | `IIB_SERVER`                                               |
+| `iib.pvc`                        | IBM Integration Bus BAR files volum claim name  | `iib-pvc`                                                  |
+| `iib.cache.policy`               | Embedded global cache policy.                   | `disabled`                                                 | 
+| `iib.cache.portrange`            | Global cache manager port range                        | `2800-2819`                                         |
+| `iib.cache.configmap`            | Global cache policy file configmap `globalcache_policy.xml`            | `iib-globalcache-policy`            |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.
 
-Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart.
-
-> **Tip**: You can use the default [values.yaml](values.yaml)
+Alternatively, the YAML file [values.yaml](values.yaml) specifies the values for the parameters.
 
 ## Persistence
 

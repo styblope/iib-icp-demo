@@ -23,6 +23,7 @@ metadata:
     heritage: "{{ .Release.Service }}"
 spec:
   type: {{ .Values.service.type }}
+  clusterIP: None # Headless service for StatefulSet
   ports:
   - port: 1414
     name: {{ .Values.service.name }}-server
@@ -34,5 +35,13 @@ spec:
     name: {{ .Values.service.name }}-nodelistener
   - port: 7800
     name: {{ .Values.service.name }}-serverlistener
+  - name: globalcache0
+    port: 2800
+  - name: globalcache1
+    port: 2801
+  - name: globalcache2
+    port: 2802
+  - name: globalcache3
+    port: 2803
   selector:
     app: {{ template "fullname" . }}

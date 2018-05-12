@@ -2,9 +2,9 @@ license: "accept"
 
 image:
   # repository is the container repository to use, which must contain IBM MQ Advanced for Developers
-  repository: icpcluster.icp:8500/default/iib-mq 
+  repository: mycluster.icp:8500/default/iib-mq 
   # tag is the tag to use for the container repository
-  tag: latest
+  tag: 10.0.0.10
   # pullSecret is the secret to use when pulling the image from a private registry
   pullSecret:
   # pullPolicy is either IfNotPresent or Always (https://kubernetes.io/docs/concepts/containers/images/)
@@ -13,7 +13,7 @@ image:
 # persistence section specifies persistence settings which apply to the whole chart
 persistence:
   # enabled is whether to use Persistent Volumes or not
-  enabled: false
+  enabled: true
   # useDynamicProvisioning is whether or not to use Storage Classes to dynamically create Persistent Volumes
   useDynamicProvisioning: true
 
@@ -27,30 +27,36 @@ dataPVC:
   size: 2Gi
 
 service:
-  name: iibmq
-  type: NodePort
+  name: iib
+  type: ClusterIP
 
 resources:
   limits:
-    cpu: 1024m
-    memory: 1024Mi
+    cpu: 2
+    memory: 2Gi
   requests:
-    cpu: 1024m
-    memory: 1024Mi
+    cpu: 1
+    memory: 512Mi
 
 # queueManager section specifies settings for the MQ Queue Manager
 queueManager:
   # name allows you to specify the name to use for the queue manager.  Defaults to the Helm release name.
-  name: icpDA1
+  name: MQ1
   # dev section specifies settings for the MQ developer defaults available in the MQ Advanced for Developers image.
   dev:
     # adminPassword sets the password of the admin user
     adminPassword: passw0rd
     # appPassword sets the password of the app user
     appPassword: passw0rd
+  enableswitchserver:
 # iib section specifies settings for iib
 iib:
-  iibnodename: icpnode1
-  iibservername: default
+  nodename: IIB_NODE
+  servername: IIB_SERVER
+  pvc: iib-pvc
+  cache:
+    policy: disabled
+    portrange: 2800-2819
+    configmap: iib-globalcache-policy
 # nameOverride can be set to partially override the name of the resources created by this chart
 nameOverride:

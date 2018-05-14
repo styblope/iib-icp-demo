@@ -31,28 +31,6 @@ spec:
     port: 7080
     protocol: TCP
     targetPort: 7080
-
-  ports:
-  - name: webui
-    port: 4414
-    protocol: TCP
-    targetPort: 4414
-  - name: mqwebui 
-    port: 9443
-    protocol: TCP
-    targetPort: 9443
-  - name: mqlistener
-    port: 1414
-    protocol: TCP
-    targetPort: 1414
-  - name: serverlistener
-    port: 7800
-    protocol: TCP
-    targetPort: 7800
-  - name: nodelistener
-    port: 7080
-    protocol: TCP
-    targetPort: 7080
   selector:
-    app: iib
+    color: green
   type: NodePort

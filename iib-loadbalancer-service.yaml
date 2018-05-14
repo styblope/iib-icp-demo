@@ -7,22 +7,27 @@ metadata:
 spec:
   ports:
   - name: webui
+    nodePort: 30760
     port: 4414
     protocol: TCP
     targetPort: 4414
-  - name: mqwebui 
+  - name: mqwebui
+    nodePort: 32183
     port: 9443
     protocol: TCP
     targetPort: 9443
   - name: mqlistener
+    nodePort: 30802
     port: 1414
     protocol: TCP
     targetPort: 1414
   - name: serverlistener
+    nodePort: 31455
     port: 7800
     protocol: TCP
     targetPort: 7800
   - name: nodelistener
+    nodePort: 30671
     port: 7080
     protocol: TCP
     targetPort: 7080

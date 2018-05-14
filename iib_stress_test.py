@@ -3,9 +3,24 @@
 import urllib3
 import thread
 import sys
+import socket
 
-if len(sys.argv) < 3:
-	print ("Usage: iib_stress_test.py <IP> <HTTP_Port>")
+if len(sys.argv) != 3:
+	print ("Usage: iib_stress_test.py <ip/hostname> <port>")
+	sys.exit(1)
+
+# try:
+# 	socket.gethostbyname(sys.argv[1])
+# except socket.gaierror as e:
+# 	print (e)
+# 	sys.exit(1)
+
+try:
+	socket.gethostbyname(sys.argv[1])
+	if int(sys.argv[2]) < 0 or int(sys.argv[2]) > 65535:
+		raise ValueError("Invalid port number")
+except Exception as e:
+	print (e)
 	sys.exit(1)
 
 # URL = 'http://httpbin.org:80/ip'

@@ -31,8 +31,8 @@ Illustrate how IIB nodes can be automatically scaled for increased performance a
 **Demo tasks**
 
 - Prepare a sample IIB flow (*BAR file*) to respond to GET requests on a REST interface
-- Setup basic IIB stateless scalable *deployment* 
-- Setup kubernetes auto-scaling policy based on CPU usage
+- Setup IIB stateless scalable *deployment* and load-balancer *service*
+- Configure kubernetes auto-scaling policy based on CPU usage
 - Simulate increased load to trigger auto-scaling
 
 **Implementation**
@@ -50,16 +50,16 @@ The test scenario involves high volume injections of REST GET queries to the ser
 
 HTTP GET single test:
 
-	curl -s 192.168.24.33:32420/icpIIBtest
+	curl -s 192.168.24.33:31455/hello
 
 HTTP GET smoke test:
 
-	curl -s 192.168.24.33:32420/icpIIBtest?[1-1000000] > /dev/null
+	curl -s 192.168.24.33:31455/hello?[1-1000000] > /dev/null
     ... repeat for parallel TCP sessions
 
 or better using the stress load script (which runs 100 parallel TCP connections)
     
-    ./iib_stress_test.py
+    ./iib_stress_test.py 192.168.24.33 31455
 
 Monitor pod CPU load
 	

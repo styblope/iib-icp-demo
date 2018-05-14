@@ -3,32 +3,29 @@ kind: Service
 metadata:
   labels:
     app: iib
-  name: iib
+  name: iib-loadbalancer
 spec:
-  clusterIP: None # Headless service for StatefulSet
   ports:
   - name: webui
     port: 4414
     protocol: TCP
-  - name: mqwebui
+    targetPort: 4414
+  - name: mqwebui 
     port: 9443
     protocol: TCP
-  - name: globalcache0
-    port: 2800
-  - name: globalcache1
-    port: 2801
-  - name: globalcache2
-    port: 2802
-  - name: globalcache3
-    port: 2803
+    targetPort: 9443
   - name: mqlistener
     port: 1414
     protocol: TCP
+    targetPort: 1414
   - name: serverlistener
     port: 7800
     protocol: TCP
+    targetPort: 7800
   - name: nodelistener
     port: 7080
     protocol: TCP
+    targetPort: 7080
   selector:
     app: iib
+  type: NodePort

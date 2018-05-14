@@ -8,27 +8,29 @@ spec:
   clusterIP: None # Headless service for StatefulSet
   ports:
   - name: webui
+    nodePort: 30760
     port: 4414
     protocol: TCP
+    targetPort: 4414
   - name: mqwebui
+    nodePort: 32183
     port: 9443
     protocol: TCP
-  - name: globalcache0
-    port: 2800
-  - name: globalcache1
-    port: 2801
-  - name: globalcache2
-    port: 2802
-  - name: globalcache3
-    port: 2803
+    targetPort: 9443
   - name: mqlistener
+    nodePort: 30802
     port: 1414
     protocol: TCP
+    targetPort: 1414
   - name: serverlistener
+    nodePort: 31455
     port: 7800
     protocol: TCP
+    targetPort: 7800
   - name: nodelistener
+    nodePort: 30671
     port: 7080
     protocol: TCP
+    targetPort: 7080
   selector:
     app: iib

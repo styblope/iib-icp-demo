@@ -329,6 +329,37 @@ Simulate disk full situation by allocating space in a big file
 
 ---
 
+## Blue-green deployment
+
+**Scenario:** Run 2 IIB environments (blue and green) within ICP. At any time, only one of the environments is live, with the live environment serving all production traffic. As you prepare a new version of your software, deployment and the final stage of testing takes place in the environment that is not live. Once you have deployed and fully tested the software in not live environment, you switch the router so all incoming requests now go to it.
+
+**Benefits:**
+
+- Reduce downtime related to the deployment of a new version
+- Reduce risks 
+
+**Demo tasks**
+
+- Show deployment.yaml for Green environment
+- Show service settings
+- Show applicaion environments
+- Deploy new version to Blue environment. Show that LoadBalancer still forwarding all trafic to Green environment. Change LB  settings and show that trafic is forwarded to Blue.
+
+**Implementation**
+
+- Change BAR deployment process. Add filtering to pods selected for update:
+
+    kubectl get pods -l color=${p:environment.name} | grep 'iib'| awk '{print $1}' | xargs -I {:}  kubectl exec  {:} -- bash - c "mqsideploy ${p:environment/node.name} -e ${p:environment/server.name} -a  ${p:environment/shared.folder}/${p:component.name}"
+
+- Add new environments for LoadBalancer and Blue environment. 
+- Create LoadBalancer as a separate component, import service.yaml as its content (you need 2 verisons: blue and green with diffrent value for selector element). 
+- Add LoadBalancer deployment process:
+
+      kubectl delete service iib-loadbalancer
+      kubectl apply -f ./*.yaml
+      
+ ![](media/blue-green.jpg) 
+
 ## Links
 IIB chart repo:
 https://github.com/ot4i/iib-helm

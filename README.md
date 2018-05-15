@@ -16,7 +16,6 @@ The following scenarios are covered:
 11. (?) Blue/Green deployments, traffic routing, network policies
 12. (?) ISTIO - pod-to-pod TLS
 
-## IIB scaling using UCD
 
 ## Autoscaling with load balancer
 
@@ -77,6 +76,34 @@ Monitor message stats in iib instances
     and then from browser host:
     ssh -L 5000:localhost:5000 -L 5001:localhost:5001 master
     point browser to http://localhost:5000 and 5001
+
+## IIB scaling using UCD
+
+**Scenario**:  
+Illustrate how IIB nodes can be semi-automatically scaled using UCD generic processes
+
+**Benefits:**
+
+- Ability to trigger scalling based on monitoring events through UCD API
+
+**Implementation**
+
+Two UCD generic processes. One for scaling out, another for scaling in. Parameter is used to define element to scale: deployment or statefulset.
+
+Scaling out:
+
+    ss=$(kubectl get ${p:workload.type} | grep 'iib'| awk '{print $1}')
+    number=$(kubectl get ${p:workload.type} | grep 'iib'| awk '{print $3}')
+    number=$((number+1))
+    kubectl scale ${p:workload.type}  $ss --replicas=$number
+
+Scaling in:
+
+    ss=$(kubectl get ${p:workload.type} | grep 'iib'| awk '{print $1}')
+    number=$(kubectl get ${p:workload.type} | grep 'iib'| awk '{print $3}')
+    number=$((number+1))
+    kubectl scale ${p:workload.type}  $ss --replicas=$number
+
 
 ## High availability
 

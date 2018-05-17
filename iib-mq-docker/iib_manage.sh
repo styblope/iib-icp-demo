@@ -119,6 +119,9 @@ start()
     echo "Starting node $NODE_NAME"
     mqsistart $NODE_NAME
     echo "----------------------------------------"
+    echo "Changing mode of operation of $NODE_NAME"
+    mqsimode $NODE_NAME -o advanced
+    echo "----------------------------------------"
     echo "Setting cachemanager parameters:"
     echo "  - listenerHost: $(hostname -f)"
     echo "  - MQTTServer: disabled"

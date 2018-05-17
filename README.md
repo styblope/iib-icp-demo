@@ -16,7 +16,6 @@ The following scenarios are covered:
 11. (?) Blue/Green deployments, traffic routing, network policies
 12. (?) ISTIO - pod-to-pod TLS
 
-## IIB scaling using UCD
 
 ## Autoscaling with load balancer
 
@@ -31,8 +30,8 @@ Illustrate how IIB nodes can be automatically scaled for increased performance a
 **Demo tasks**
 
 - Prepare a sample IIB flow (*BAR file*) to respond to GET requests on a REST interface
-- Setup basic IIB stateless scalable *deployment* 
-- Setup kubernetes auto-scaling policy based on CPU usage
+- Setup IIB stateless scalable *deployment* and load-balancer *service*
+- Configure kubernetes auto-scaling policy based on CPU usage
 - Simulate increased load to trigger auto-scaling
 
 **Implementation**
@@ -50,16 +49,16 @@ The test scenario involves high volume injections of REST GET queries to the ser
 
 HTTP GET single test:
 
-	curl -s 192.168.24.33:32420/icpIIBtest
+	curl -s 192.168.24.33:31455/hello
 
 HTTP GET smoke test:
 
-	curl -s 192.168.24.33:32420/icpIIBtest?[1-1000000] > /dev/null
+	curl -s 192.168.24.33:31455/hello?[1-1000000] > /dev/null
     ... repeat for parallel TCP sessions
 
 or better using the stress load script (which runs 100 parallel TCP connections)
     
-    ./iib_stress_test.py
+    ./iib_stress_test.py 192.168.24.33 31455
 
 Monitor pod CPU load
 	
@@ -77,6 +76,34 @@ Monitor message stats in iib instances
     and then from browser host:
     ssh -L 5000:localhost:5000 -L 5001:localhost:5001 master
     point browser to http://localhost:5000 and 5001
+
+## IIB scaling using UCD
+
+**Scenario**:  
+Illustrate how IIB nodes can be semi-automatically scaled using UCD generic processes
+
+**Benefits:**
+
+- Ability to trigger scalling based on monitoring events through UCD API
+
+**Implementation**
+
+Two UCD generic processes. One for scaling out, another for scaling in. Parameter is used to define element to scale: deployment or statefulset.
+
+Scaling out:
+
+    ss=$(kubectl get ${p:workload.type} | grep 'iib'| awk '{print $1}')
+    number=$(kubectl get ${p:workload.type} | grep 'iib'| awk '{print $3}')
+    number=$((number+1))
+    kubectl scale ${p:workload.type}  $ss --replicas=$number
+
+Scaling in:
+
+    ss=$(kubectl get ${p:workload.type} | grep 'iib'| awk '{print $1}')
+    number=$(kubectl get ${p:workload.type} | grep 'iib'| awk '{print $3}')
+    number=$((number+1))
+    kubectl scale ${p:workload.type}  $ss --replicas=$number
+
 
 ## High availability
 
@@ -328,6 +355,37 @@ Simulate disk full situation by allocating space in a big file
     fallocate -l 30G big-file1.tmp
 
 ---
+
+## Blue-green deployment
+
+**Scenario:** Run 2 IIB environments (blue and green) within ICP. At any time, only one of the environments is live, with the live environment serving all production traffic. As you prepare a new version of your software, deployment and the final stage of testing takes place in the environment that is not live. Once you have deployed and fully tested the software in not live environment, you switch the router so all incoming requests now go to it.
+
+**Benefits:**
+
+- Reduce downtime related to the deployment of a new version
+- Reduce risks 
+
+**Demo tasks**
+
+- Show deployment.yaml for Green environment
+- Show service settings
+- Show applicaion environments
+- Deploy new version to Blue environment. Show that LoadBalancer still forwarding all trafic to Green environment. Change LB  settings and show that trafic is forwarded to Blue.
+
+**Implementation**
+
+- Change BAR deployment process. Add filtering to pods selected for update:
+
+    kubectl get pods -l color=${p:environment.name} | grep 'iib'| awk '{print $1}' | xargs -I {:}  kubectl exec  {:} -- bash - c "mqsideploy ${p:environment/node.name} -e ${p:environment/server.name} -a  ${p:environment/shared.folder}/${p:component.name}"
+
+- Add new environments for LoadBalancer and Blue environment. 
+- Create LoadBalancer as a separate component, import service.yaml as its content (you need 2 verisons: blue and green with diffrent value for selector element). 
+- Add LoadBalancer deployment process:
+
+      kubectl delete service iib-loadbalancer
+      kubectl apply -f ./*.yaml
+      
+ ![](media/blue-green.jpg) 
 
 ## Links
 IIB chart repo:

@@ -3,9 +3,8 @@ kind: Service
 metadata:
   labels:
     app: iib
-  name: iib
+  name: iib-loadbalancer
 spec:
-  clusterIP: None # Headless service for StatefulSet
   ports:
   - name: webui
     nodePort: 30760
@@ -33,4 +32,5 @@ spec:
     protocol: TCP
     targetPort: 7080
   selector:
-    app: iib
+    color: green
+  type: NodePort

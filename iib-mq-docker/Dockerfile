@@ -1,4 +1,4 @@
-# © Copyright IBM Corporation 2015.
+# Â© Copyright IBM Corporation 2015.
 #
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Eclipse Public License v1.0
@@ -67,6 +67,8 @@ RUN mkdir -p /tmp/mq \
 COPY mq-dev-config.sh mq-license-check.sh mq.sh setup-mqm-web.sh setup-var-mqm.sh /usr/local/bin/
 COPY *.mqsc /etc/mqm/
 COPY *.bar  /etc/mqm/
+COPY key.kdb /etc/mqm/
+COPY key.sth /etc/mqm/
 COPY admin.json /etc/mqm/
 COPY mq-dev-config /etc/mqm/mq-dev-config
 

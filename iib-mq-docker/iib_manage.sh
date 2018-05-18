@@ -140,6 +140,9 @@ start()
     echo "Configuring db access"
     mqsisetdbparms $NODE_NAME -n BROKER -u sa -p passw0rd
     echo "----------------------------------------"
+    echo "Configuring SSL"
+    mqsichangeproperties $NODE_NAME -o BrokerRegistry -n mqKeyRepository -v /etc/mqm/key
+    echo "----------------------------------------"
     echo "Starting node $NODE_NAME"
     mqsistart $NODE_NAME
     echo "----------------------------------------"

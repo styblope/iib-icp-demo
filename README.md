@@ -49,15 +49,11 @@ The test scenario involves high volume injections of REST GET queries to the ser
 
 HTTP GET single test:
 
-	curl -s 192.168.24.33:31455/hello
+	curl -s -X PUT -i 192.168.24.33:31455/hello -d qwerty
 
-HTTP GET smoke test:
-
-	curl -s 192.168.24.33:31455/hello?[1-1000000] > /dev/null
-    ... repeat for parallel TCP sessions
-
-or better using the stress load script (which runs 100 parallel TCP connections)
+HTTP 'smoke' test using custom script (which runs 100 parallel TCP connections)
     
+    ssh master
     ./iib_stress_test.py 192.168.24.33 31455
 
 Monitor pod CPU load

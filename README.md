@@ -331,7 +331,7 @@ Response should contain image version:
 
 The logging collection, aggregation and storage are out-of-box
 
-TODO: Optional custom log collector implementation using sidecar container
+Optional TODO: Custom application log collector implementation using sidecar container
 
 ## Kubernetes cluster and IIB Monitoring
 
@@ -385,14 +385,14 @@ Simulate disk full situation by allocating space in a big file
 
 - Change BAR deployment process. Add filtering to pods selected for update:
 
-    kubectl get pods -l color=${p:environment.name} | grep 'iib'| awk '{print $1}' | xargs -I {:}  kubectl exec  {:} -- bash - c "mqsideploy ${p:environment/node.name} -e ${p:environment/server.name} -a  ${p:environment/shared.folder}/${p:component.name}"
+        kubectl get pods -l color=${p:environment.name} | grep 'iib'| awk '{print $1}' | xargs -I {:}  kubectl exec  {:} -- bash - c "mqsideploy ${p:environment/node.name} -e ${p:environment/server.name} -a  ${p:environment/shared.folder}/${p:component.name}"
 
 - Add new environments for LoadBalancer and Blue environment. 
 - Create LoadBalancer as a separate component, import service.yaml as its content (you need 2 verisons: blue and green with diffrent value for selector element). 
 - Add LoadBalancer deployment process:
 
-      kubectl delete service iib-loadbalancer
-      kubectl apply -f ./*.yaml
+        kubectl delete service iib-loadbalancer
+        kubectl apply -f ./*.yaml
       
  ![](media/blue-green.jpg) 
 

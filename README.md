@@ -329,9 +329,13 @@ Response should contain image version:
 
 **Implementation**
 
-The logging collection, aggregation and storage are out-of-box
+The container log collection, aggregation and storage are provided by ICP out-of-box through ELK stack.
 
-Optional TODO: Custom application log collector implementation using sidecar container
+Redirect IIB logs from `/var/log/syslog` to STDOUT, which is by default collected by Docker log. See [Docker documentation](https://docs.docker.com/config/containers/logging/)
+
+Alternative: Custom application log collector implementation using sidecar container
+
+
 
 ## Kubernetes cluster and IIB Monitoring
 

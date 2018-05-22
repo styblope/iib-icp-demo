@@ -202,6 +202,8 @@ Show IIB embedded global cache feature on IBM Cloud Private container orchestrat
 
 Configure multi-integration node cache topology
 
+<img src="media/globalcache.png" width="500">
+
 > To share data across integration nodes, or enhance the availability of the cache, you must create a policy file. The policy file is an XML file that the cache manager uses to connect the caches of multiple integration nodes. Set the cache policy to the fully qualified name of the policy file.
 
 Sample policy files are located here:

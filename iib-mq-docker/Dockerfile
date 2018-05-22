@@ -37,6 +37,7 @@ RUN rm -rf /var/lib/apt/lists/*
 
 RUN apt-get dist-upgrade -y
 
+
 #Install MQ
 
 ARG MQ_URL=http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/mqadv_dev903_linux_x86-64.tar.gz
@@ -73,7 +74,6 @@ COPY admin.json /etc/mqm/
 COPY mq-dev-config /etc/mqm/mq-dev-config
 
 RUN chmod +x /usr/local/bin/*.sh
-
 
 
 # Install IIB V10 Developer edition
@@ -114,6 +114,9 @@ RUN chgrp mqbrkrs /home/iibuser/agentx.json && \
  chmod 664 /etc/odbc.ini && \
  chmod +rx /usr/local/bin/*.sh && \
  chmod 666 /etc/hosts
+
+# forward syslog logs to docker log collector
+RUN ln -sf /dev/stdout /var/log/syslog
 
 # Set BASH_ENV to source mqsiprofile when using docker exec bash -c
 ENV BASH_ENV=/usr/local/bin/iib_env.sh

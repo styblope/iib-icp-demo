@@ -141,8 +141,8 @@ Let’s imagine that your app takes a minute to warm up and start. Your service 
 **Liveness**  
 Let’s imagine another scenario where your app has a nasty case of deadlock, causing it to hang indefinitely and stop serving requests. Because the process continues to run, by default Kubernetes thinks that everything is fine and continues to send requests to the broken pod. By using a liveness probe, Kubernetes detects that the app is no longer serving requests and restarts the offending pod.
 
-![](media/google-kubernetes-probe-liveness.gif | width=300)
-![](media/google-kubernetes-probe-readiness.gif | width=300)
+<img src="media/google-kubernetes-probe-readiness.gif" width="350">
+<img src="media/google-kubernetes-probe-liveness.gif" width="350">
 
 ## MQ Integration
 

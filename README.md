@@ -217,7 +217,9 @@ Verify cache placement
 
     kubectl exec -ti iib-0 -- bash -c "mqsicacheadmin IIB_NODE -c showPlacement"
 
-Deploy custom Global Cache application (src-iib/docker-gc/docker_gc.bar) to test. Test by using HTTP POST with "Content-Type: text/plain" and some data to `<load-balancer-ip>:<load-balancer-http-port>/gchello`. Application increments a counter inside GlobalCache by data length.
+Deploy custom Global Cache application (src-iib/docker-gc/docker_gc.bar) to test. Test by using HTTP POST with `Content-Type: text/plain` and some data to `<load-balancer-ip>:<load-balancer-http-port>/gchello`. Application increments a counter inside GlobalCache by data length.
+
+    curl 192.168.24.33:31455/gchello -X POST -H "Content-Type: text/plain" -d "data"
 
 ## Custom catalog item (HELM chart)
 

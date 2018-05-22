@@ -1,4 +1,4 @@
-# © Copyright IBM Corporation 2015.
+# Â© Copyright IBM Corporation 2015.
 #
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Eclipse Public License v1.0
@@ -37,6 +37,7 @@ RUN rm -rf /var/lib/apt/lists/*
 
 RUN apt-get dist-upgrade -y
 
+
 #Install MQ
 
 ARG MQ_URL=http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/mqadv_dev903_linux_x86-64.tar.gz
@@ -67,11 +68,12 @@ RUN mkdir -p /tmp/mq \
 COPY mq-dev-config.sh mq-license-check.sh mq.sh setup-mqm-web.sh setup-var-mqm.sh /usr/local/bin/
 COPY *.mqsc /etc/mqm/
 COPY *.bar  /etc/mqm/
+COPY key.kdb /etc/mqm/
+COPY key.sth /etc/mqm/
 COPY admin.json /etc/mqm/
 COPY mq-dev-config /etc/mqm/mq-dev-config
 
 RUN chmod +x /usr/local/bin/*.sh
-
 
 
 # Install IIB V10 Developer edition
@@ -112,6 +114,9 @@ RUN chgrp mqbrkrs /home/iibuser/agentx.json && \
  chmod 664 /etc/odbc.ini && \
  chmod +rx /usr/local/bin/*.sh && \
  chmod 666 /etc/hosts
+
+# forward syslog logs to docker log collector
+RUN ln -sf /dev/stdout /var/log/syslog
 
 # Set BASH_ENV to source mqsiprofile when using docker exec bash -c
 ENV BASH_ENV=/usr/local/bin/iib_env.sh

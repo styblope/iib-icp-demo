@@ -127,6 +127,10 @@ start()
     echo "  - MQTTServer: disabled"
     mqsichangeproperties $NODE_NAME -b cachemanager -o CacheManager -n listenerHost -v $(hostname -f)
     mqsichangeproperties $NODE_NAME -b pubsub -o MQTTServer -n enabled -v false
+    mqsicreateexecutiongroup $NODE_NAME -e $SERVER_NAME
+    echo "----------------------------------------"
+    echo "Configuring SSL"
+    mqsichangeproperties $NODE_NAME -o BrokerRegistry -n mqKeyRepository -v /etc/mqm/key
     echo "----------------------------------------" 
     echo "Stopping node before changing cache policy"
     mqsistop $NODE_NAME
@@ -143,7 +147,6 @@ start()
     echo "Starting node $NODE_NAME"
     mqsistart $NODE_NAME
     echo "----------------------------------------"
-    mqsicreateexecutiongroup $NODE_NAME -e $SERVER_NAME
   else
     echo "----------------------------------------"
     echo "Starting syslog"
@@ -151,6 +154,7 @@ start()
     echo "----------------------------------------"
     echo "Configuring db access"
     mqsisetdbparms $NODE_NAME -n BROKER -u sa -p passw0rd
+    echo "----------------------------------------"
     echo "Starting node $NODE_NAME"   
     mqsistart $NODE_NAME
     echo "----------------------------------------"

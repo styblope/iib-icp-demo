@@ -49,15 +49,11 @@ The test scenario involves high volume injections of REST GET queries to the ser
 
 HTTP GET single test:
 
-	curl -s 192.168.24.33:31455/hello
+	curl -s -X PUT -i 192.168.24.33:31455/hello -d qwerty
 
-HTTP GET smoke test:
-
-	curl -s 192.168.24.33:31455/hello?[1-1000000] > /dev/null
-    ... repeat for parallel TCP sessions
-
-or better using the stress load script (which runs 100 parallel TCP connections)
+HTTP 'smoke' test using custom script (which runs 100 parallel TCP connections)
     
+    ssh master
     ./iib_stress_test.py 192.168.24.33 31455
 
 Monitor pod CPU load
@@ -139,6 +135,15 @@ Watch pods
 
     watch "kubectl get pods -o wide -l app=iib"
 
+**Readiness**  
+Let’s imagine that your app takes a minute to warm up and start. Your service won’t work until it is up and running, even though the process has started. You will also have issues if you want to scale up this deployment to have multiple copies. A new copy shouldn’t receive traffic until it is fully ready, but by default Kubernetes starts sending it traffic as soon as the process inside the container starts. By using a readiness probe, Kubernetes waits until the app is fully started before it allows the service to send traffic to the new copy.
+
+**Liveness**  
+Let’s imagine another scenario where your app has a nasty case of deadlock, causing it to hang indefinitely and stop serving requests. Because the process continues to run, by default Kubernetes thinks that everything is fine and continues to send requests to the broken pod. By using a liveness probe, Kubernetes detects that the app is no longer serving requests and restarts the offending pod.
+
+<img src="media/google-kubernetes-probe-readiness.gif" width="350">
+<img src="media/google-kubernetes-probe-liveness.gif" width="350">
+
 ## MQ Integration
 
 IIB production image doesn't have MQ libraries at the moment. So to demo MQ workflow within IIB container we used development image https://github.com/DAVEXACOM/IIB-MQ.git and connect it to MSB pipeline. In order to deploy another MQ workflow replace/add .bar file to the project.
@@ -197,6 +202,8 @@ Show IIB embedded global cache feature on IBM Cloud Private container orchestrat
 
 Configure multi-integration node cache topology
 
+<img src="media/globalcache.png" width="500">
+
 > To share data across integration nodes, or enhance the availability of the cache, you must create a policy file. The policy file is an XML file that the cache manager uses to connect the caches of multiple integration nodes. Set the cache policy to the fully qualified name of the policy file.
 
 Sample policy files are located here:
@@ -217,7 +224,9 @@ Verify cache placement
 
     kubectl exec -ti iib-0 -- bash -c "mqsicacheadmin IIB_NODE -c showPlacement"
 
-Deploy custom Global Cache application (src-iib/docker-gc/docker_gc.bar) to test. Test by using HTTP POST with "Content-Type: text/plain" and some data to `<load-balancer-ip>:<load-balancer-http-port>/gchello`. Application increments a counter inside GlobalCache by data length.
+Deploy custom Global Cache application (src-iib/docker-gc/docker_gc.bar) to test. Test by using HTTP POST with `Content-Type: text/plain` and some data to `<load-balancer-ip>:<load-balancer-http-port>/gchello`. Application increments a counter inside GlobalCache by data length.
+
+    curl 192.168.24.33:31455/gchello -X POST -H "Content-Type: text/plain" -d "data"
 
 ## Custom catalog item (HELM chart)
 
@@ -320,9 +329,13 @@ Response should contain image version:
 
 **Implementation**
 
-The logging collection, aggregation and storage are out-of-box
+The container log collection, aggregation and storage are provided by ICP out-of-box through ELK stack.
 
-TODO: Optional custom log collector implementation using sidecar container
+Redirect IIB logs from `/var/log/syslog` to STDOUT, which is by default collected by Docker log. See [Docker documentation](https://docs.docker.com/config/containers/logging/)
+
+Alternative: Custom application log collector implementation using sidecar container
+
+
 
 ## Kubernetes cluster and IIB Monitoring
 
@@ -376,26 +389,28 @@ Simulate disk full situation by allocating space in a big file
 
 - Change BAR deployment process. Add filtering to pods selected for update:
 
-    kubectl get pods -l color=${p:environment.name} | grep 'iib'| awk '{print $1}' | xargs -I {:}  kubectl exec  {:} -- bash - c "mqsideploy ${p:environment/node.name} -e ${p:environment/server.name} -a  ${p:environment/shared.folder}/${p:component.name}"
+        kubectl get pods -l color=${p:environment.name} | grep 'iib'| awk '{print $1}' | xargs -I {:}  kubectl exec  {:} -- bash - c "mqsideploy ${p:environment/node.name} -e ${p:environment/server.name} -a  ${p:environment/shared.folder}/${p:component.name}"
 
 - Add new environments for LoadBalancer and Blue environment. 
 - Create LoadBalancer as a separate component, import service.yaml as its content (you need 2 verisons: blue and green with diffrent value for selector element). 
 - Add LoadBalancer deployment process:
 
-      kubectl delete service iib-loadbalancer
-      kubectl apply -f ./*.yaml
+        kubectl delete service iib-loadbalancer
+        kubectl apply -f ./*.yaml
       
  ![](media/blue-green.jpg) 
 
 ## Links
-IIB chart repo:
-https://github.com/ot4i/iib-helm
+IIB chart repo:  
+[https://github.com/ot4i/iib-helm]()
 
-IIB docker repo:
-https://github.com/ot4i/iib-docker
-https://github.com/DAVEXACOM/IIB-MQ.git
+IIB docker repo:  
+[https://github.com/ot4i/iib-docker]()  
+[https://github.com/DAVEXACOM/IIB-MQ.git]()
 
-Setting up the MSB pipeline:
-https://www.ibm.com/support/knowledgecenter/en/SS5PWC/pipeline.html
+Setting up the MSB pipeline:  
+[https://www.ibm.com/support/knowledgecenter/en/SS5PWC/pipeline.html]()  
+[https://developer.ibm.com/integration/blog/2017/09/18/lightweight-integration-useful-links/]()
 
-https://developer.ibm.com/integration/blog/2017/09/18/lightweight-integration-useful-links/
+Setting up health checks with readiness and liveness probes  
+[https://cloudplatform.googleblog.com/2018/05/Kubernetes-best-practices-Setting-up-health-checks-with-readiness-and-liveness-probes.html]()  

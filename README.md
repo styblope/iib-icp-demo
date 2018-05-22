@@ -397,17 +397,16 @@ Simulate disk full situation by allocating space in a big file
  ![](media/blue-green.jpg) 
 
 ## Links
-IIB chart repo:
-https://github.com/ot4i/iib-helm
+IIB chart repo:  
+[https://github.com/ot4i/iib-helm]()
 
-IIB docker repo:
-https://github.com/ot4i/iib-docker
-https://github.com/DAVEXACOM/IIB-MQ.git
+IIB docker repo:  
+[https://github.com/ot4i/iib-docker]()  
+[https://github.com/DAVEXACOM/IIB-MQ.git]()
 
-Setting up the MSB pipeline:
-https://www.ibm.com/support/knowledgecenter/en/SS5PWC/pipeline.html
+Setting up the MSB pipeline:  
+[https://www.ibm.com/support/knowledgecenter/en/SS5PWC/pipeline.html]()  
+[https://developer.ibm.com/integration/blog/2017/09/18/lightweight-integration-useful-links/]()
 
-https://developer.ibm.com/integration/blog/2017/09/18/lightweight-integration-useful-links/
-
-Setting up health checks with readiness and liveness probes
-https://cloudplatform.googleblog.com/2018/05/Kubernetes-best-practices-Setting-up-health-checks-with-readiness-and-liveness-probes.html
+Setting up health checks with readiness and liveness probes  
+[https://cloudplatform.googleblog.com/2018/05/Kubernetes-best-practices-Setting-up-health-checks-with-readiness-and-liveness-probes.html]()  

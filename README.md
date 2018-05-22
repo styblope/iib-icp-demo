@@ -135,6 +135,15 @@ Watch pods
 
     watch "kubectl get pods -o wide -l app=iib"
 
+**Readiness**  
+Let’s imagine that your app takes a minute to warm up and start. Your service won’t work until it is up and running, even though the process has started. You will also have issues if you want to scale up this deployment to have multiple copies. A new copy shouldn’t receive traffic until it is fully ready, but by default Kubernetes starts sending it traffic as soon as the process inside the container starts. By using a readiness probe, Kubernetes waits until the app is fully started before it allows the service to send traffic to the new copy.
+
+**Liveness**  
+Let’s imagine another scenario where your app has a nasty case of deadlock, causing it to hang indefinitely and stop serving requests. Because the process continues to run, by default Kubernetes thinks that everything is fine and continues to send requests to the broken pod. By using a liveness probe, Kubernetes detects that the app is no longer serving requests and restarts the offending pod.
+
+![](media/google-kubernetes-probe-liveness.gif | width=300)
+![](media/google-kubernetes-probe-readiness.gif | width=300)
+
 ## MQ Integration
 
 IIB production image doesn't have MQ libraries at the moment. So to demo MQ workflow within IIB container we used development image https://github.com/DAVEXACOM/IIB-MQ.git and connect it to MSB pipeline. In order to deploy another MQ workflow replace/add .bar file to the project.
@@ -397,3 +406,6 @@ Setting up the MSB pipeline:
 https://www.ibm.com/support/knowledgecenter/en/SS5PWC/pipeline.html
 
 https://developer.ibm.com/integration/blog/2017/09/18/lightweight-integration-useful-links/
+
+Setting up health checks with readiness and liveness probes
+https://cloudplatform.googleblog.com/2018/05/Kubernetes-best-practices-Setting-up-health-checks-with-readiness-and-liveness-probes.html

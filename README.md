@@ -180,7 +180,16 @@ Disable authentication
 
 **Setting up SSL**
 
-If you wish to use two-way SSL between IIB and MQ using a client connection, consult the notes in iib-mq-ssl-notes.txt.
+To use SSL from IIB to a remote QM both IIB and the QM need to exchange certificates stored inside .kdb keystores. The IIB keystore stores its own personal certificate and the remote QM's signer certificate (and vice versa).
+To make IIB load up the keystore we run
+
+	mqsichangeproperties IIB_NODE -o BrokerRegistry -n mqKeyRepository -v /path/to/keystore/key
+
+where the absolute path to the key.kdb file is "/path/to/keystore/key.kdb". Also the personal certificate for IIB has to be labeled "ibmwebspheremq<user>" where <user> is the username of the user running the IIB flow engine.
+
+If an MQ node in an IIB message flow has "Use SSL" checked and the appropriate cipherspec set (cipherspec on the node must match the cipherspec on the MQ channel) (in this demo we are using TLS_RSA_WITH_AES_256_CBC_SHA256) and the MQ channel has SSLCAUTH set to REQUIRED the secure connection gets established only if IIB has the QM's extracted certificate in its keystore and vice versa.
+
+To configure the remote QM please consult iib-mq-ssl-notes.txt.
 
 ## IIB Global Cache
 

@@ -10,10 +10,11 @@ FROM ubuntu:14.04
 
 LABEL maintainers="Timur Markunin timur.markunin1@ibm.com, Petr Styblo petr.styblo@cz.ibm.com"
 
-# Install packages
+# Update system and install packages
 RUN export DEBIAN_FRONTEND=noninteractive \
- && apt-get update && \
-    apt-get install -y --no-install-recommends \
+  && apt-get update \
+  && apt-get dist-upgrade -y \
+  && apt-get install -y --no-install-recommends \
     curl \
     bash \
     bc \
@@ -31,12 +32,8 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     rpm \
     sed \
     tar \
-	util-linux
-
-RUN rm -rf /var/lib/apt/lists/*
-
-RUN apt-get dist-upgrade -y
-
+    util-linux \
+  && rm -rf /var/lib/apt/lists/* \
 
 #Install MQ
 
@@ -44,25 +41,25 @@ ARG MQ_URL=http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messagi
 ARG MQ_PACKAGES="MQSeriesRuntime-*.rpm MQSeriesServer-*.rpm MQSeriesMsg*.rpm MQSeriesJava*.rpm MQSeriesJRE*.rpm MQSeriesGSKit*.rpm MQSeriesWeb*.rpm"
 
 RUN mkdir -p /tmp/mq \
-  	&& cd /tmp/mq \
-  	&& curl -LO $MQ_URL \
+  && cd /tmp/mq \
+  && curl -LO $MQ_URL \
 	&& tar -zxvf ./*.tar.gz \
 	&& groupadd --gid 1000 mqm \
-  	&& useradd --create-home --home-dir /home/mqm --uid 1000 --gid mqm mqm \
-  	&& usermod -G mqm root \
+  && useradd --create-home --home-dir /home/mqm --uid 1000 --gid mqm mqm \
+  && usermod -G mqm root \
 	&& cd /tmp/mq/MQServer \
 	# Accept the MQ license
-  	&& ./mqlicense.sh -text_only -accept \
-  	# Install MQ using the RPM packages
-  	&& rpm -ivh --force-debian $MQ_PACKAGES \
-  	# Recommended: Set the default MQ installation (makes the MQ commands available on the PATH)
-  	&& /opt/mqm/bin/setmqinst -p /opt/mqm -i \
-  	# Clean up all the downloaded files
-  	&& rm -rf /tmp/mq \
+  && ./mqlicense.sh -text_only -accept \
+  # Install MQ using the RPM packages
+  && rpm -ivh --force-debian $MQ_PACKAGES \
+  # Recommended: Set the default MQ installation (makes the MQ commands available on the PATH)
+  && /opt/mqm/bin/setmqinst -p /opt/mqm -i \
+  # Clean up all the downloaded files
+  && rm -rf /tmp/mq \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& rm -rf /var/mqm \
 	&& sed -i 's/PASS_MAX_DAYS\t99999/PASS_MAX_DAYS\t90/' /etc/login.defs \
-  	&& sed -i 's/PASS_MIN_DAYS\t0/PASS_MIN_DAYS\t1/' /etc/login.defs \
+  && sed -i 's/PASS_MIN_DAYS\t0/PASS_MIN_DAYS\t1/' /etc/login.defs \
 	&& sed -i 's/password\t\[success=1 default=ignore\]\tpam_unix\.so obscure sha512/password\t[success=1 default=ignore]\tpam_unix.so obscure sha512 minlen=8/' /etc/pam.d/common-password
 
 COPY mq-dev-config.sh mq-license-check.sh mq.sh setup-mqm-web.sh setup-var-mqm.sh /usr/local/bin/
@@ -72,15 +69,14 @@ COPY key.kdb /etc/mqm/
 COPY key.sth /etc/mqm/
 COPY admin.json /etc/mqm/
 COPY mq-dev-config /etc/mqm/mq-dev-config
-
 RUN chmod +x /usr/local/bin/*.sh
 
 
 # Install IIB V10 Developer edition
-RUN mkdir /opt/ibm && \
-    curl http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integration/10.0.0.10-IIB-LINUX64-DEVELOPER.tar.gz \
-    | tar zx --exclude iib-10.0.0.10/tools --directory /opt/ibm && \
-    /opt/ibm/iib-10.0.0.10/iib make registry global accept license silently
+RUN mkdir /opt/ibm \
+  && curl http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integration/10.0.0.10-IIB-LINUX64-DEVELOPER.tar.gz \
+    | tar zx --exclude iib-10.0.0.10/tools --directory /opt/ibm \
+  && /opt/ibm/iib-10.0.0.10/iib make registry global accept license silently
 
 # Configure system
 COPY kernel_settings.sh /tmp/
@@ -103,20 +99,17 @@ COPY odbc.ini /etc
 COPY odbcinst.ini /etc
 COPY agentx.json /home/iibuser
 COPY switch.json /home/iibuser
-RUN chgrp mqbrkrs /home/iibuser/agentx.json && \
- chown iibuser /home/iibuser/agentx.json && \
- chgrp mqbrkrs /home/iibuser/switch.json && \
- chown iibuser /home/iibuser/switch.json && \
- chmod +r /home/iibuser/agentx.json && \
- chmod +r /home/iibuser/switch.json && \
- chgrp mqbrkrs /etc/odbc.ini && \
- chown iibuser /etc/odbc.ini && \
- chmod 664 /etc/odbc.ini && \
- chmod +rx /usr/local/bin/*.sh && \
- chmod 666 /etc/hosts
-
-# forward syslog logs to docker log collector
-RUN ln -sf /dev/stdout /var/log/syslog
+RUN chgrp mqbrkrs /home/iibuser/agentx.json \
+  && chown iibuser /home/iibuser/agentx.json \
+  && chgrp mqbrkrs /home/iibuser/switch.json \
+  && chown iibuser /home/iibuser/switch.json \
+  && chmod +r /home/iibuser/agentx.json \
+  && chmod +r /home/iibuser/switch.json \
+  && chgrp mqbrkrs /etc/odbc.ini \
+  && chown iibuser /etc/odbc.ini \
+  && chmod 664 /etc/odbc.ini \
+  && chmod +rx /usr/local/bin/*.sh \
+  && chmod 666 /etc/hosts
 
 # Set BASH_ENV to source mqsiprofile when using docker exec bash -c
 ENV BASH_ENV=/usr/local/bin/iib_env.sh
@@ -124,7 +117,7 @@ ENV ODBCINI=/etc/odbc.ini
 
 
 # Expose default admin port and http port, plus MQ ports
-EXPOSE 4414 7800 7883 1414 9443
+EXPOSE 4414 7800 7808 7883 1414 9443
 
 # USER iibuser
 

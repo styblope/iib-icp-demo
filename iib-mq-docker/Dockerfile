@@ -33,7 +33,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     sed \
     tar \
     util-linux \
-  && rm -rf /var/lib/apt/lists/* \
+  && rm -rf /var/lib/apt/lists/*
 
 #Install MQ
 
@@ -85,7 +85,6 @@ RUN echo "IIB_10:" > /etc/debian_chroot \
   && chown syslog:adm /var/log/syslog \
   && chmod +x /tmp/kernel_settings.sh;sync \
   && /tmp/kernel_settings.sh \
-
   # Create user to run as
   && useradd --create-home --home-dir /home/iibuser -G mqbrkrs,sudo,mqm iibuser \
   && sed -e 's/^%sudo .*/%sudo ALL=NOPASSWD:ALL/g' -i /etc/sudoers

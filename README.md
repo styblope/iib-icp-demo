@@ -224,7 +224,29 @@ Disable authentication
 
 **Setting up SSL**
 
-If you wish to use two-way SSL between IIB and MQ using a client connection, consult the notes in iib-mq-ssl-notes.txt.
+To use SSL from IIB to a remote QM both IIB and the QM need to exchange certificates stored inside .kdb keystores. The IIB keystore stores its own personal certificate and the remote QM's signer certificate (and vice versa).
+To make IIB load up the keystore we run
+
+	mqsichangeproperties IIB_NODE -o BrokerRegistry -n mqKeyRepository -v /path/to/keystore/key
+
+where the absolute path to the key.kdb file is "/path/to/keystore/key.kdb". Also the personal certificate for IIB has to be labeled "ibmwebspheremq<user>" where <user> is the username of the user running the IIB flow engine.
+
+If an MQ node in an IIB message flow has "Use SSL" checked and the appropriate cipherspec set (cipherspec on the node must match the cipherspec on the MQ channel) (in this demo we are using TLS_RSA_WITH_AES_256_CBC_SHA256) and the MQ channel has SSLCAUTH set to REQUIRED the secure connection gets established only if IIB has the QM's extracted certificate in its keystore and vice versa.
+
+To configure the remote QM please consult iib-mq-ssl-notes.txt.
+
+**Scenario:** To demonstrate SSL functionality, we use a remote QM that 
+- is named ICPQM1
+- is reachable by the IIB nodes
+- has a server connection channel ICP.SCC with SSLCAUTH set to REQUIRED, cipherspec set to TLS_RSA_WITH_AES_256_CBC_SHA256
+- has local queues LQ1 and LQ2
+IIB connects to this QM using TLS and routes messages put to LQ1 to LQ2. To show this, it is possible to use the sample amqsput and amqsget programs (usually located in /opt/mqm/samp/bin) 
+
+	amqsput LQ1 ICPQM1
+
+	amqsget LQ2 ICPQM1
+	
+to put to LQ1 and get the message from LQ2, where it has been put the remote IIB.
 
 ## IIB Global Cache
 

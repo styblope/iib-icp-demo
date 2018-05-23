@@ -235,7 +235,7 @@ If an MQ node in an IIB message flow has "Use SSL" checked and the appropriate c
 
 To configure the remote QM please consult iib-mq-ssl-notes.txt.
 
-**Scenario:** To demonstrate SSL functionality, we use a remote QM that 
+To demonstrate SSL functionality, we use a remote QM that 
 
 - is named ICPQM1
 - is reachable by the IIB nodes

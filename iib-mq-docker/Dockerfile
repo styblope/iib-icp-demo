@@ -80,15 +80,17 @@ RUN mkdir /opt/ibm \
 
 # Configure system
 COPY kernel_settings.sh /tmp/
-RUN echo "IIB_10:" > /etc/debian_chroot  && \
-    touch /var/log/syslog && \
-    chown syslog:adm /var/log/syslog && \
-    chmod +x /tmp/kernel_settings.sh;sync && \
-    /tmp/kernel_settings.sh
+RUN echo "IIB_10:" > /etc/debian_chroot \
+  && touch /var/log/syslog \
+  && chown syslog:adm /var/log/syslog \
+  && chmod +x /tmp/kernel_settings.sh;sync \
+  && /tmp/kernel_settings.sh \
 
-# Create user to run as
-RUN useradd --create-home --home-dir /home/iibuser -G mqbrkrs,sudo,mqm iibuser && \
-    sed -e 's/^%sudo	.*/%sudo	ALL=NOPASSWD:ALL/g' -i /etc/sudoers
+  # Create user to run as
+  && useradd --create-home --home-dir /home/iibuser -G mqbrkrs,sudo,mqm iibuser \
+  && sed -e 's/^%sudo .*/%sudo ALL=NOPASSWD:ALL/g' -i /etc/sudoers
+
+COPY 10-iib_rsyslog.conf /etc/rsyslog.d/
 
 # Copy in script files
 COPY iib_manage.sh /usr/local/bin/

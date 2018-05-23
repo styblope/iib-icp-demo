@@ -236,17 +236,21 @@ If an MQ node in an IIB message flow has "Use SSL" checked and the appropriate c
 To configure the remote QM please consult iib-mq-ssl-notes.txt.
 
 **Scenario:** To demonstrate SSL functionality, we use a remote QM that 
+
 - is named ICPQM1
 - is reachable by the IIB nodes
 - has a server connection channel ICP.SCC with SSLCAUTH set to REQUIRED, cipherspec set to TLS_RSA_WITH_AES_256_CBC_SHA256
 - has local queues LQ1 and LQ2
-IIB connects to this QM using TLS and routes messages put to LQ1 to LQ2. To show this, it is possible to use the sample amqsput and amqsget programs (usually located in /opt/mqm/samp/bin) 
+
+IIB connects to this QM using TLS and routes messages from LQ1 to LQ2. To show this, it is possible to use the sample programs
 
 	amqsput LQ1 ICPQM1
 
+and
+
 	amqsget LQ2 ICPQM1
 	
-to put to LQ1 and get the message from LQ2, where it has been put the remote IIB.
+which, if installed, are by default located in /opt/mqm/samp/bin. We put a message to LQ1 and get the message from LQ2, where it has been moved by the remote IIB.
 
 ## IIB Global Cache
 

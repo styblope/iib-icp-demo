@@ -144,11 +144,55 @@ Let’s imagine another scenario where your app has a nasty case of deadlock, ca
 <img src="media/google-kubernetes-probe-readiness.gif" width="350">
 <img src="media/google-kubernetes-probe-liveness.gif" width="350">
 
-## MQ Integration
+## MQ TLS Integration
 
-IIB production image doesn't have MQ libraries at the moment. So to demo MQ workflow within IIB container we used development image https://github.com/DAVEXACOM/IIB-MQ.git and connect it to MSB pipeline. In order to deploy another MQ workflow replace/add .bar file to the project.
+**Scenario**  
+Show message queuing and message transfer over TLS between MQ and IIB
 
-**Dockerfile modification**
+**Demo tasks**
+
+- deploy the BAR file which provides the queue message routing
+- send messages to one MQ queue and receive them on the other queue
+- TLS is used along the way
+
+**Implementation**
+
+SSH to MQ server
+
+    ssh 192.168.24.62 
+    user:user
+    password:password
+
+or rather
+
+    user:mqm
+    password:password
+
+    cd /opt/mqm/samp/bin
+
+In one terminal you can run
+
+    ./amqsput LQ1 ICPQM1 (edited)
+
+which opens a sample app that writes anything you write to the queue
+and in another terminal you could run
+
+    ./amqsget LQ2 ICPQM1
+
+which runs a sample get program, that reads messages from the queue (IIB routes the messages from LQ1 to LQ2)
+
+Unless you would like to examine the packets themselves, showing that the QM requires 2-way ssl can be done by
+
+    cd /opt/mqm/bin
+    ./runmqsc ICPQM1
+    display channel(ICP.SCC)
+    #fields
+    #SSLCAUTH(REQUIRED) - requires 2-way SSL
+    #SSLCIPH(TLS_RSA_WITH_AES_256_CBC_SHA256) - cipherspec, encryption algorithm
+
+<!-- IIB production image doesn't have MQ libraries at the moment. So to demo MQ workflow within IIB container we used development image https://github.com/DAVEXACOM/IIB-MQ.git and connect it to MSB pipeline. In order to deploy another MQ workflow replace/add .bar file to the project. -->
+
+<!-- **Dockerfile modification**
 In order to minimize build time move line
 	
 	COPY *.bar  /etc/mqm/
@@ -176,11 +220,37 @@ Disable authentication
 	alter qmgr chlauth(disabled)
 	dis qmgr all
 	alter qmgr connauth(' ‘)
-	refresh security
+	refresh security -->
 
 **Setting up SSL**
 
-If you wish to use two-way SSL between IIB and MQ using a client connection, consult the notes in iib-mq-ssl-notes.txt.
+To use SSL from IIB to a remote QM both IIB and the QM need to exchange certificates stored inside .kdb keystores. The IIB keystore stores its own personal certificate and the remote QM's signer certificate (and vice versa).
+To make IIB load up the keystore we run
+
+	mqsichangeproperties IIB_NODE -o BrokerRegistry -n mqKeyRepository -v /path/to/keystore/key
+
+where the absolute path to the key.kdb file is "/path/to/keystore/key.kdb". Also the personal certificate for IIB has to be labeled "ibmwebspheremq<user>" where <user> is the username of the user running the IIB flow engine.
+
+If an MQ node in an IIB message flow has "Use SSL" checked and the appropriate cipherspec set (cipherspec on the node must match the cipherspec on the MQ channel) (in this demo we are using TLS_RSA_WITH_AES_256_CBC_SHA256) and the MQ channel has SSLCAUTH set to REQUIRED the secure connection gets established only if IIB has the QM's extracted certificate in its keystore and vice versa.
+
+To configure the remote QM please consult iib-mq-ssl-notes.txt.
+
+To demonstrate SSL functionality, we use a remote QM that 
+
+- is named ICPQM1
+- is reachable by the IIB nodes
+- has a server connection channel ICP.SCC with SSLCAUTH set to REQUIRED, cipherspec set to TLS_RSA_WITH_AES_256_CBC_SHA256
+- has local queues LQ1 and LQ2
+
+IIB connects to this QM using TLS and routes messages from LQ1 to LQ2. To show this, it is possible to use the sample programs
+
+	amqsput LQ1 ICPQM1
+
+and
+
+	amqsget LQ2 ICPQM1
+	
+which, if installed, are by default located in /opt/mqm/samp/bin. We put a message to LQ1 and get the message from LQ2, where it has been moved by the remote IIB.
 
 ## IIB Global Cache
 

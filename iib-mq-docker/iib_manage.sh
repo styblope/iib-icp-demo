@@ -108,7 +108,14 @@ start()
 
   NODE_EXISTS=`mqsilist | grep $NODE_NAME > /dev/null ; echo $?`
   
-  
+  # Start rsyslog and redirect application logs to default docker log (STDOUT)
+  echo "----------------------------------------"
+  echo "Starting rsyslogd"
+  rm -f /var/log/docker
+  touch /var/log/docker
+  chown syslog:adm /var/log/docker
+  tail --pid $$ -n0 -F /var/log/docker &
+  sudo /usr/sbin/rsyslogd
 
   if [ ${NODE_EXISTS} -ne 0 ]; then
     echo "----------------------------------------"
@@ -138,9 +145,6 @@ start()
     echo "Changing cache policy to: $CACHE_POLICY"
     mqsichangebroker $NODE_NAME -b $CACHE_POLICY -r $CACHE_PORT_RANGE
     echo "----------------------------------------"
-    echo "Starting syslog"
-    sudo /usr/sbin/rsyslogd
-    echo "----------------------------------------"
     echo "Configuring db access"
     mqsisetdbparms $NODE_NAME -n BROKER -u sa -p passw0rd
     echo "----------------------------------------"
@@ -148,9 +152,6 @@ start()
     mqsistart $NODE_NAME
     echo "----------------------------------------"
   else
-    echo "----------------------------------------"
-    echo "Starting syslog"
-    sudo /usr/sbin/rsyslogd
     echo "----------------------------------------"
     echo "Configuring db access"
     mqsisetdbparms $NODE_NAME -n BROKER -u sa -p passw0rd

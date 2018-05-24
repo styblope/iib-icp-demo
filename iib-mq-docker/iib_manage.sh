@@ -108,8 +108,13 @@ start()
 
   NODE_EXISTS=`mqsilist | grep $NODE_NAME > /dev/null ; echo $?`
   
+  # Start rsyslog and redirect application logs to default docker log (STDOUT)
   echo "----------------------------------------"
-  echo "Starting syslog"
+  echo "Starting rsyslogd"
+  rm -f /var/log/docker
+  touch /var/log/docker
+  chown syslog:adm /var/log/docker
+  tail --pid $$ -n0 -F /var/log/docker &
   sudo /usr/sbin/rsyslogd
 
   if [ ${NODE_EXISTS} -ne 0 ]; then

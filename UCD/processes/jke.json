@@ -1,0 +1,2744 @@
+{
+    "name": "jke",
+    "description": "",
+    "enforceCompleteSnapshots": false,
+    "propSheet": {"properties": []},
+    "templatePropSheet": {
+        "name": "template",
+        "properties": []
+    },
+    "components": [
+        {
+            "name": "jke",
+            "description": "",
+            "created": 1536588417104,
+            "componentType": "STANDARD",
+            "ignoreQualifiers": 0,
+            "importAutomatically": false,
+            "useVfs": true,
+            "active": true,
+            "deleted": false,
+            "defaultVersionType": "FULL",
+            "cleanupDaysToKeep": 0,
+            "cleanupCountToKeep": 0,
+            "componentTemplate": {
+                "securityResourceId": "165c2680-2a22-9080-c312-af886438b668",
+                "path": "componentTemplates\/165c2680-2a54-44d0-bb6b-a74a839d8f13",
+                "name": "Kubernetes",
+                "description": "Template for a component containing a Kubernetes YAML file",
+                "ignoreQualifiers": 0,
+                "componentType": "STANDARD",
+                "tags": [],
+                "active": true,
+                "envPropDefs": [],
+                "resPropDefs": [],
+                "propDefs": [],
+                "properties": [],
+                "processes": [{
+                    "name": "Process and Apply YAML File",
+                    "description": "",
+                    "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                    "takesVersion": true,
+                    "inventoryActionType": "ADD",
+                    "status": "Active",
+                    "configActionType": "ADD",
+                    "active": true,
+                    "path": "componentTemplates\/165c2680-2a54-44d0-bb6b-a74a839d8f13\/processes\/165c2680-2b76-7a18-c811-4450bcc8f637",
+                    "deleted": false,
+                    "propDefs": [],
+                    "rootActivity": {
+                        "edges": [
+                            {
+                                "to": "Clean working directory",
+                                "type": "ALWAYS",
+                                "value": ""
+                            },
+                            {
+                                "to": "Replace Tokens",
+                                "from": "Copy yaml to working folder",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "dc49fce3ec74e6540cb9c65d9637fd",
+                                "from": "Apply Resources",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "Copy yaml to working folder",
+                                "from": "Download Artifacts",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "Apply Resources",
+                                "from": "Process YAML File",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "Process YAML File",
+                                "from": "Replace Tokens",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "Download Artifacts",
+                                "from": "Clean working directory",
+                                "type": "SUCCESS",
+                                "value": ""
+                            }
+                        ],
+                        "offsets": [
+                            {
+                                "name": "Copy yaml to working folder",
+                                "x": -80,
+                                "y": 370,
+                                "h": 70,
+                                "w": 270
+                            },
+                            {
+                                "name": "Process YAML File",
+                                "x": -75,
+                                "y": 610,
+                                "h": 70,
+                                "w": 260
+                            },
+                            {
+                                "name": "Replace Tokens",
+                                "x": -70,
+                                "y": 490,
+                                "h": 70,
+                                "w": 250
+                            },
+                            {
+                                "name": "Download Artifacts",
+                                "x": -75,
+                                "y": 250,
+                                "h": 70,
+                                "w": 260
+                            },
+                            {
+                                "name": "Apply Resources",
+                                "x": -70,
+                                "y": 730,
+                                "h": 70,
+                                "w": 250
+                            },
+                            {
+                                "name": "dc49fce3ec74e6540cb9c65d9637fd",
+                                "x": -5,
+                                "y": 850,
+                                "h": 80,
+                                "w": 120
+                            },
+                            {
+                                "name": "Clean working directory",
+                                "x": -105,
+                                "y": 130,
+                                "h": 70,
+                                "w": 320
+                            }
+                        ],
+                        "layoutMode": "auto",
+                        "type": "graph",
+                        "name": "ba227f7d-266a-49f6-b09d-c44da26de3c1",
+                        "children": [
+                            {
+                                "type": "finish",
+                                "name": "dc49fce3ec74e6540cb9c65d9637fd",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "pluginVersion": 64,
+                                "commandName": "Delete Files and Directories",
+                                "pluginName": "File Utils",
+                                "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                "properties": {
+                                    "baseDir": ".",
+                                    "includes": "**\/*\n*",
+                                    "excludes": "",
+                                    "followSymlinks": "false",
+                                    "caseSensitive": "true"
+                                },
+                                "cachedAuthTokenRestriction": {
+                                    "name": "System Default",
+                                    "description": "Used by default for any plugin steps without a specified token restriction",
+                                    "restrictions": [{
+                                        "verb": "ALL",
+                                        "url": "\/*"
+                                    }]
+                                },
+                                "type": "plugin",
+                                "name": "Clean working directory",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "pluginVersion": 30,
+                                "commandName": "Download Artifacts",
+                                "pluginName": "UrbanCode Deploy Versioned File Storage",
+                                "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                "properties": {
+                                    "directoryOffset": ".",
+                                    "artifactSetBaseDir": "",
+                                    "fileIncludePatterns": "**\/*",
+                                    "fileExcludePatterns": "",
+                                    "syncMode": "true",
+                                    "fullVerification": "true",
+                                    "setFileExecuteBits": "false",
+                                    "verifyFileIntegrity": "false",
+                                    "versionId": "${p:version.id}",
+                                    "serverUrl": "${p:server.url}",
+                                    "compId": "${p:component.id}",
+                                    "resId": "${p:resource.id}",
+                                    "charset": "",
+                                    "label": ""
+                                },
+                                "cachedAuthTokenRestriction": {
+                                    "name": "System Default",
+                                    "description": "Used by default for any plugin steps without a specified token restriction",
+                                    "restrictions": [{
+                                        "verb": "ALL",
+                                        "url": "\/*"
+                                    }]
+                                },
+                                "type": "plugin",
+                                "name": "Download Artifacts",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "pluginVersion": 18,
+                                "commandName": "Process YAML File",
+                                "pluginName": "Kubernetes",
+                                "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                "properties": {
+                                    "yamlFile": "",
+                                    "alwaysVersionFromYaml": "${p?:environment\/alwaysApplyVersionsFromYaml}",
+                                    "componentTemplate": "Docker Template",
+                                    "authToken": "crypt_v1{AES\/CBC\/PKCS5Padding|aes128keye1vt|TGJBULHxa3w8Yhso+uNWvQ==|Do8IzL1rsIX\/Cj30G6yIJg==}",
+                                    "resource": "${p:resource.id}",
+                                    "resourcePath": "${p:resource.path}",
+                                    "application": "${p:application.id}",
+                                    "version": "${p:version.name}",
+                                    "sourceConfigType": "Docker",
+                                    "environmentName": "${p:environment.name}",
+                                    "environment": "${p:environment.id}",
+                                    "componentProcessRequest": "${p:request.id}",
+                                    "applicationProcessRequest": "${p:parentRequest.id}"
+                                },
+                                "cachedAuthTokenRestriction": {
+                                    "name": "System Default",
+                                    "description": "Used by default for any plugin steps without a specified token restriction",
+                                    "restrictions": [{
+                                        "verb": "ALL",
+                                        "url": "\/*"
+                                    }]
+                                },
+                                "type": "plugin",
+                                "name": "Process YAML File",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "pluginVersion": 18,
+                                "commandName": "Apply Resources",
+                                "pluginName": "Kubernetes",
+                                "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                "properties": {
+                                    "url": "",
+                                    "username": "",
+                                    "password": "crypt_v1{AES\/CBC\/PKCS5Padding|aes128keye1vt|jmKYx\/GhsHzhhCNb2a7ctQ==|UothMyU\/lRAPKjYvyzcjMw==}",
+                                    "namespace": "",
+                                    "path": "",
+                                    "globals": "",
+                                    "flags": "",
+                                    "filename": "ibm-ucd-kubernetes.yaml"
+                                },
+                                "cachedAuthTokenRestriction": {
+                                    "name": "System Default",
+                                    "description": "Used by default for any plugin steps without a specified token restriction",
+                                    "restrictions": [{
+                                        "verb": "ALL",
+                                        "url": "\/*"
+                                    }]
+                                },
+                                "type": "plugin",
+                                "name": "Apply Resources",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "pluginVersion": 64,
+                                "commandName": "Replace Tokens",
+                                "pluginName": "File Utils",
+                                "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                "properties": {
+                                    "includes": "**\/*",
+                                    "excludes": "",
+                                    "envPropValues": "${p:environment\/allProperties}",
+                                    "propertyPrefix": "",
+                                    "explicitTokens": "",
+                                    "startDelimiter": "@",
+                                    "endDelimiter": "@",
+                                    "propFile": "replace_tokens.properties",
+                                    "dir": "",
+                                    "customEncoding": ""
+                                },
+                                "cachedAuthTokenRestriction": {
+                                    "name": "System Default",
+                                    "description": "Used by default for any plugin steps without a specified token restriction",
+                                    "restrictions": [{
+                                        "verb": "ALL",
+                                        "url": "\/*"
+                                    }]
+                                },
+                                "type": "plugin",
+                                "name": "Replace Tokens",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "pluginVersion": 9,
+                                "commandName": "Shell",
+                                "pluginName": "Shell",
+                                "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                "properties": {
+                                    "directoryOffset": ".",
+                                    "shellInterpreter": "",
+                                    "scriptBody": "cp kubernetes\/*.yaml  .",
+                                    "runAsDaemon": "false",
+                                    "outputFile": ""
+                                },
+                                "cachedAuthTokenRestriction": {
+                                    "name": "System Default",
+                                    "description": "Used by default for any plugin steps without a specified token restriction",
+                                    "restrictions": [{
+                                        "verb": "ALL",
+                                        "url": "\/*"
+                                    }]
+                                },
+                                "type": "plugin",
+                                "name": "Copy yaml to working folder",
+                                "children": []
+                            }
+                        ]
+                    }
+                }],
+                "genericProcesses": [],
+                "teamMappings": []
+            },
+            "sourceConfigPluginName": "Git",
+            "envPropDefs": [],
+            "resPropDefs": [],
+            "versionPropDefs": [],
+            "propSheetGroup": {"propSheets": [
+                {
+                    "name": "template",
+                    "properties": []
+                },
+                {
+                    "name": "GitComponentProperties",
+                    "properties": [
+                        {
+                            "name": "branch",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "excludes",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "extensions",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "gitPath",
+                            "value": "git",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "includes",
+                            "value": "kubernetes\/jke.yaml",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "password",
+                            "value": "crypt_v1{AES\/CBC\/PKCS5Padding|aes128keye1vt|qDay9ni7r55tbAPnSUt46w==|jD5byrLdl7apnFq0z+ykUA==}",
+                            "description": "",
+                            "secure": true
+                        },
+                        {
+                            "name": "recursive",
+                            "value": "false",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "repoUrl",
+                            "value": "https:\/\/github.com\/tmarkunin\/jke.git",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "saveFileExecuteBits",
+                            "value": "false",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "trustAllCerts",
+                            "value": "false",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "username",
+                            "value": "tmarkunin",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "watchTags",
+                            "value": "false",
+                            "description": "",
+                            "secure": false
+                        }
+                    ]
+                },
+                {
+                    "name": "custom",
+                    "properties": []
+                }
+            ]},
+            "processes": [],
+            "configTemplates": [],
+            "genericProcesses": [],
+            "teamMappings": [],
+            "tags": [{
+                "id": "165c3d0f-12ee-49a4-118e-63cf7119f5e9",
+                "name": "Kubernetes",
+                "color": "#008ABF",
+                "description": "",
+                "objectType": "Component"
+            }]
+        },
+        {
+            "name": "jke-jke.db",
+            "description": "Kubernetes image: default\/jke.db",
+            "created": 1536589132958,
+            "componentType": "STANDARD",
+            "ignoreQualifiers": 0,
+            "importAutomatically": false,
+            "useVfs": false,
+            "active": true,
+            "deleted": false,
+            "defaultVersionType": "FULL",
+            "cleanupDaysToKeep": 0,
+            "cleanupCountToKeep": 0,
+            "componentTemplate": {
+                "securityResourceId": "165c240f-7d35-069d-f2e8-ad4bef5e15a0",
+                "path": "componentTemplates\/165c240f-7d69-31a1-4e63-f0dffbfc54f7",
+                "name": "Docker Template",
+                "description": "",
+                "ignoreQualifiers": 0,
+                "componentType": "STANDARD",
+                "tags": [],
+                "active": true,
+                "envPropDefs": [],
+                "resPropDefs": [],
+                "propDefs": [
+                    {
+                        "name": "docker.image.name",
+                        "label": "Docker Image Name",
+                        "pattern": "",
+                        "type": "TEXT",
+                        "required": false,
+                        "description": "Name of the Docker image to use with this component. i.e. tomcat, nginx, ubuntu",
+                        "placeholder": ""
+                    },
+                    {
+                        "name": "docker.qualified.image",
+                        "label": "Fully Qualified Docker Image",
+                        "pattern": "",
+                        "type": "TEXT",
+                        "value": "${p?:docker.registry}${p:docker.image.name}:${p:version\/dockerImageTag}",
+                        "required": true,
+                        "description": "Name to pass into pull command, in the form, [REGISTRY_HOST[:REGISTRY_PORT]\/]NAME[:TAG]",
+                        "placeholder": ""
+                    },
+                    {
+                        "name": "docker.registry",
+                        "label": "Docker Registry",
+                        "pattern": "",
+                        "type": "TEXT",
+                        "required": false,
+                        "description": "Location of the docker registry used in pull commands",
+                        "placeholder": ""
+                    },
+                    {
+                        "name": "docker.container.name",
+                        "label": "Container Name",
+                        "pattern": "",
+                        "type": "TEXT",
+                        "value": "${p:docker.image.name}-${p:environment.name}",
+                        "required": true,
+                        "description": "Name to assign to the running docker container",
+                        "placeholder": ""
+                    }
+                ],
+                "properties": [],
+                "processes": [
+                    {
+                        "name": "Deploy",
+                        "description": "",
+                        "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                        "takesVersion": true,
+                        "inventoryActionType": "ADD",
+                        "status": "Active",
+                        "configActionType": "ADD",
+                        "active": true,
+                        "path": "componentTemplates\/165c240f-7d69-31a1-4e63-f0dffbfc54f7\/processes\/165c240f-9441-fcdb-9236-00b656da98ff",
+                        "deleted": false,
+                        "propDefs": [],
+                        "rootActivity": {
+                            "edges": [
+                                {
+                                    "to": "Run Docker Container",
+                                    "from": "3415bda2aafa244d16083d9f925b31",
+                                    "type": "SUCCESS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "3415bda2aafa244d16083d9f925b31",
+                                    "from": "Remove Docker Container",
+                                    "type": "ALWAYS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "Stop Docker Container",
+                                    "type": "ALWAYS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "3415bda2aafa244d16083d9f925b31",
+                                    "from": "Pull Docker Image",
+                                    "type": "SUCCESS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "Pull Docker Image",
+                                    "type": "ALWAYS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "Remove Docker Container",
+                                    "from": "Stop Docker Container",
+                                    "type": "ALWAYS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "efb4d1efddce74b0d171a47f62095d",
+                                    "from": "Run Docker Container",
+                                    "type": "SUCCESS",
+                                    "value": ""
+                                }
+                            ],
+                            "offsets": [
+                                {
+                                    "name": "Pull Docker Image",
+                                    "x": -215,
+                                    "y": 90,
+                                    "h": 60,
+                                    "w": 210
+                                },
+                                {
+                                    "name": "efb4d1efddce74b0d171a47f62095d",
+                                    "x": -5,
+                                    "y": 510,
+                                    "h": 50,
+                                    "w": 90
+                                },
+                                {
+                                    "name": "Remove Docker Container",
+                                    "x": 78.5,
+                                    "y": 180,
+                                    "h": 60,
+                                    "w": 250
+                                },
+                                {
+                                    "name": "Stop Docker Container",
+                                    "x": 88.5,
+                                    "y": 90,
+                                    "h": 60,
+                                    "w": 230
+                                },
+                                {
+                                    "name": "Run Docker Container",
+                                    "x": -75,
+                                    "y": 400,
+                                    "h": 60,
+                                    "w": 230
+                                },
+                                {
+                                    "name": "3415bda2aafa244d16083d9f925b31",
+                                    "x": -10,
+                                    "y": 300,
+                                    "h": 50,
+                                    "w": 100
+                                }
+                            ],
+                            "layoutMode": "unknown",
+                            "type": "graph",
+                            "name": "a4c8a606-2436-45f1-8b0e-a0b77fe5a297",
+                            "children": [
+                                {
+                                    "type": "finish",
+                                    "name": "efb4d1efddce74b0d171a47f62095d",
+                                    "children": []
+                                },
+                                {
+                                    "allowFailure": false,
+                                    "useImpersonation": false,
+                                    "showHidden": false,
+                                    "impersonationUseSudo": false,
+                                    "pluginVersion": 10,
+                                    "commandName": "Pull Docker Image",
+                                    "pluginName": "Docker",
+                                    "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                    "properties": {
+                                        "image": "${p:docker.qualified.image}",
+                                        "commandOptions": "",
+                                        "globalOptions": "${p?:resource\/docker.opts}",
+                                        "envVars": ""
+                                    },
+                                    "cachedAuthTokenRestriction": {
+                                        "name": "System Default",
+                                        "description": "Used by default for any plugin steps without a specified token restriction",
+                                        "restrictions": [{
+                                            "verb": "ALL",
+                                            "url": "\/*"
+                                        }]
+                                    },
+                                    "type": "plugin",
+                                    "name": "Pull Docker Image",
+                                    "children": []
+                                },
+                                {
+                                    "allowFailure": false,
+                                    "useImpersonation": false,
+                                    "showHidden": false,
+                                    "impersonationUseSudo": false,
+                                    "pluginVersion": 10,
+                                    "commandName": "Run Docker Container",
+                                    "pluginName": "Docker",
+                                    "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                    "properties": {
+                                        "image": "${p:docker.qualified.image}",
+                                        "containerCommand": "",
+                                        "container": "${p:docker.container.name}",
+                                        "commandOptions": "-d\n",
+                                        "globalOptions": "${p?:resource\/docker.opts}",
+                                        "envVars": ""
+                                    },
+                                    "cachedAuthTokenRestriction": {
+                                        "name": "System Default",
+                                        "description": "Used by default for any plugin steps without a specified token restriction",
+                                        "restrictions": [{
+                                            "verb": "ALL",
+                                            "url": "\/*"
+                                        }]
+                                    },
+                                    "type": "plugin",
+                                    "name": "Run Docker Container",
+                                    "children": []
+                                },
+                                {
+                                    "allowFailure": false,
+                                    "useImpersonation": false,
+                                    "showHidden": false,
+                                    "impersonationUseSudo": false,
+                                    "pluginVersion": 10,
+                                    "commandName": "Stop Docker Container",
+                                    "pluginName": "Docker",
+                                    "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                    "properties": {
+                                        "container": "${p:docker.container.name}",
+                                        "commandOptions": "",
+                                        "globalOptions": "${p?:resource\/docker.opts}",
+                                        "envVars": ""
+                                    },
+                                    "cachedAuthTokenRestriction": {
+                                        "name": "System Default",
+                                        "description": "Used by default for any plugin steps without a specified token restriction",
+                                        "restrictions": [{
+                                            "verb": "ALL",
+                                            "url": "\/*"
+                                        }]
+                                    },
+                                    "type": "plugin",
+                                    "name": "Stop Docker Container",
+                                    "children": []
+                                },
+                                {
+                                    "allowFailure": false,
+                                    "useImpersonation": false,
+                                    "showHidden": false,
+                                    "impersonationUseSudo": false,
+                                    "pluginVersion": 10,
+                                    "commandName": "Remove Docker Container",
+                                    "pluginName": "Docker",
+                                    "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                    "properties": {
+                                        "container": "${p:docker.container.name}",
+                                        "commandOptions": "",
+                                        "globalOptions": "${p?:resource\/docker.opts}",
+                                        "envVars": ""
+                                    },
+                                    "cachedAuthTokenRestriction": {
+                                        "name": "System Default",
+                                        "description": "Used by default for any plugin steps without a specified token restriction",
+                                        "restrictions": [{
+                                            "verb": "ALL",
+                                            "url": "\/*"
+                                        }]
+                                    },
+                                    "type": "plugin",
+                                    "name": "Remove Docker Container",
+                                    "children": []
+                                },
+                                {
+                                    "type": "join",
+                                    "name": "3415bda2aafa244d16083d9f925b31",
+                                    "children": []
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "Update Inventory",
+                        "description": "Empty process to help acquire component versions during a docker-compose up deployment.",
+                        "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                        "takesVersion": true,
+                        "inventoryActionType": "ADD",
+                        "status": "Active",
+                        "configActionType": "ADD",
+                        "active": true,
+                        "path": "componentTemplates\/165c240f-7d69-31a1-4e63-f0dffbfc54f7\/processes\/165c240f-9511-f34c-27f1-4a8838d5f1bc",
+                        "deleted": false,
+                        "propDefs": [],
+                        "rootActivity": {
+                            "edges": [{
+                                "to": "52ab313f7bd1d841136630fa150808",
+                                "type": "ALWAYS",
+                                "value": ""
+                            }],
+                            "offsets": [{
+                                "name": "52ab313f7bd1d841136630fa150808",
+                                "x": -5,
+                                "y": 420,
+                                "h": 80,
+                                "w": 120
+                            }],
+                            "layoutMode": "unknown",
+                            "type": "graph",
+                            "name": "b9c0b880-e7d0-47d4-a81d-25d7dfc91d95",
+                            "children": [{
+                                "type": "finish",
+                                "name": "52ab313f7bd1d841136630fa150808",
+                                "children": []
+                            }]
+                        }
+                    }
+                ],
+                "genericProcesses": [],
+                "teamMappings": []
+            },
+            "sourceConfigPluginName": "Docker",
+            "envPropDefs": [],
+            "resPropDefs": [],
+            "versionPropDefs": [
+                {
+                    "name": "dockerImageTag",
+                    "label": "dockerImageTag",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "",
+                    "placeholder": ""
+                },
+                {
+                    "name": "registry",
+                    "label": "registry",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "",
+                    "placeholder": ""
+                },
+                {
+                    "name": "dockerImageId",
+                    "label": "dockerImageId",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "",
+                    "placeholder": ""
+                }
+            ],
+            "propSheetGroup": {"propSheets": [
+                {
+                    "name": "custom",
+                    "properties": [{
+                        "name": "docker.registry.name",
+                        "value": "mycluster.icp:8500",
+                        "description": "",
+                        "secure": false
+                    }]
+                },
+                {
+                    "name": "DockerTagImport",
+                    "properties": [
+                        {
+                            "name": "allowInsecure",
+                            "value": "true",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "api",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "awsCli",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "dockerHome",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "dockerImageName",
+                            "value": "default\/jke.db",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "dockerRegistryAPIKey",
+                            "value": "crypt_v1{AES\/CBC\/PKCS5Padding|aes128keye1vt|9Plb4JDr\/luR0e7yXvy9QA==|6NmjoEPjj5XfRpBBw67RzA==}",
+                            "description": "",
+                            "secure": true
+                        },
+                        {
+                            "name": "dockerRegistryName",
+                            "value": "mycluster.icp:8500",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "dockerRegistryPassword",
+                            "value": "crypt_v1{AES\/CBC\/PKCS5Padding|aes128keye1vt|oBgtxr5d1OQgQxUXD1XATg==|8KBgrdl2Ebyyrdlxlj0vMw==}",
+                            "description": "",
+                            "secure": true
+                        },
+                        {
+                            "name": "dockerRegistryUsername",
+                            "value": "admin",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "namingConvention",
+                            "value": "tag_only",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "org",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "regexForTag",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "region",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "registryType",
+                            "value": "false",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "space",
+                            "description": "",
+                            "secure": false
+                        }
+                    ]
+                },
+                {
+                    "name": "template",
+                    "properties": [
+                        {
+                            "name": "docker.container.name",
+                            "value": "${p:docker.image.name}-${p:environment.name}",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "docker.image.name",
+                            "value": "default\/jke.db",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "docker.qualified.image",
+                            "value": "${p?:docker.registry}${p:docker.image.name}:${p:version\/dockerImageTag}",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "docker.registry",
+                            "value": "mycluster.icp:8500",
+                            "description": "",
+                            "secure": false
+                        }
+                    ]
+                }
+            ]},
+            "processes": [],
+            "configTemplates": [],
+            "genericProcesses": [],
+            "teamMappings": [],
+            "tags": [{
+                "id": "165c3d47-21b2-1fe6-4da0-0ed576ddb0bb",
+                "name": "kubernetes.image",
+                "color": "#FFFFFF",
+                "description": "",
+                "objectType": "Component"
+            }]
+        },
+        {
+            "name": "jke-websphere-liberty",
+            "description": "Kubernetes image: default\/websphere-liberty",
+            "created": 1536589128397,
+            "componentType": "STANDARD",
+            "ignoreQualifiers": 0,
+            "importAutomatically": false,
+            "useVfs": false,
+            "active": true,
+            "deleted": false,
+            "defaultVersionType": "FULL",
+            "cleanupDaysToKeep": 0,
+            "cleanupCountToKeep": 0,
+            "componentTemplate": {
+                "securityResourceId": "165c240f-7d35-069d-f2e8-ad4bef5e15a0",
+                "path": "componentTemplates\/165c240f-7d69-31a1-4e63-f0dffbfc54f7",
+                "name": "Docker Template",
+                "description": "",
+                "ignoreQualifiers": 0,
+                "componentType": "STANDARD",
+                "tags": [],
+                "active": true,
+                "envPropDefs": [],
+                "resPropDefs": [],
+                "propDefs": [
+                    {
+                        "name": "docker.image.name",
+                        "label": "Docker Image Name",
+                        "pattern": "",
+                        "type": "TEXT",
+                        "required": false,
+                        "description": "Name of the Docker image to use with this component. i.e. tomcat, nginx, ubuntu",
+                        "placeholder": ""
+                    },
+                    {
+                        "name": "docker.qualified.image",
+                        "label": "Fully Qualified Docker Image",
+                        "pattern": "",
+                        "type": "TEXT",
+                        "value": "${p?:docker.registry}${p:docker.image.name}:${p:version\/dockerImageTag}",
+                        "required": true,
+                        "description": "Name to pass into pull command, in the form, [REGISTRY_HOST[:REGISTRY_PORT]\/]NAME[:TAG]",
+                        "placeholder": ""
+                    },
+                    {
+                        "name": "docker.registry",
+                        "label": "Docker Registry",
+                        "pattern": "",
+                        "type": "TEXT",
+                        "required": false,
+                        "description": "Location of the docker registry used in pull commands",
+                        "placeholder": ""
+                    },
+                    {
+                        "name": "docker.container.name",
+                        "label": "Container Name",
+                        "pattern": "",
+                        "type": "TEXT",
+                        "value": "${p:docker.image.name}-${p:environment.name}",
+                        "required": true,
+                        "description": "Name to assign to the running docker container",
+                        "placeholder": ""
+                    }
+                ],
+                "properties": [],
+                "processes": [
+                    {
+                        "name": "Deploy",
+                        "description": "",
+                        "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                        "takesVersion": true,
+                        "inventoryActionType": "ADD",
+                        "status": "Active",
+                        "configActionType": "ADD",
+                        "active": true,
+                        "path": "componentTemplates\/165c240f-7d69-31a1-4e63-f0dffbfc54f7\/processes\/165c240f-9441-fcdb-9236-00b656da98ff",
+                        "deleted": false,
+                        "propDefs": [],
+                        "rootActivity": {
+                            "edges": [
+                                {
+                                    "to": "Run Docker Container",
+                                    "from": "3415bda2aafa244d16083d9f925b31",
+                                    "type": "SUCCESS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "3415bda2aafa244d16083d9f925b31",
+                                    "from": "Remove Docker Container",
+                                    "type": "ALWAYS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "Stop Docker Container",
+                                    "type": "ALWAYS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "3415bda2aafa244d16083d9f925b31",
+                                    "from": "Pull Docker Image",
+                                    "type": "SUCCESS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "Pull Docker Image",
+                                    "type": "ALWAYS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "Remove Docker Container",
+                                    "from": "Stop Docker Container",
+                                    "type": "ALWAYS",
+                                    "value": ""
+                                },
+                                {
+                                    "to": "efb4d1efddce74b0d171a47f62095d",
+                                    "from": "Run Docker Container",
+                                    "type": "SUCCESS",
+                                    "value": ""
+                                }
+                            ],
+                            "offsets": [
+                                {
+                                    "name": "Pull Docker Image",
+                                    "x": -215,
+                                    "y": 90,
+                                    "h": 60,
+                                    "w": 210
+                                },
+                                {
+                                    "name": "efb4d1efddce74b0d171a47f62095d",
+                                    "x": -5,
+                                    "y": 510,
+                                    "h": 50,
+                                    "w": 90
+                                },
+                                {
+                                    "name": "Remove Docker Container",
+                                    "x": 78.5,
+                                    "y": 180,
+                                    "h": 60,
+                                    "w": 250
+                                },
+                                {
+                                    "name": "Stop Docker Container",
+                                    "x": 88.5,
+                                    "y": 90,
+                                    "h": 60,
+                                    "w": 230
+                                },
+                                {
+                                    "name": "Run Docker Container",
+                                    "x": -75,
+                                    "y": 400,
+                                    "h": 60,
+                                    "w": 230
+                                },
+                                {
+                                    "name": "3415bda2aafa244d16083d9f925b31",
+                                    "x": -10,
+                                    "y": 300,
+                                    "h": 50,
+                                    "w": 100
+                                }
+                            ],
+                            "layoutMode": "unknown",
+                            "type": "graph",
+                            "name": "a4c8a606-2436-45f1-8b0e-a0b77fe5a297",
+                            "children": [
+                                {
+                                    "type": "finish",
+                                    "name": "efb4d1efddce74b0d171a47f62095d",
+                                    "children": []
+                                },
+                                {
+                                    "allowFailure": false,
+                                    "useImpersonation": false,
+                                    "showHidden": false,
+                                    "impersonationUseSudo": false,
+                                    "pluginVersion": 10,
+                                    "commandName": "Pull Docker Image",
+                                    "pluginName": "Docker",
+                                    "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                    "properties": {
+                                        "image": "${p:docker.qualified.image}",
+                                        "commandOptions": "",
+                                        "globalOptions": "${p?:resource\/docker.opts}",
+                                        "envVars": ""
+                                    },
+                                    "cachedAuthTokenRestriction": {
+                                        "name": "System Default",
+                                        "description": "Used by default for any plugin steps without a specified token restriction",
+                                        "restrictions": [{
+                                            "verb": "ALL",
+                                            "url": "\/*"
+                                        }]
+                                    },
+                                    "type": "plugin",
+                                    "name": "Pull Docker Image",
+                                    "children": []
+                                },
+                                {
+                                    "allowFailure": false,
+                                    "useImpersonation": false,
+                                    "showHidden": false,
+                                    "impersonationUseSudo": false,
+                                    "pluginVersion": 10,
+                                    "commandName": "Run Docker Container",
+                                    "pluginName": "Docker",
+                                    "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                    "properties": {
+                                        "image": "${p:docker.qualified.image}",
+                                        "containerCommand": "",
+                                        "container": "${p:docker.container.name}",
+                                        "commandOptions": "-d\n",
+                                        "globalOptions": "${p?:resource\/docker.opts}",
+                                        "envVars": ""
+                                    },
+                                    "cachedAuthTokenRestriction": {
+                                        "name": "System Default",
+                                        "description": "Used by default for any plugin steps without a specified token restriction",
+                                        "restrictions": [{
+                                            "verb": "ALL",
+                                            "url": "\/*"
+                                        }]
+                                    },
+                                    "type": "plugin",
+                                    "name": "Run Docker Container",
+                                    "children": []
+                                },
+                                {
+                                    "allowFailure": false,
+                                    "useImpersonation": false,
+                                    "showHidden": false,
+                                    "impersonationUseSudo": false,
+                                    "pluginVersion": 10,
+                                    "commandName": "Stop Docker Container",
+                                    "pluginName": "Docker",
+                                    "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                    "properties": {
+                                        "container": "${p:docker.container.name}",
+                                        "commandOptions": "",
+                                        "globalOptions": "${p?:resource\/docker.opts}",
+                                        "envVars": ""
+                                    },
+                                    "cachedAuthTokenRestriction": {
+                                        "name": "System Default",
+                                        "description": "Used by default for any plugin steps without a specified token restriction",
+                                        "restrictions": [{
+                                            "verb": "ALL",
+                                            "url": "\/*"
+                                        }]
+                                    },
+                                    "type": "plugin",
+                                    "name": "Stop Docker Container",
+                                    "children": []
+                                },
+                                {
+                                    "allowFailure": false,
+                                    "useImpersonation": false,
+                                    "showHidden": false,
+                                    "impersonationUseSudo": false,
+                                    "pluginVersion": 10,
+                                    "commandName": "Remove Docker Container",
+                                    "pluginName": "Docker",
+                                    "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                                    "properties": {
+                                        "container": "${p:docker.container.name}",
+                                        "commandOptions": "",
+                                        "globalOptions": "${p?:resource\/docker.opts}",
+                                        "envVars": ""
+                                    },
+                                    "cachedAuthTokenRestriction": {
+                                        "name": "System Default",
+                                        "description": "Used by default for any plugin steps without a specified token restriction",
+                                        "restrictions": [{
+                                            "verb": "ALL",
+                                            "url": "\/*"
+                                        }]
+                                    },
+                                    "type": "plugin",
+                                    "name": "Remove Docker Container",
+                                    "children": []
+                                },
+                                {
+                                    "type": "join",
+                                    "name": "3415bda2aafa244d16083d9f925b31",
+                                    "children": []
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "Update Inventory",
+                        "description": "Empty process to help acquire component versions during a docker-compose up deployment.",
+                        "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                        "takesVersion": true,
+                        "inventoryActionType": "ADD",
+                        "status": "Active",
+                        "configActionType": "ADD",
+                        "active": true,
+                        "path": "componentTemplates\/165c240f-7d69-31a1-4e63-f0dffbfc54f7\/processes\/165c240f-9511-f34c-27f1-4a8838d5f1bc",
+                        "deleted": false,
+                        "propDefs": [],
+                        "rootActivity": {
+                            "edges": [{
+                                "to": "52ab313f7bd1d841136630fa150808",
+                                "type": "ALWAYS",
+                                "value": ""
+                            }],
+                            "offsets": [{
+                                "name": "52ab313f7bd1d841136630fa150808",
+                                "x": -5,
+                                "y": 420,
+                                "h": 80,
+                                "w": 120
+                            }],
+                            "layoutMode": "unknown",
+                            "type": "graph",
+                            "name": "b9c0b880-e7d0-47d4-a81d-25d7dfc91d95",
+                            "children": [{
+                                "type": "finish",
+                                "name": "52ab313f7bd1d841136630fa150808",
+                                "children": []
+                            }]
+                        }
+                    }
+                ],
+                "genericProcesses": [],
+                "teamMappings": []
+            },
+            "sourceConfigPluginName": "Docker",
+            "envPropDefs": [],
+            "resPropDefs": [],
+            "versionPropDefs": [
+                {
+                    "name": "dockerImageTag",
+                    "label": "dockerImageTag",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "",
+                    "placeholder": ""
+                },
+                {
+                    "name": "registry",
+                    "label": "registry",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "",
+                    "placeholder": ""
+                }
+            ],
+            "propSheetGroup": {"propSheets": [
+                {
+                    "name": "custom",
+                    "properties": [{
+                        "name": "docker.registry.name",
+                        "value": "mycluster.icp:8500",
+                        "description": "",
+                        "secure": false
+                    }]
+                },
+                {
+                    "name": "DockerTagImport",
+                    "properties": [
+                        {
+                            "name": "allowInsecure",
+                            "value": "true",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "api",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "awsCli",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "dockerHome",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "dockerImageName",
+                            "value": "default\/websphere-liberty",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "dockerRegistryAPIKey",
+                            "value": "crypt_v1{AES\/CBC\/PKCS5Padding|aes128keye1vt|dFhArYHRUXVA8ZIrxxBNrg==|If\/BFttGQyc3yJnuhWwt7Q==}",
+                            "description": "",
+                            "secure": true
+                        },
+                        {
+                            "name": "dockerRegistryName",
+                            "value": "mycluster.icp:8500",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "dockerRegistryPassword",
+                            "value": "crypt_v1{AES\/CBC\/PKCS5Padding|aes128keye1vt|5Xru7v4mxYa1ckWSBV4WyQ==|qD5yfdM9axM2uoDsPP5How==}",
+                            "description": "",
+                            "secure": true
+                        },
+                        {
+                            "name": "dockerRegistryUsername",
+                            "value": "admin",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "namingConvention",
+                            "value": "tag_only",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "org",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "regexForTag",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "region",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "registryType",
+                            "value": "false",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "space",
+                            "description": "",
+                            "secure": false
+                        }
+                    ]
+                },
+                {
+                    "name": "template",
+                    "properties": [
+                        {
+                            "name": "docker.container.name",
+                            "value": "${p:docker.image.name}-${p:environment.name}",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "docker.image.name",
+                            "value": "default\/websphere-liberty",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "docker.qualified.image",
+                            "value": "${p?:docker.registry}${p:docker.image.name}:${p:version\/dockerImageTag}",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "docker.registry",
+                            "value": "mycluster.icp:8500",
+                            "description": "",
+                            "secure": false
+                        }
+                    ]
+                }
+            ]},
+            "processes": [],
+            "configTemplates": [],
+            "genericProcesses": [],
+            "teamMappings": [],
+            "tags": [{
+                "id": "165c3d47-21b2-1fe6-4da0-0ed576ddb0bb",
+                "name": "kubernetes.image",
+                "color": "#FFFFFF",
+                "description": "",
+                "objectType": "Component"
+            }]
+        },
+        {
+            "name": "jke.db.scripts",
+            "description": "",
+            "created": 1536594467410,
+            "componentType": "STANDARD",
+            "ignoreQualifiers": 0,
+            "importAutomatically": false,
+            "useVfs": true,
+            "active": true,
+            "deleted": false,
+            "defaultVersionType": "FULL",
+            "cleanupDaysToKeep": 0,
+            "cleanupCountToKeep": 0,
+            "sourceConfigPluginName": "Git",
+            "envPropDefs": [],
+            "resPropDefs": [],
+            "versionPropDefs": [],
+            "propSheetGroup": {"propSheets": [
+                {
+                    "name": "template",
+                    "properties": []
+                },
+                {
+                    "name": "GitComponentProperties",
+                    "properties": [
+                        {
+                            "name": "branch",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "excludes",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "extensions",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "gitPath",
+                            "value": "git",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "includes",
+                            "value": "DB\/*.sql",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "password",
+                            "value": "crypt_v1{AES\/CBC\/PKCS5Padding|aes128keye1vt|1RE0ubK0I69r\/kaXUv6hzQ==|9kW9RQlJXCiaUwyptFobzQ==}",
+                            "description": "",
+                            "secure": true
+                        },
+                        {
+                            "name": "recursive",
+                            "value": "false",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "repoUrl",
+                            "value": "https:\/\/github.com\/tmarkunin\/jke.git",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "saveFileExecuteBits",
+                            "value": "false",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "trustAllCerts",
+                            "value": "false",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "username",
+                            "value": "tmarkunin",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "watchTags",
+                            "value": "false",
+                            "description": "",
+                            "secure": false
+                        }
+                    ]
+                },
+                {
+                    "name": "custom",
+                    "properties": []
+                }
+            ]},
+            "processes": [{
+                "name": "Deploy app",
+                "description": "",
+                "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                "takesVersion": true,
+                "inventoryActionType": "ADD",
+                "status": "Active",
+                "configActionType": "ADD",
+                "active": true,
+                "path": "components\/165c42ad-a662-da30-c264-98e2280f0788\/processes\/165c42ad-a767-d16a-757e-cbc760233179",
+                "deleted": false,
+                "propDefs": [],
+                "rootActivity": {
+                    "edges": [
+                        {
+                            "to": "Download Artifacts",
+                            "from": "Delete Files and Directories",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "9af9b9462faf5b53c44d8a94c40611",
+                            "from": "Execute SQL Scripts",
+                            "type": "ALWAYS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Delete Files and Directories",
+                            "type": "ALWAYS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Execute SQL Scripts",
+                            "from": "Download Artifacts",
+                            "type": "SUCCESS",
+                            "value": ""
+                        }
+                    ],
+                    "offsets": [
+                        {
+                            "name": "9af9b9462faf5b53c44d8a94c40611",
+                            "x": -5,
+                            "y": 590,
+                            "h": 80,
+                            "w": 120
+                        },
+                        {
+                            "name": "Execute SQL Scripts",
+                            "x": -80,
+                            "y": 445,
+                            "h": 70,
+                            "w": 270
+                        },
+                        {
+                            "name": "Delete Files and Directories",
+                            "x": -100,
+                            "y": 155,
+                            "h": 70,
+                            "w": 310
+                        },
+                        {
+                            "name": "Download Artifacts",
+                            "x": -75,
+                            "y": 300,
+                            "h": 70,
+                            "w": 260
+                        }
+                    ],
+                    "layoutMode": "auto",
+                    "type": "graph",
+                    "name": "6548b041-5b27-4890-b4bd-c3ae268d4b20",
+                    "children": [
+                        {
+                            "type": "finish",
+                            "name": "9af9b9462faf5b53c44d8a94c40611",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "pluginVersion": 64,
+                            "commandName": "Delete Files and Directories",
+                            "pluginName": "File Utils",
+                            "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                            "properties": {
+                                "baseDir": ".",
+                                "includes": "**\/*",
+                                "excludes": "",
+                                "followSymlinks": "false",
+                                "caseSensitive": "true"
+                            },
+                            "cachedAuthTokenRestriction": {
+                                "name": "System Default",
+                                "description": "Used by default for any plugin steps without a specified token restriction",
+                                "restrictions": [{
+                                    "verb": "ALL",
+                                    "url": "\/*"
+                                }]
+                            },
+                            "type": "plugin",
+                            "name": "Delete Files and Directories",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "pluginVersion": 30,
+                            "commandName": "Download Artifacts",
+                            "pluginName": "UrbanCode Deploy Versioned File Storage",
+                            "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                            "properties": {
+                                "directoryOffset": ".",
+                                "artifactSetBaseDir": "",
+                                "fileIncludePatterns": "**\/*",
+                                "fileExcludePatterns": "",
+                                "syncMode": "true",
+                                "fullVerification": "true",
+                                "setFileExecuteBits": "false",
+                                "verifyFileIntegrity": "false",
+                                "versionId": "${p:version.id}",
+                                "serverUrl": "${p:server.url}",
+                                "compId": "${p:component.id}",
+                                "resId": "${p:resource.id}",
+                                "charset": "",
+                                "label": ""
+                            },
+                            "cachedAuthTokenRestriction": {
+                                "name": "System Default",
+                                "description": "Used by default for any plugin steps without a specified token restriction",
+                                "restrictions": [{
+                                    "verb": "ALL",
+                                    "url": "\/*"
+                                }]
+                            },
+                            "type": "plugin",
+                            "name": "Download Artifacts",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "pluginVersion": 11,
+                            "commandName": "Execute SQL Scripts",
+                            "pluginName": "SQL-JDBC",
+                            "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                            "properties": {
+                                "jdbcDriver": "com.mysql.jdbc.Driver",
+                                "jdbcJar": "\/opt\/ibm-ucd\/agent\/mysql-connector-java-5.1.42.jar",
+                                "connectionString": "jdbc:mysql:\/\/192.168.24.33:32306\/JKEDB",
+                                "username": "jke_user",
+                                "password": "crypt_v1{AES\/CBC\/PKCS5Padding|aes128keye1vt|X0Exk6UQeVNT7kUTqqj4MA==|wx+afH6jVpCu4+yHyT6DWQ==}",
+                                "passScript": "",
+                                "files": "",
+                                "includes": "**\/*.sql",
+                                "excludes": "",
+                                "delimiter": ";",
+                                "encoding": "",
+                                "autocommit": "false",
+                                "print": "false",
+                                "onerror": "abort",
+                                "keepformat": "",
+                                "showWarnings": "",
+                                "treatWarningsAsErrors": ""
+                            },
+                            "cachedAuthTokenRestriction": {
+                                "name": "System Default",
+                                "description": "Used by default for any plugin steps without a specified token restriction",
+                                "restrictions": [{
+                                    "verb": "ALL",
+                                    "url": "\/*"
+                                }]
+                            },
+                            "type": "plugin",
+                            "name": "Execute SQL Scripts",
+                            "children": []
+                        }
+                    ]
+                }
+            }],
+            "configTemplates": [],
+            "genericProcesses": [],
+            "teamMappings": [],
+            "tags": []
+        },
+        {
+            "name": "jke.web",
+            "description": "",
+            "created": 1536561704027,
+            "componentType": "STANDARD",
+            "ignoreQualifiers": 0,
+            "importAutomatically": false,
+            "useVfs": true,
+            "active": true,
+            "deleted": false,
+            "defaultVersionType": "FULL",
+            "cleanupDaysToKeep": 0,
+            "cleanupCountToKeep": 0,
+            "envPropDefs": [],
+            "resPropDefs": [],
+            "versionPropDefs": [],
+            "propSheetGroup": {"propSheets": [
+                {
+                    "name": "custom",
+                    "properties": []
+                },
+                {
+                    "name": "template",
+                    "properties": []
+                }
+            ]},
+            "processes": [{
+                "name": "Deploy app",
+                "description": "",
+                "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                "takesVersion": true,
+                "inventoryActionType": "ADD",
+                "status": "Active",
+                "configActionType": "ADD",
+                "active": true,
+                "path": "components\/165c236e-c657-56a4-aae2-7d92b468bb9e\/processes\/165c37a6-d7d2-b125-4fda-0f7d76af16cb",
+                "deleted": false,
+                "propDefs": [],
+                "rootActivity": {
+                    "edges": [
+                        {
+                            "to": "Delete Files and Directories",
+                            "type": "ALWAYS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Update Java Properties File",
+                            "from": "Unzip war",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Copy war to dropping folder",
+                            "from": "Remove old jke.war from dropins folder",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Unzip war",
+                            "from": "Download Artifacts",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Download Artifacts",
+                            "from": "Delete Files and Directories",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Restart container",
+                            "from": "Copy war to dropping folder",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "9af9b9462faf5b53c44d8a94c40611",
+                            "from": "Restart container",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Remove old jke.war from dropins folder",
+                            "from": "Update war",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Update war",
+                            "from": "Update Java Properties File",
+                            "type": "SUCCESS",
+                            "value": ""
+                        }
+                    ],
+                    "offsets": [
+                        {
+                            "name": "Copy war to dropping folder",
+                            "x": -170,
+                            "y": 1110,
+                            "h": 110,
+                            "w": 490
+                        },
+                        {
+                            "name": "9af9b9462faf5b53c44d8a94c40611",
+                            "x": -10,
+                            "y": 1430,
+                            "h": 100,
+                            "w": 170
+                        },
+                        {
+                            "name": "Remove old jke.war from dropins folder",
+                            "x": -260,
+                            "y": 950,
+                            "h": 110,
+                            "w": 660
+                        },
+                        {
+                            "name": "Delete Files and Directories",
+                            "x": -220,
+                            "y": 150,
+                            "h": 110,
+                            "w": 590
+                        },
+                        {
+                            "name": "Update war",
+                            "x": -130,
+                            "y": 790,
+                            "h": 110,
+                            "w": 410
+                        },
+                        {
+                            "name": "Download Artifacts",
+                            "x": -155,
+                            "y": 310,
+                            "h": 110,
+                            "w": 460
+                        },
+                        {
+                            "name": "Update Java Properties File",
+                            "x": -220,
+                            "y": 630,
+                            "h": 110,
+                            "w": 590
+                        },
+                        {
+                            "name": "Unzip war",
+                            "x": -65,
+                            "y": 470,
+                            "h": 110,
+                            "w": 280
+                        },
+                        {
+                            "name": "Restart container",
+                            "x": -95,
+                            "y": 1270,
+                            "h": 110,
+                            "w": 340
+                        }
+                    ],
+                    "layoutMode": "auto",
+                    "type": "graph",
+                    "name": "aa226e8b-93e8-4bbd-9d34-2644aa9743d7",
+                    "children": [
+                        {
+                            "type": "finish",
+                            "name": "9af9b9462faf5b53c44d8a94c40611",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "pluginVersion": 64,
+                            "commandName": "Delete Files and Directories",
+                            "pluginName": "File Utils",
+                            "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                            "properties": {
+                                "baseDir": ".",
+                                "includes": "**\/*",
+                                "excludes": "",
+                                "followSymlinks": "false",
+                                "caseSensitive": "true"
+                            },
+                            "cachedAuthTokenRestriction": {
+                                "name": "System Default",
+                                "description": "Used by default for any plugin steps without a specified token restriction",
+                                "restrictions": [{
+                                    "verb": "ALL",
+                                    "url": "\/*"
+                                }]
+                            },
+                            "type": "plugin",
+                            "name": "Delete Files and Directories",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "pluginVersion": 30,
+                            "commandName": "Download Artifacts",
+                            "pluginName": "UrbanCode Deploy Versioned File Storage",
+                            "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                            "properties": {
+                                "directoryOffset": ".",
+                                "artifactSetBaseDir": "",
+                                "fileIncludePatterns": "**\/*",
+                                "fileExcludePatterns": "",
+                                "syncMode": "true",
+                                "fullVerification": "true",
+                                "setFileExecuteBits": "false",
+                                "verifyFileIntegrity": "false",
+                                "versionId": "${p:version.id}",
+                                "serverUrl": "${p:server.url}",
+                                "compId": "${p:component.id}",
+                                "resId": "${p:resource.id}",
+                                "charset": "",
+                                "label": ""
+                            },
+                            "cachedAuthTokenRestriction": {
+                                "name": "System Default",
+                                "description": "Used by default for any plugin steps without a specified token restriction",
+                                "restrictions": [{
+                                    "verb": "ALL",
+                                    "url": "\/*"
+                                }]
+                            },
+                            "type": "plugin",
+                            "name": "Download Artifacts",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "pluginVersion": 64,
+                            "commandName": "Unzip",
+                            "pluginName": "File Utils",
+                            "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                            "properties": {
+                                "dir": ".\/jke_expanded",
+                                "zip": "jke.war",
+                                "includes": "**\/*",
+                                "excludes": "",
+                                "overwrite": "false",
+                                "customEncoding": ""
+                            },
+                            "cachedAuthTokenRestriction": {
+                                "name": "System Default",
+                                "description": "Used by default for any plugin steps without a specified token restriction",
+                                "restrictions": [{
+                                    "verb": "ALL",
+                                    "url": "\/*"
+                                }]
+                            },
+                            "type": "plugin",
+                            "name": "Unzip war",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "pluginVersion": 64,
+                            "commandName": "Update Java Properties File",
+                            "pluginName": "File Utils",
+                            "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                            "properties": {
+                                "customEncoding": "",
+                                "useSystemEncoding": "false",
+                                "dir": ".\/jke_expanded\/WEB-INF\/classes",
+                                "includes": "JKEDB.properties",
+                                "excludes": "",
+                                "updateProps": "jdbc.port=${p:environment\/jdbc.port}\njdbc.hostname=${p:environment\/jdbc.hostname}",
+                                "additionalProps": "",
+                                "additionalPropsPrefix": "",
+                                "deleteProps": ""
+                            },
+                            "cachedAuthTokenRestriction": {
+                                "name": "System Default",
+                                "description": "Used by default for any plugin steps without a specified token restriction",
+                                "restrictions": [{
+                                    "verb": "ALL",
+                                    "url": "\/*"
+                                }]
+                            },
+                            "type": "plugin",
+                            "name": "Update Java Properties File",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "pluginVersion": 64,
+                            "commandName": "Create .zip File",
+                            "pluginName": "File Utils",
+                            "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                            "properties": {
+                                "zipName": "jke.war",
+                                "baseDir": ".\/jke_expanded",
+                                "includes": "**\/*",
+                                "excludes": "",
+                                "update": "false",
+                                "followSymlinks": "false",
+                                "caseSensitive": "true",
+                                "customEncoding": ""
+                            },
+                            "cachedAuthTokenRestriction": {
+                                "name": "System Default",
+                                "description": "Used by default for any plugin steps without a specified token restriction",
+                                "restrictions": [{
+                                    "verb": "ALL",
+                                    "url": "\/*"
+                                }]
+                            },
+                            "type": "plugin",
+                            "name": "Update war",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "pluginVersion": 9,
+                            "commandName": "Shell",
+                            "pluginName": "Shell",
+                            "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                            "properties": {
+                                "directoryOffset": ".",
+                                "shellInterpreter": "",
+                                "scriptBody": "cp jke.war \/export\/wars",
+                                "runAsDaemon": "false",
+                                "outputFile": ""
+                            },
+                            "cachedAuthTokenRestriction": {
+                                "name": "System Default",
+                                "description": "Used by default for any plugin steps without a specified token restriction",
+                                "restrictions": [{
+                                    "verb": "ALL",
+                                    "url": "\/*"
+                                }]
+                            },
+                            "type": "plugin",
+                            "name": "Copy war to dropping folder",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "pluginVersion": 9,
+                            "commandName": "Shell",
+                            "pluginName": "Shell",
+                            "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                            "properties": {
+                                "directoryOffset": ".",
+                                "shellInterpreter": "",
+                                "scriptBody": "rm \/export\/wars\/jke.war",
+                                "runAsDaemon": "false",
+                                "outputFile": ""
+                            },
+                            "cachedAuthTokenRestriction": {
+                                "name": "System Default",
+                                "description": "Used by default for any plugin steps without a specified token restriction",
+                                "restrictions": [{
+                                    "verb": "ALL",
+                                    "url": "\/*"
+                                }]
+                            },
+                            "type": "plugin",
+                            "name": "Remove old jke.war from dropins folder",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "pluginVersion": 9,
+                            "commandName": "Shell",
+                            "pluginName": "Shell",
+                            "authTokenRestriction": "20000001-0001-0001-0001-000000000000",
+                            "properties": {
+                                "directoryOffset": ".",
+                                "shellInterpreter": "",
+                                "scriptBody": "number=$(kubectl get deployments | grep 'jkeweb'| awk '{print $3}')\nkubectl scale deployment jkeweb --replicas=0\nkubectl scale deployment jkeweb --replicas=$number",
+                                "runAsDaemon": "false",
+                                "outputFile": ""
+                            },
+                            "cachedAuthTokenRestriction": {
+                                "name": "System Default",
+                                "description": "Used by default for any plugin steps without a specified token restriction",
+                                "restrictions": [{
+                                    "verb": "ALL",
+                                    "url": "\/*"
+                                }]
+                            },
+                            "type": "plugin",
+                            "name": "Restart container",
+                            "children": []
+                        }
+                    ]
+                }
+            }],
+            "configTemplates": [],
+            "genericProcesses": [],
+            "teamMappings": [],
+            "tags": []
+        }
+    ],
+    "environments": [{
+        "name": "ICP",
+        "description": "",
+        "color": "#00B2EF",
+        "requireApprovals": false,
+        "noSelfApprovals": false,
+        "exemptProcesses": [],
+        "lockSnapshots": false,
+        "requireSnapshots": false,
+        "cleanupDaysToKeep": 0,
+        "cleanupCountToKeep": 0,
+        "enableProcessHistoryCleanup": false,
+        "useSystemDefaultDays": true,
+        "historyCleanupDaysToKeep": 365,
+        "order": 0,
+        "active": true,
+        "environmentTemplate": "QA",
+        "propSheet": {"properties": [
+            {
+                "name": "jdbc.hostname",
+                "value": "192.168.24.33",
+                "description": "",
+                "secure": false
+            },
+            {
+                "name": "jdbc.port",
+                "value": "32306",
+                "description": "",
+                "secure": false
+            }
+        ]},
+        "templatePropSheet": {
+            "name": "template",
+            "properties": [{
+                "name": "alwaysApplyVersionsFromYaml",
+                "value": "false",
+                "description": "",
+                "secure": false
+            }]
+        },
+        "baseResources": [{
+            "path": "\/jke\/ICP",
+            "id": "165c3d64-ee64-fe4a-8d1c-7e5c47d36d91"
+        }],
+        "componentPropSheets": [
+            {
+                "properties": [],
+                "componentName": "jke"
+            },
+            {
+                "properties": [],
+                "componentName": "jke-jke.db"
+            },
+            {
+                "properties": [],
+                "componentName": "jke-websphere-liberty"
+            },
+            {
+                "properties": [],
+                "componentName": "jke.db.scripts"
+            },
+            {
+                "properties": [],
+                "componentName": "jke.web"
+            }
+        ],
+        "versionConditions": [],
+        "teamMappings": []
+    }],
+    "statuses": [],
+    "processes": [],
+    "genericProcesses": [],
+    "teamMappings": [],
+    "tags": [],
+    "applicationTemplate": {
+        "name": "Kubernetes Application Template",
+        "description": "Application Template for Kubernetes deployments",
+        "applicationProcessList": [{
+            "name": "Deploy from YAML file",
+            "description": "",
+            "inventoryManagementType": "AUTOMATIC",
+            "offlineAgentHandling": "PRE_EXECUTION_CHECK",
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "94ed247900ef01c17c2f8349574c38",
+                        "from": "9e51a6f61e1be2428ff0e24c3d584a",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "36da1c52b7e93bfe61e083ae7c00c4",
+                        "type": "ALWAYS",
+                        "value": ""
+                    },
+                    {
+                        "to": "9e51a6f61e1be2428ff0e24c3d584a",
+                        "from": "Always Apply Image Tags from YAML",
+                        "type": "VALUE",
+                        "value": "true\nTRUE\nTrue"
+                    },
+                    {
+                        "to": "9e51a6f61e1be2428ff0e24c3d584a",
+                        "from": "c0bdd77a3d5c01e149f643cd5ac8da",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "c0bdd77a3d5c01e149f643cd5ac8da",
+                        "from": "Always Apply Image Tags from YAML",
+                        "type": "VALUE",
+                        "value": ""
+                    },
+                    {
+                        "to": "Always Apply Image Tags from YAML",
+                        "from": "36da1c52b7e93bfe61e083ae7c00c4",
+                        "type": "SUCCESS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "Always Apply Image Tags from YAML",
+                        "x": -321.4631915866484,
+                        "y": 320,
+                        "h": 100,
+                        "w": 780
+                    },
+                    {
+                        "name": "36da1c52b7e93bfe61e083ae7c00c4",
+                        "x": -205,
+                        "y": 140,
+                        "h": 130,
+                        "w": 550
+                    },
+                    {
+                        "name": "c0bdd77a3d5c01e149f643cd5ac8da",
+                        "x": -17.926383173296813,
+                        "y": 470,
+                        "h": 130,
+                        "w": 400
+                    },
+                    {
+                        "name": "9e51a6f61e1be2428ff0e24c3d584a",
+                        "x": -141.69181527206223,
+                        "y": 650,
+                        "h": 130,
+                        "w": 340
+                    },
+                    {
+                        "name": "94ed247900ef01c17c2f8349574c38",
+                        "x": -6.691815272062229,
+                        "y": 760,
+                        "h": 90,
+                        "w": 150
+                    }
+                ],
+                "layoutMode": "auto",
+                "type": "graph",
+                "name": "f12a32c8-415e-46d3-943d-9c48e2bf9f31",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "94ed247900ef01c17c2f8349574c38",
+                        "children": []
+                    },
+                    {
+                        "name": "36da1c52b7e93bfe61e083ae7c00c4",
+                        "componentTag": {
+                            "objectType": "Component",
+                            "name": "Kubernetes",
+                            "description": "",
+                            "color": "#008ABF"
+                        },
+                        "properties": [
+                            {
+                                "name": "activity.componentProcess.name",
+                                "value": "Process and Apply YAML File"
+                            },
+                            {
+                                "name": "maxCompIteration",
+                                "value": "100"
+                            },
+                            {
+                                "name": "maxIteration",
+                                "value": "-1"
+                            },
+                            {
+                                "name": "runOnlyOnFirst",
+                                "value": "false"
+                            },
+                            {
+                                "name": "failFast",
+                                "value": "false"
+                            }
+                        ],
+                        "type": "multiComponentEnvironmentIterator",
+                        "children": [{
+                            "properties": [
+                                {
+                                    "name": "runOnlyOnFirst",
+                                    "value": "false"
+                                },
+                                {
+                                    "name": "failFast",
+                                    "value": "false"
+                                }
+                            ],
+                            "type": "componentEnvironmentIterator",
+                            "name": "657e71e4439054d19ccd5ad86153ca",
+                            "children": [{
+                                "status": "Active",
+                                "type": "inventoryVersionDiff",
+                                "name": "d5160661-e392-4d02-a04d-b39cbfa8cae8",
+                                "children": [{
+                                    "componentProcessName": "Process and Apply YAML File",
+                                    "allowFailure": false,
+                                    "properties": {"activity.componentProcess.name": "Process and Apply YAML File"},
+                                    "type": "componentProcess",
+                                    "name": "Process and Apply YAML File",
+                                    "children": []
+                                }]
+                            }]
+                        }]
+                    },
+                    {
+                        "propertyName": "${p?:environment\/alwaysApplyVersionsFromYaml}",
+                        "type": "switch",
+                        "name": "Always Apply Image Tags from YAML",
+                        "children": []
+                    },
+                    {
+                        "name": "c0bdd77a3d5c01e149f643cd5ac8da",
+                        "componentTag": {
+                            "objectType": "Component",
+                            "name": "kubernetes.image",
+                            "description": "",
+                            "color": "#FFFFFF"
+                        },
+                        "properties": [
+                            {
+                                "name": "activity.componentProcess.name",
+                                "value": "Update Inventory"
+                            },
+                            {
+                                "name": "maxCompIteration",
+                                "value": "100"
+                            },
+                            {
+                                "name": "maxIteration",
+                                "value": "-1"
+                            },
+                            {
+                                "name": "runOnlyOnFirst",
+                                "value": "false"
+                            },
+                            {
+                                "name": "failFast",
+                                "value": "false"
+                            }
+                        ],
+                        "type": "multiComponentEnvironmentIterator",
+                        "children": [{
+                            "properties": [
+                                {
+                                    "name": "runOnlyOnFirst",
+                                    "value": "false"
+                                },
+                                {
+                                    "name": "failFast",
+                                    "value": "false"
+                                }
+                            ],
+                            "type": "componentEnvironmentIterator",
+                            "name": "c6a44d294e7278fa36fd92b1ca6810",
+                            "children": [{
+                                "status": "Active",
+                                "type": "inventoryVersionDiff",
+                                "name": "e105cc79-0fa1-49b2-8832-828ea4a55e28",
+                                "children": [{
+                                    "componentProcessName": "Update Inventory",
+                                    "allowFailure": false,
+                                    "properties": {"activity.componentProcess.name": "Update Inventory"},
+                                    "type": "componentProcess",
+                                    "name": "Update Inventory",
+                                    "children": []
+                                }]
+                            }]
+                        }]
+                    },
+                    {
+                        "name": "9e51a6f61e1be2428ff0e24c3d584a",
+                        "properties": [
+                            {
+                                "name": "activity.componentProcess.name",
+                                "value": "Deploy app"
+                            },
+                            {
+                                "name": "maxCompIteration",
+                                "value": "100"
+                            },
+                            {
+                                "name": "maxIteration",
+                                "value": "-1"
+                            },
+                            {
+                                "name": "failFast",
+                                "value": "false"
+                            }
+                        ],
+                        "type": "multiComponentEnvironmentIterator",
+                        "children": [{
+                            "properties": [],
+                            "type": "componentEnvironmentIterator",
+                            "name": "7d9417b9ce42f57faa9ed1dd7b085f",
+                            "children": [{
+                                "status": "Active",
+                                "type": "inventoryVersionDiff",
+                                "name": "899a4604-d82e-4c82-a9e8-a9e4febd3eec",
+                                "children": [{
+                                    "componentProcessName": "Deploy app",
+                                    "allowFailure": false,
+                                    "properties": {"activity.componentProcess.name": "Deploy app"},
+                                    "type": "componentProcess",
+                                    "name": "Deploy app",
+                                    "children": []
+                                }]
+                            }]
+                        }]
+                    }
+                ]
+            },
+            "propDefs": [],
+            "versionPresets": []
+        }],
+        "genericProcesses": [],
+        "tagRequirements": [{
+            "type": "EQUALS",
+            "number": 1,
+            "tag": {
+                "objectType": "Component",
+                "name": "Kubernetes",
+                "description": "",
+                "color": "#008ABF"
+            }
+        }],
+        "enforceCompleteSnapshots": false,
+        "environmentTemplates": [
+            {
+                "name": "LOCAL",
+                "description": "",
+                "color": "#17AF4B",
+                "requireApproval": false,
+                "noSelfApprovals": false,
+                "lockSnapshots": false,
+                "requireSnapshots": false,
+                "cleanupDaysToKeep": 0,
+                "cleanupCountToKeep": 0,
+                "enableProcessHistoryCleanup": false,
+                "useSystemDefaultDays": true,
+                "historyCleanupDaysToKeep": 365,
+                "propDefs": [{
+                    "name": "alwaysApplyVersionsFromYaml",
+                    "label": "Always Apply Image Tags from YAML",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "value": "false",
+                    "required": false,
+                    "description": "If set to true, container image tags specified in the yaml will always be applied (container image tags specified in the UrbanCode Deploy user interface will be ignored).",
+                    "placeholder": ""
+                }],
+                "resourceTemplate": {
+                    "name": "Kubernetes Resource Template",
+                    "resources": {
+                        "name": "Kubernetes Resource Template",
+                        "path": "\/Kubernetes Resource Template",
+                        "parentName": "",
+                        "tags": [],
+                        "prototype": false,
+                        "children": [{
+                            "name": "Kubernetes",
+                            "path": "\/Kubernetes Resource Template\/Kubernetes",
+                            "description": "",
+                            "parentName": "Kubernetes Resource Template",
+                            "tags": [],
+                            "prototype": false,
+                            "children": [{
+                                "name": "Agent Prototype",
+                                "path": "\/Kubernetes Resource Template\/Kubernetes\/Agent Prototype",
+                                "description": "Agent Prototype",
+                                "parentName": "Kubernetes",
+                                "role": "Agent Placeholder",
+                                "roleProperties": {
+                                    "name": "Agent Placeholder",
+                                    "properties": [{
+                                        "name": "agentNamePatterns",
+                                        "value": "mrad0cker",
+                                        "description": "",
+                                        "secure": false
+                                    }]
+                                },
+                                "tags": [],
+                                "prototype": false,
+                                "children": [{
+                                    "name": "Kubernetes",
+                                    "componentTag": {
+                                        "objectType": "Component",
+                                        "name": "Kubernetes",
+                                        "description": "",
+                                        "color": "#008ABF"
+                                    },
+                                    "path": "\/Kubernetes Resource Template\/Kubernetes\/Agent Prototype\/Kubernetes",
+                                    "description": "",
+                                    "parentName": "Agent Prototype",
+                                    "tags": [],
+                                    "prototype": false,
+                                    "children": []
+                                }]
+                            }]
+                        }]
+                    },
+                    "description": ""
+                },
+                "versionConditions": [],
+                "exemptProcesses": []
+            },
+            {
+                "name": "PROD",
+                "description": "",
+                "color": "#D9182D",
+                "requireApproval": false,
+                "noSelfApprovals": false,
+                "lockSnapshots": false,
+                "requireSnapshots": false,
+                "cleanupDaysToKeep": 0,
+                "cleanupCountToKeep": 0,
+                "enableProcessHistoryCleanup": false,
+                "useSystemDefaultDays": true,
+                "historyCleanupDaysToKeep": 365,
+                "propDefs": [{
+                    "name": "alwaysApplyVersionsFromYaml",
+                    "label": "Always Apply Image Tags from YAML",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "value": "false",
+                    "required": false,
+                    "description": "If set to true, container image tags specified in the yaml will always be applied (container image tags specified in the UrbanCode Deploy user interface will be ignored).",
+                    "placeholder": ""
+                }],
+                "resourceTemplate": {
+                    "name": "Kubernetes Resource Template",
+                    "resources": {
+                        "name": "Kubernetes Resource Template",
+                        "path": "\/Kubernetes Resource Template",
+                        "parentName": "",
+                        "tags": [],
+                        "prototype": false,
+                        "children": [{
+                            "name": "Kubernetes",
+                            "path": "\/Kubernetes Resource Template\/Kubernetes",
+                            "description": "",
+                            "parentName": "Kubernetes Resource Template",
+                            "tags": [],
+                            "prototype": false,
+                            "children": [{
+                                "name": "Agent Prototype",
+                                "path": "\/Kubernetes Resource Template\/Kubernetes\/Agent Prototype",
+                                "description": "Agent Prototype",
+                                "parentName": "Kubernetes",
+                                "role": "Agent Placeholder",
+                                "roleProperties": {
+                                    "name": "Agent Placeholder",
+                                    "properties": [{
+                                        "name": "agentNamePatterns",
+                                        "value": "mrad0cker",
+                                        "description": "",
+                                        "secure": false
+                                    }]
+                                },
+                                "tags": [],
+                                "prototype": false,
+                                "children": [{
+                                    "name": "Kubernetes",
+                                    "componentTag": {
+                                        "objectType": "Component",
+                                        "name": "Kubernetes",
+                                        "description": "",
+                                        "color": "#008ABF"
+                                    },
+                                    "path": "\/Kubernetes Resource Template\/Kubernetes\/Agent Prototype\/Kubernetes",
+                                    "description": "",
+                                    "parentName": "Agent Prototype",
+                                    "tags": [],
+                                    "prototype": false,
+                                    "children": []
+                                }]
+                            }]
+                        }]
+                    },
+                    "description": ""
+                },
+                "versionConditions": [],
+                "exemptProcesses": []
+            },
+            {
+                "name": "QA",
+                "description": "",
+                "color": "#00B2EF",
+                "requireApproval": false,
+                "noSelfApprovals": false,
+                "lockSnapshots": false,
+                "requireSnapshots": false,
+                "cleanupDaysToKeep": 0,
+                "cleanupCountToKeep": 0,
+                "enableProcessHistoryCleanup": false,
+                "useSystemDefaultDays": true,
+                "historyCleanupDaysToKeep": 365,
+                "propDefs": [{
+                    "name": "alwaysApplyVersionsFromYaml",
+                    "label": "Always Apply Image Tags from YAML",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "value": "false",
+                    "required": false,
+                    "description": "If set to true, container image tags specified in the yaml will always be applied (container image tags specified in the UrbanCode Deploy user interface will be ignored).",
+                    "placeholder": ""
+                }],
+                "resourceTemplate": {
+                    "name": "Kubernetes Resource Template",
+                    "resources": {
+                        "name": "Kubernetes Resource Template",
+                        "path": "\/Kubernetes Resource Template",
+                        "parentName": "",
+                        "tags": [],
+                        "prototype": false,
+                        "children": [{
+                            "name": "Kubernetes",
+                            "path": "\/Kubernetes Resource Template\/Kubernetes",
+                            "description": "",
+                            "parentName": "Kubernetes Resource Template",
+                            "tags": [],
+                            "prototype": false,
+                            "children": [{
+                                "name": "Agent Prototype",
+                                "path": "\/Kubernetes Resource Template\/Kubernetes\/Agent Prototype",
+                                "description": "Agent Prototype",
+                                "parentName": "Kubernetes",
+                                "role": "Agent Placeholder",
+                                "roleProperties": {
+                                    "name": "Agent Placeholder",
+                                    "properties": [{
+                                        "name": "agentNamePatterns",
+                                        "value": "mrad0cker",
+                                        "description": "",
+                                        "secure": false
+                                    }]
+                                },
+                                "tags": [],
+                                "prototype": false,
+                                "children": [{
+                                    "name": "Kubernetes",
+                                    "componentTag": {
+                                        "objectType": "Component",
+                                        "name": "Kubernetes",
+                                        "description": "",
+                                        "color": "#008ABF"
+                                    },
+                                    "path": "\/Kubernetes Resource Template\/Kubernetes\/Agent Prototype\/Kubernetes",
+                                    "description": "",
+                                    "parentName": "Agent Prototype",
+                                    "tags": [],
+                                    "prototype": false,
+                                    "children": []
+                                }]
+                            }]
+                        }]
+                    },
+                    "description": ""
+                },
+                "versionConditions": [],
+                "exemptProcesses": []
+            }
+        ],
+        "propDefs": [],
+        "statuses": []
+    }
+}

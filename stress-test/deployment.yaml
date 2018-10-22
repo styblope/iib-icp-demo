@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: iib-stress-test
+  name: iib-stress-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iib-stress-test
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: iib-stress-test
+    spec:
+      containers:
+      - image: mycluster.icp:8500/default/iib-stress-test:latest
+        args: ["http://iib-loadbalancer.default.svc.cluster.local:7800/icpIIBtest"]
+        name: iib-stress-test
+        resources: {}
+status: {}

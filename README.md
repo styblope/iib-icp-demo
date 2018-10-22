@@ -54,7 +54,11 @@ HTTP GET single test:
 HTTP 'smoke' test using custom script (which runs 100 parallel TCP connections)
     
     ssh master
-    ./iib_stress_test.py 192.168.24.33 31455
+    ./iib_stress_test.py http://192.168.24.33:31455/icpIIBtest
+
+or using a benchmark tool such as `wrk`
+
+    wrk -c 100 -t 20 -d 10m --timeout 1 http://192.168.24.33:31455/icpIIBtest
 
 Monitor pod CPU load
 	
